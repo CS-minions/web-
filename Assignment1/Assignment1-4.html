@@ -1,0 +1,132 @@
+<!DOCTYPE html>
+<html lang="zh-CN">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>心满意粥菜单</title>
+    <style>
+        body {
+            font-family: Arial, sans-serif;
+            line-height: 1.6;
+        }
+        h1 {
+            text-align: center;
+        }
+        nav {
+            background-color: #333;
+            overflow: hidden;
+        }
+        nav a {
+            float: left;
+            display: block;
+            color: white;
+            text-align: center;
+            padding: 14px 16px;
+            text-decoration: none;
+        }
+        nav a:hover {
+            background-color: #ddd;
+            color: black;
+        }
+        .menu-section {
+            width: 80%;
+            margin: 20px auto;
+        }
+        .menu-item {
+            display: flex;
+            justify-content: space-between;
+            padding: 8px 0;
+        }
+        .menu-item span:first-child::after {
+            content: "........................................................................................................";
+            flex-grow: 1;
+            text-align: right;
+            white-space: nowrap;
+            overflow: hidden;
+        }
+    </style>
+</head>
+<body>
+    <h1>心满意粥菜单</h1>
+    <nav>
+        <a href="#congee">粥类</a>
+        <a href="#drinks">饮料</a>
+        <a href="#wine">红酒</a>
+    </nav>
+    <div class="menu-section" id="congee">
+        <h2>粥类</h2>
+        <div class="menu-item">
+            <span>菜心粒肉片粥</span><span>6元</span>
+        </div>
+        <div class="menu-item">
+            <span>皮蛋瘦肉粥</span><span>5元</span>
+        </div>
+        <div class="menu-item">
+            <span>香茜鱼片粥</span><span>8元</span>
+        </div>
+        <div class="menu-item">
+            <span>生菜丝骨腩粥</span><span>6元</span>
+        </div>
+        <div class="menu-item">
+            <span>枣丝杞子猪肝粥</span><span>6元</span>
+        </div>
+        <div class="menu-item">
+            <span>状元及第粥</span><span>8元</span>
+        </div>
+        <div class="menu-item">
+            <span>生菜肚丝粥</span><span>8元</span>
+        </div>
+        <div class="menu-item">
+            <span>明火白粥</span><span>2元</span>
+        </div>
+    </div>
+    <div class="menu-section" id="drinks">
+        <h2>饮料</h2>
+        <div class="menu-item">
+            <span>矿泉水</span><span>2元/瓶</span>
+        </div>
+        <div class="menu-item">
+            <span>旺仔牛奶</span><span>5元/瓶</span>
+        </div>
+        <div class="menu-item">
+            <span>高山青草奶</span><span>10元/瓶</span>
+        </div>
+        <div class="menu-item">
+            <span>王老吉</span><span>5元/罐</span>
+        </div>
+        <div class="menu-item">
+            <span>雪碧</span><span>4元/瓶</span>
+        </div>
+        <div class="menu-item">
+            <span>可口可乐</span><span>4元/罐</span>
+        </div>
+        <div class="menu-item">
+            <span>和其正凉茶</span><span>4元/罐</span>
+        </div>
+        <div class="menu-item">
+            <span>康师傅红/绿茶</span><span>4元/瓶</span>
+        </div>
+    </div>
+    <div class="menu-section" id="wine">
+        <h2>红酒</h2>
+        <div class="menu-item">
+            <span>特饮干红</span><span>98元/瓶</span>
+        </div>
+        <div class="menu-item">
+            <span>法国查尔斯干红</span><span>128元/瓶</span>
+        </div>
+        <div class="menu-item">
+            <span>注册解百纳干红</span><span>168元/瓶</span>
+        </div>
+        <div class="menu-item">
+            <span>张裕圆桶干红（特选级）黑色</span><span>168元/瓶</span>
+        </div>
+        <div class="menu-item">
+            <span>张裕圆桶解百纳（特选级）红色</span><span>258元/瓶</span>
+        </div>
+        <div class="menu-item">
+            <span>张裕卡斯特（特选级）黑色</span><span>398元/瓶</span>
+        </div>
+    </div>
+</body>
+</html>
