@@ -1,0 +1,36 @@
+body {
+    font-family: Arial, sans-serif;
+    background-color: #f9f9f9;
+    text-align: left;
+}
+.container {
+    max-width: 800px;
+    margin: 20px auto;
+    padding: 20px;
+    border: 2px solid #e0e0e0;
+    background-color: #ffffff;
+}
+h1 {
+    color: #ffffff;
+    font-weight: bold;
+    text-align: center;
+    background-color: #008000;
+    padding: 10px;
+}
+.paragraph {
+    font-size: 28px;
+    line-height: 1.5;
+    letter-spacing: 2px;
+    text-decoration: underline;
+    text-indent: 2em;
+    margin: 20px 0;
+}
+.images {
+    display: flex;
+    justify-content: space-between;
+}
+.images img {
+    width: 180px;
+    height: auto;
+    border: 3px solid #008000;
+}
