@@ -1,0 +1,107 @@
+<!DOCTYPE html>
+<html lang="zh">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>新书推荐 - 表格布局</title>
+    <style>
+        body {
+            font-family: Arial, sans-serif;
+            background-color: #f9f9f9;
+            margin: 0;
+            padding: 0;
+        }
+
+        .book-table {
+            width: 90%;
+            margin: 20px auto;
+            border-collapse: collapse;
+        }
+        .book-table td {
+            padding: 15px;
+            vertical-align: top;
+            background-color: #ffffff;
+            border: 1px solid #ddd;
+            width: 50%;
+        }
+        .book-container {
+            display: flex;
+            align-items: flex-start;
+        }
+        .book-container img {
+            width: 100px;
+            height: auto;
+            margin-right: 15px;
+        }
+        .book-info h3 {
+            margin: 0 0 10px 0;
+            color: #333;
+            font-size: 18px;
+        }
+        .book-info p {
+            margin: 5px 0;
+            color: #555;
+        }
+        .price {
+            font-weight: bold;
+            color: #d9534f;
+        }
+    </style>
+</head>
+<body>
+
+<div >总编推荐</div>
+
+<table class="book-table">
+    <tr>
+        <td>
+            <div class="book-container">
+                <img src="../images/image61.jpg" alt="数学的世界 I 封面">
+                <div class="book-info">
+                    <h3>数学的世界 I</h3>
+                    <p>作者: J.R. 纽曼 编， 王善平, 李璐 译</p>
+                    <p class="price">定价: 59.00元</p>
+                    <p>推荐理由: 呈现在大家面前的是由J.R. 纽曼花费十五年心血，所精选的迄今为止世界上最天才的数学文献集锦。高...</p>
+                </div>
+            </div>
+        </td>
+        <td>
+            <div class="book-container">
+                <img src="../images/image62.jpg" alt="现代教育技术封面">
+                <div class="book-info">
+                    <h3>现代教育技术</h3>
+                    <p>作者: 傅钢善</p>
+                    <p class="price">定价: 39.80元</p>
+                    <p>推荐理由: 本教材结构新颖，逻辑清晰，图文并茂，内容丰富，易教易学，知行合一。</p>
+                </div>
+            </div>
+        </td>
+    </tr>
+    <tr>
+        <td>
+            <div class="book-container">
+                <img src="../images/image63.jpg" alt="生态智慧封面">
+                <div class="book-info">
+                    <h3>《生态智慧——生态可持续性》</h3>
+                    <p>作者: 伍业钢</p>
+                    <p class="price">定价: 29.00元</p>
+                    <p>推荐理由: 传统的经济学认为，经济的投入和产出可以简化为“资本+劳动”的投入等于经济增长，而忽略了对劳动者的人文关怀（以人为本）。</p>
+                </div>
+            </div>
+        </td>
+        <td>
+            <div class="book-container">
+                <img src="../images/image64.jpg" alt="中国工程院院士封面">
+                <div class="book-info">
+                    <h3>中国工程院院士（11）</h3>
+                    <p>作者: 中国工程院、高等教育出版社、中国工程物理研究院</p>
+                    <p class="price">定价: 500.00元</p>
+                    <p>推荐理由: 中国工程院院士是国家在工程技术方面设立的最高学术称号，为终身荣誉。为了展现中国工程院院士的风采、宣传科学家积极投身。</p>
+                </div>
+            </div>
+        </td>
+    </tr>
+</table>
+
+</body>
+</html>

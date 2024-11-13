@@ -1,0 +1,86 @@
+.container {
+    width: 1190px;
+    margin: 0 auto;
+}
+
+/* 顶部导航栏 */
+.top-bar {
+    height: 30px;
+    background: #e3e4e5;
+    line-height: 30px;
+}
+
+.top-bar .container {
+    display: flex;
+    justify-content: space-between;
+}
+
+.nav-items {
+    display: flex;
+    gap: 20px;
+}
+
+/* 搜索区域 */
+.search-area {
+    height: 100px;
+    background: #fff;
+}
+
+.search-area .container {
+    display: flex;
+    align-items: center;
+    padding: 20px 0;
+}
+
+.logo {
+    width: 190px;
+    height: 60px;
+    background: #f10215;
+    color: #fff;
+    text-align: center;
+    line-height: 60px;
+    font-size: 24px;
+}
+
+.search-box {
+    flex: 1;
+    margin-left: 70px;
+    display: flex;
+}
+
+.search-box input {
+    flex: 1;
+    height: 40px;
+    padding: 0 10px;
+    border: 2px solid #f10215;
+}
+
+.search-box button {
+    width: 80px;
+    height: 40px;
+    background: #f10215;
+    color: #fff;
+    border: none;
+    cursor: pointer;
+}
+
+/* 主要内容区域 */
+.main {
+    margin-top: 10px;
+}
+
+.category-menu {
+    width: 190px;
+    background: #fff;
+}
+
+.category-menu ul li {
+    height: 40px;
+    line-height: 40px;
+    padding-left: 10px;
+}
+
+.category-menu ul li:hover {
+    background: #f10215;
+    color: #fff;
+}
