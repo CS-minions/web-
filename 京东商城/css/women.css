@@ -1,0 +1,153 @@
+/* General Styles */
+body {
+    font-family: Arial, sans-serif;
+    background-color: #f8f9fa;
+}
+
+header {
+    background-color: #ffffff;
+    border-bottom: 1px solid #e5e5e5;
+    padding: 10px 0;
+}
+
+.nav-link {
+    color: #333;
+}
+
+.nav-link:hover {
+    color: #007bff;
+}
+
+/* Left Banner Styles */
+.col-md-3 .p-4 {
+    background: linear-gradient(to bottom, #e9ecef, #ffffff);
+    border-radius: 5px;
+    box-shadow: 0 2px 8px rgba(0, 0, 0, 0.1);
+    padding: 20px;
+    margin-bottom: 20px;
+}
+
+.col-md-3 h5 {
+    font-weight: bold;
+    font-size: 1.2rem;
+    margin-bottom: 15px;
+}
+
+.col-md-3 p {
+    font-size: 0.9rem;
+    color: #666;
+    margin-bottom: 15px;
+}
+
+.col-md-3 ul {
+    padding-left: 0;
+}
+
+.col-md-3 ul li {
+    margin-bottom: 10px;
+}
+
+.col-md-3 ul li a {
+    color: #007bff;
+    text-decoration: none;
+}
+
+.col-md-3 ul li a:hover {
+    text-decoration: underline;
+}
+
+/* Product Grid Styles */
+.col-md-9 {
+    padding-left: 15px;
+}
+
+/* Product Card Styles */
+.card {
+    border: none;
+    transition: transform 0.2s;
+    height: 100%;
+    display: flex;
+    flex-direction: column;
+}
+
+.card:hover {
+    transform: scale(1.05);
+    box-shadow: 0 4px 15px rgba(0, 0, 0, 0.2);
+}
+
+.card-title {
+    font-size: 1rem;
+    font-weight: 600;
+    margin-bottom: 10px;
+}
+
+.card-text {
+    font-size: 0.9rem;
+    color: #666;
+    margin-bottom: 15px;
+}
+
+.text-danger {
+    font-weight: bold;
+    font-size: 1rem;
+}
+
+/* Recommendations Section Styles */
+.recommendations {
+    display: flex;
+    justify-content: center;
+    gap: 15px;
+    margin-top: 30px;
+    flex-wrap: wrap;
+}
+
+.recommendations .col-md-2 {
+    flex: 0 0 220px;
+    margin-bottom: 15px;
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+}
+
+.recommendations .text-center {
+    padding: 20px;
+    background: #ffffff;
+    border: 1px solid #e5e5e5;
+    border-radius: 8px;
+    transition: all 0.3s ease;
+    box-shadow: 0 2px 8px rgba(0, 0, 0, 0.05);
+    width: 100%;
+    height: 100%;
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+}
+
+.recommendations .text-center:hover {
+    background: #f8f8f8;
+    box-shadow: 0 3px 10px rgba(0, 0, 0, 0.1);
+    transform: translateY(-3px);
+}
+
+.recommendations img {
+    max-height: 150px;
+    transition: transform 0.3s;
+    margin-bottom: 10px;
+}
+
+.recommendations img:hover {
+    transform: scale(1.05);
+}
+
+.recommendations h6 {
+    font-size: 1rem;
+    font-weight: 600;
+    margin-top: 10px;
+}
+
+.recommendations p {
+    font-size: 0.9rem;
+    color: #ff5733;
+    font-weight: bold;
+}
+
