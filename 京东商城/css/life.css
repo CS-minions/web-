@@ -1,0 +1,107 @@
+/* General Styles */
+body {
+    font-family: Arial, sans-serif;
+    background-color: #f8f9fa;
+    color: #333;
+}
+
+h2 {
+    font-weight: bold;
+}
+
+h5, h6 {
+    font-weight: bold;
+    margin-bottom: 15px;
+}
+
+.container {
+    max-width: 1200px;
+}
+
+/* Header */
+header {
+    border-bottom: 1px solid #ddd;
+    padding-bottom: 15px;
+}
+
+/* Main Sections */
+.main-sections .col-md-4 {
+    margin-bottom: 30px;
+}
+
+.main-sections .p-4 {
+    background-color: #fff;
+    border-radius: 5px;
+    box-shadow: 0 2px 5px rgba(0, 0, 0, 0.1);
+}
+
+.main-sections img {
+    border-radius: 5px;
+}
+
+/* Grid Layout */
+.products-grid {
+    display: grid;
+    grid-template-columns: repeat(4, 1fr);
+    gap: 4px;
+    padding: 0;
+    width: 100%;
+}
+
+/* Product Items */
+.product-item {
+    position: relative;
+    overflow: hidden;
+    width: 100%;
+    height: 300px; /* 设置固定高度 */
+}
+
+.product-item img {
+    width: 100%;
+    height: 100%;
+    object-fit: contain; /* 改为contain确保图片完整显示 */
+    background-color: #fff;
+    padding: 10px;
+}
+
+.product-item:hover img {
+    transform: scale(1.05);
+}
+
+/* Product Sizes */
+.product-item.large {
+    grid-row: span 2;
+    grid-column: span 2;
+    height: 300px; /* 大尺寸图片的高度 */
+    width: 400px; /* 大尺寸图片的宽度 */
+}
+
+.product-item.medium {
+    grid-row: span 2;
+    grid-column: span 1;
+    height: 300px; /* 中等尺寸图片的高度 */
+}
+
+.product-item.small {
+    grid-row: span 1;
+    grid-column: span 1;
+    height: 300px; /* 小尺寸图片的高度 */
+}
+
+@media (max-width: 768px) {
+    .products-grid {
+        grid-template-columns: repeat(2, 1fr);
+        grid-auto-rows: 150px;
+    }
+    
+    .product-item,
+    .product-item.small {
+        height: 200px;
+    }
+    
+    .product-item.medium,
+    .product-item.large {
+        height: 400px;
+    }
+}
+

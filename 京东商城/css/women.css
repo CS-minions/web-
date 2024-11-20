@@ -151,3 +151,230 @@ header {
     font-weight: bold;
 }
 
+
+footer {
+    width: 100%;
+    background: #eaeaea;
+    min-width: 100%;
+    min-height: 400px; /* Added for taller footer */
+    padding-bottom: 40px; /* Added for better spacing */
+}
+footer>.footer-top{
+	width: 1085px;
+	height: 42px;
+	padding:30px;
+	margin: 0px auto;
+}
+.footer-top>ul{
+	width: 1085px;
+	height: 42px;
+	text-align: left;
+	line-height: 42px;
+	font-weight: bold;
+	font-size: 17px;
+	
+}
+.footer-top>ul li{
+	width: 246px;
+	height: 42px;
+	padding-left: 46px;
+	float: left;
+	position: relative;
+}
+.footer-top>ul li:nth-of-type(4){
+	width:161px; 
+}
+.footer-top .many,.footer-top .fash,.footer-top .nice,.footer-top .little{
+	width: 42px;
+	height: 42px;
+	position: absolute;
+}
+.footer-top .many{
+	background: url("../images/ico_service.png")no-repeat 0px 0px;
+	top:0px;
+	left: 0px;
+}
+.footer-top .fash{
+	background: url("../images/ico_service.png")no-repeat 0px -42px;
+	top:0px;
+	left: 0px;
+}
+.footer-top .nice{
+	background: url("../images/ico_service.png")no-repeat 0px -85px;
+	top:0px;
+	left: 0px;
+}
+.footer-top .little{
+	background: url("../images/ico_service.png")no-repeat 0px -129px;
+	top:0px;
+	left: 0px;
+}
+.footer-mid{
+	width: 100%;
+	border-top: 1px solid #dedede;
+	border-bottom: 1px solid #dedede;
+}
+.footer-mid>ul{
+	width: 1085px;
+	height: 152px;
+	padding: 26px 0px;
+	margin:0px auto;
+
+}
+.footer-mid ul::after{
+	content: "";
+	display: none;
+	clear:both;
+}
+.footer-mid li{
+	width: 254px;
+	height: 152px;
+	float: left;
+	font-size: 12px;
+	color: #666666;
+}
+.footer-mid li a{
+	color: #666666;
+	text-decoration: none;
+}
+.footer-mid li a:hover{
+	color: red;
+}
+
+.footer-mid li:nth-of-type(5){
+	width: 64px;
+}
+.footer-mid dt{
+	font-size: 14px;
+	color: #777777;
+	margin-bottom: 7px;
+}
+.footer-mid dd{
+	line-height: 22px;
+}
+.footer-bom .one{
+	font-size: 13px;
+	color:#666666;
+	margin-top: 21px;
+	margin-bottom: 19px;
+	text-align: center; 
+}
+.footer-bom .two{
+	font-size: 12px;
+	text-align: center;
+	color: #999999;
+	line-height: 20px;
+}
+.footer-bom .one a{
+	color: #666666;
+	text-decoration: none;
+	padding: 0px 10px;
+}
+.footer-bom a{
+	color:#999a9c;
+	text-decoration: none; 
+}
+.footer-bom a:hover{
+	color: red;
+}
+.footer-bom .three{
+	text-align: center;
+	font-size: 13px;
+	color: #999a9c;
+}
+.footer-bom .three a{
+	color: #999a9c;
+	text-decoration: none;
+	padding: 0px 14px;
+	margin-left: 16px;
+	position: relative;
+}
+.footer-bom .three span{
+	width: 16px;
+	height: 16px;
+}
+.footer-bom .three a:nth-of-type(1) span{
+	background: url("../images/下载.png")no-repeat 0px 0px;
+	position: absolute;
+	left: -8px;
+	top:4px;
+}
+.footer-bom .three a:nth-of-type(2) span{
+	background: url("../images/下载.png")no-repeat -19px 0px;
+	position: absolute;
+	left: -8px;
+	top:4px;
+}
+.footer-bom .three a:nth-of-type(3) span{
+	background: url("../images/下载.png")no-repeat 0px -16px;
+	position: absolute;
+	left: -8px;
+	top:4px;
+}
+.footer-bom .three a:nth-of-type(4) span{
+	background: url("../images/下载.png")no-repeat -39px 0px;
+	position: absolute;
+	left: -8px;
+	top:4px;
+}
+.footer-bom .three a:nth-of-type(5) span{
+	background: url("../images/下载.png")no-repeat -19px -16px;
+	position: absolute;
+	left: -8px;
+	top:4px;
+}
+.footer-bom .four{
+	width: 805px;
+	text-align: center;
+	height: 29px;
+	margin: 16px auto 32px;
+}
+.footer-bom .four span{
+	position: relative;
+	margin: 53px;
+}
+.footer-bom .four span:nth-of-type(1)::after{
+	content: "";
+	width: 93px;
+	height: 33px;
+	background: url("../images/ico_footer.png")no-repeat -105px 0px;
+	top:0px;
+	left: 0px;
+	position: absolute;
+}
+.footer-bom .four span:nth-of-type(2)::after{
+	content: "";
+	width: 93px;
+	height: 33px;
+	background: url("../images/ico_footer.png")no-repeat 0px -33px;
+	top:0px;
+	left: 0px;
+	position: absolute;
+}
+.footer-bom .four span:nth-of-type(3)::after{
+	content: "";
+	width: 93px;
+	height: 33px;
+	background: url("../images/ico_footer.png")no-repeat -104px -32px;
+	top:0px;
+	left: 0px;
+	position: absolute;
+}
+.footer-bom .four span:nth-of-type(4)::after{
+	content: "";
+	width: 98px;
+	height: 33px;
+	background: url("../images/ico_footer.png")no-repeat 0px -67px;
+	top:0px;
+	left: 0px;
+	position: absolute;
+}
+.footer-bom .four span:nth-of-type(5)::after{
+	content: "";
+	width: 93px;
+	height: 33px;
+	background: url("../images/ico_footer.png")no-repeat -105px -66px;
+	top:0px;
+	left: 0px;
+	position: absolute;
+}
