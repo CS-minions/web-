@@ -1,0 +1,47 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>科技资讯页面</title>
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/tailwindcss/3.0.23/tailwind.min.css">
+    <style>
+        body {
+            background-color: #f0f0f0;
+        }
+        .news-card:hover {
+            transform: translateY(-5px);
+        }
+    </style>
+</head>
+<body class="font-sans">
+    <div class="container mx-auto p-6">
+        <div class="header text-center mb-10">
+            <h1 class="text-4xl font-bold text-gray-800">科技资讯</h1>
+            <p class="text-lg text-gray-600">最新科技发展和热门资讯尽在于此</p>
+        </div>
+        <div class="news-list grid grid-cols-1 md:grid-cols-2 gap-8">
+            <div class="news-card flex bg-white rounded-lg shadow-lg overflow-hidden transition-transform duration-300">
+                <div class="news-image w-2/5">
+                    <img src="image1.jpg" alt="新闻图片1" class="w-full h-full object-cover">
+                </div>
+                <div class="news-content p-6 w-3/5">
+                    <h2 class="text-xl font-semibold text-gray-800 mb-3">网吧严人脸识别 玩低俗游戏要挨罚</h2>
+                    <p class="text-gray-600">在用户登录网吧时，如果有人玩低俗内容的网络游戏，警文化厅将要求网吧按使用者一律一罚，并将对违反规定的网吧实施责任追究。</p>
+                </div>
+            </div>
+            <div class="news-card flex bg-white rounded-lg shadow-lg overflow-hidden transition-transform duration-300">
+                <div class="news-image w-2/5">
+                    <img src="image2.jpg" alt="新闻图片2" class="w-full h-full object-cover">
+                </div>
+                <div class="news-content p-6 w-3/5">
+                    <h2 class="text-xl font-semibold text-gray-800 mb-3">海外三大网络视频模式落地中国</h2>
+                    <p class="text-gray-600">中国的网络视频市场开始吸收和改进，Esteban的盈利模式逐渐得到推广和应用。</p>
+                </div>
+            </div>
+            <!-- 更多的新闻卡片可以按照上面格式添加 -->
+        </div>
+    </div>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/alpinejs/3.10.5/cdn.min.js"></script>
+</body>
+</html>
