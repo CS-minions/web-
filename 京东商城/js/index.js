@@ -239,7 +239,7 @@ $('.go2-right').click(function () {
 	每个背景图像URL都是基于数组中的文件名构建的，并应用额外的CSS样式来调整背景大小。
 */
 // 隐藏所有class为two的元素
-$('.two').hide();
+//$('.two').hide();
 
 // 图片数组
 var arr = ['1.png', '3.png', '5.png', '7.png', '9.png', '11.png', '13.png', '15.png', '17.png', '19.png', '21.png', '23.png'];

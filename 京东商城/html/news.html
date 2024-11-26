@@ -1,47 +1,154 @@
 <!DOCTYPE html>
-<html lang="en">
+<html lang="zh">
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>科技资讯页面</title>
-    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/tailwindcss/3.0.23/tailwind.min.css">
+    <title>科技资讯</title>
     <style>
         body {
-            background-color: #f0f0f0;
+            font-family: "Microsoft YaHei", sans-serif;
+            background-color: #f5f5f5;
+            margin: 0;
+            padding: 0;
         }
-        .news-card:hover {
-            transform: translateY(-5px);
+
+        .container {
+            max-width: 1200px;
+            margin: 0 auto;
+            padding: 20px;
+        }
+
+        .header {
+            text-align: center;
+            margin-bottom: 40px;
+        }
+
+        .header h1 {
+            font-size: 2.5rem;
+            color: #333;
+            margin-bottom: 10px;
+        }
+
+        .header p {
+            font-size: 1.1rem;
+            color: #666;
+        }
+
+        .divcss5 {
+    display: flex;
+    background: #fff;
+    padding: 15px;
+    border-radius: 8px;
+    box-shadow: 0 2px 4px rgba(0,0,0,0.1);
+    transition: transform 0.2s;
+    max-width: calc(50% - 10px); /* 设置最大宽度为父容器的50%减去间距 */
+    width: 100%; /* 确保占满分配的空间 */
+    box-sizing: border-box; /* 确保padding不会影响总宽度 */
+}
+
+.news-list {
+    display: flex; /* 改用flex布局 */
+    flex-wrap: wrap; /* 允许换行 */
+    gap: 20px; /* 设置间距 */
+    justify-content: space-between; /* 两端对齐 */
+    max-width: 1200px; /* 容器最大宽度 */
+    margin: 0 auto;
+}
+
+/* 响应式布局 */
+@media (max-width: 768px) {
+    .divcss5 {
+        max-width: 100%; /* 小屏幕下占满宽度 */
+    }
+}
+
+        .divcss5:hover {
+            transform: translateY(-2px);
+        }
+
+        .divcss5 img {
+            width: 120px;
+            height: 80px;
+            object-fit: cover;
+            border-radius: 4px;
+        }
+
+        .divcss5 .right {
+            width: calc(100% - 122px);
+            margin-left: 15px;
+        }
+
+        .divcss5 .right h3 {
+            height: 26px;
+            line-height: 26px;
+            font-size: 16px;
+            font-weight: bold;
+            color: #333;
+            margin: 0;
+            overflow: hidden;
+            text-overflow: ellipsis;
+            white-space: nowrap;
+        }
+
+        .divcss5 .right div {
+            padding-top: 5px;
+            height: 44px;
+            color: #666;
+            font-size: 14px;
+            line-height: 1.4;
+            overflow: hidden;
+            display: -webkit-box;
+            -webkit-line-clamp: 2;
+            -webkit-box-orient: vertical;
+        }
+
+        @media (max-width: 768px) {
+            .news-list {
+                grid-template-columns: 1fr;
+            }
         }
     </style>
 </head>
-<body class="font-sans">
-    <div class="container mx-auto p-6">
-        <div class="header text-center mb-10">
-            <h1 class="text-4xl font-bold text-gray-800">科技资讯</h1>
-            <p class="text-lg text-gray-600">最新科技发展和热门资讯尽在于此</p>
+<body>
+    <div class="container">
+        <div class="header">
+            <h1>科技资讯</h1>
+            <p>最新科技发展和热门资讯尽在于此</p>
         </div>
-        <div class="news-list grid grid-cols-1 md:grid-cols-2 gap-8">
-            <div class="news-card flex bg-white rounded-lg shadow-lg overflow-hidden transition-transform duration-300">
-                <div class="news-image w-2/5">
-                    <img src="image1.jpg" alt="新闻图片1" class="w-full h-full object-cover">
-                </div>
-                <div class="news-content p-6 w-3/5">
-                    <h2 class="text-xl font-semibold text-gray-800 mb-3">网吧严人脸识别 玩低俗游戏要挨罚</h2>
-                    <p class="text-gray-600">在用户登录网吧时，如果有人玩低俗内容的网络游戏，警文化厅将要求网吧按使用者一律一罚，并将对违反规定的网吧实施责任追究。</p>
-                </div>
-            </div>
-            <div class="news-card flex bg-white rounded-lg shadow-lg overflow-hidden transition-transform duration-300">
-                <div class="news-image w-2/5">
-                    <img src="image2.jpg" alt="新闻图片2" class="w-full h-full object-cover">
-                </div>
-                <div class="news-content p-6 w-3/5">
-                    <h2 class="text-xl font-semibold text-gray-800 mb-3">海外三大网络视频模式落地中国</h2>
-                    <p class="text-gray-600">中国的网络视频市场开始吸收和改进，Esteban的盈利模式逐渐得到推广和应用。</p>
+        
+        <div class="news-list">
+            <div class="divcss5">
+                <img src="../images/news/1.jpg" alt="新闻图片1">
+                <div class="right">
+                    <h3>网吧严人脸识别</h3>
+                    <div>在用户登录网吧时，如果有人玩低俗内容的网络游戏，警文化厅将要求网吧按使用者一律一罚，并将对违反规定的网吧实施责任追究。</div>
                 </div>
             </div>
-            <!-- 更多的新闻卡片可以按照上面格式添加 -->
+
+            <div class="divcss5">
+                <img src="../images/news/2.jpg" alt="新闻图片2">
+                <div class="right">
+                    <h3>AI换脸软件</h3>
+                    <div>人工智能换脸技术正在引发社会关注，专家呼吁加强监管并制定相关法规，以防止技术滥用带来的隐私和安全风险。</div>
+                </div>
+            </div>
+
+            <div class="divcss5">
+                <img src="../images/news/3.jpg" alt="新闻图片3">
+                <div class="right">
+                    <h3>5G技术应用</h3>
+                    <div>随着5G网络的普及，各行各业正在积极探索5G技术的创新应用，从智慧城市到工业互联网，展现出广阔的发展前景。</div>
+                </div>
+            </div>
+
+            <div class="divcss5">
+                <img src="../images/news/4.jpg" alt="新闻图片4">
+                <div class="right">
+                    <h3>数字货币发展</h3>
+                    <div>各国央行数字货币研发进程加快，专家认为未来数字支付将成为主流，但也需要关注安全和隐私保护问题。</div>
+                </div>
+            </div>
         </div>
     </div>
-    <script src="https://cdnjs.cloudflare.com/ajax/libs/alpinejs/3.10.5/cdn.min.js"></script>
 </body>
 </html>
