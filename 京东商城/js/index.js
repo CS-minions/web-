@@ -423,7 +423,7 @@ $('.fix3 li').click(function () { // 给 .fix3 下的列表项绑定点击事件
 
 setInterval(function () { // 每隔一秒执行以下函数。
 	var Time = new Date(); // 获取当前时间。
-	var key = new Date('2024,6,3'); // 设置目标日期为 2024 年 6 月 3 日。
+	var key = new Date('2024,12,31'); // 设置目标日期为 2024 年 12 月 31 日。
 	var now = Time.getTime(); // 获取当前时间的毫秒数。
 	var center = key.getTime() - now; // 计算离目标日期的剩余毫秒数。
 	var hours = parseInt(center / 3600000); // 计算剩余小时数。
