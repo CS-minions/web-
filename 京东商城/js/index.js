@@ -7,24 +7,24 @@ $('.db div').hide();				//地址
 
 /*
 这段代码实现了点击左右按钮时，在 .mid>ol 元素上进行图片切换的功能。
-通过控制 num 变量来记录当前显示的图片索引，
-然后根据点击左右按钮来增加或减少 num 变量的值，并通过动画效果切换图片。
+通过控制 slideIndex 变量来记录当前显示的图片索引，
+然后根据点击左右按钮来增加或减少 slideIndex 变量的值，并通过动画效果切换图片。
 
 */
 //用户下的轮播
-var num = 0; // 初始化图片索引为 0
+var slideIndex = 0; // 初始化图片索引为 0
 // 点击左侧按钮切换图片
 $('.choose .left').click(function () {
-	num--; // 减少索引
-	if (num == -1) num = 0; // 限制索引不小于 0
-	$('.mid>ol').stop().animate({ 'left': -152 * num + 'px' }, 500); // 切换图片动画
+	slideIndex--; // 减少索引
+	if (slideIndex == -1) slideIndex = 0; // 限制索引不小于 0
+	$('.mid>ol').stop().animate({ 'left': -152 * slideIndex + 'px' }, 500); // 切换图片动画
 });
 
 // 点击右侧按钮切换图片
 $('.choose .right').click(function () {
-	num++; // 增加索引
-	if (num == 4) num = 3; // 限制索引不大于 3
-	$('.mid>ol').stop().animate({ 'left': -152 * num + 'px' }, 500); // 切换图片动画
+	slideIndex++; // 增加索引
+	if (slideIndex == 4) slideIndex = 3; // 限制索引不大于 3
+	$('.mid>ol').stop().animate({ 'left': -152 * slideIndex + 'px' }, 500); // 切换图片动画
 });
 
 //manu
@@ -63,36 +63,36 @@ $('.go1>img').hide();
 $('.go1>img').eq(0).show();
 
 // 初始化轮播计数器和定时器变量
-var num1 = -1;
-var timer;
+var carouselIndex = -1;
+var carouselTimer;
 
 // 定义轮播函数
-function go1() {
+function startCarousel() {
 	// 设定定时器，每隔2秒执行一次
-	timer = setInterval(function () {
+	carouselTimer = setInterval(function () {
 		// 计数器递增
-		num1++;
+		carouselIndex++;
 		// 当计数器达到8时重置为0，实现循环轮播
-		if (num1 == 4) num1 = 0;
+		if (carouselIndex == 4) carouselIndex = 0;
 		// 淡出上一张图片，淡入当前轮播图片
-		$('.go1>img').eq(num1 - 1).fadeOut();
-		$('.go1>img').eq(num1).fadeIn();
+		$('.go1>img').eq(carouselIndex - 1).fadeOut();
+		$('.go1>img').eq(carouselIndex).fadeIn();
 		// 调整小圆点的透明度，显示当前对应的小圆点
-		$('.small>li').eq(num1).siblings().css('opacity', '0.4');
-		$('.small>li').eq(num1).css('opacity', '1');
+		$('.small>li').eq(carouselIndex).siblings().css('opacity', '0.4');
+		$('.small>li').eq(carouselIndex).css('opacity', '1');
 		// 调整大图下方的轮播信息透明度，显示当前对应的信息
-		$('.big>li').eq(num1).siblings().css('opacity', '0');
-		$('.big>li').eq(num1).css('opacity', '0.3');
+		$('.big>li').eq(carouselIndex).siblings().css('opacity', '0');
+		$('.big>li').eq(carouselIndex).css('opacity', '0.3');
 	}, 2000);
 }
 
 // 初始调用轮播函数
-go1();
+startCarousel();
 
 // 鼠标悬停在轮播区域时执行的事件
 $('.go1').hover(function () {
 	// 清除定时器，停止轮播
-	clearInterval(timer);
+	clearInterval(carouselTimer);
 	// 鼠标悬停在小圆点上时的事件
 	$('.go1 li').hover(function () {
 		// 获取当前小圆点的索引
@@ -109,24 +109,24 @@ $('.go1').hover(function () {
 	}, function () { })
 }, function () {
 	// 鼠标移出轮播区域时恢复轮播定时器
-	go1();
+	startCarousel();
 })
 
 // 左箭头点击事件
 $('.go1-left').click(function () {
 	// 计数器递减
-	num1--;
+	carouselIndex--;
 	// 如果计数器减到-2，则重置为7，实现循环轮播
-	if (num1 == -2) num1 = 7;
+	if (carouselIndex == -2) carouselIndex = 7;
 	// 切换显示对应的轮播图片
-	$('.go1>img').eq(num1).siblings('img').fadeOut();
-	$('.go1>img').eq(num1).fadeIn();
+	$('.go1>img').eq(carouselIndex).siblings('img').fadeOut();
+	$('.go1>img').eq(carouselIndex).fadeIn();
 	// 调整小圆点的透明度，显示当前对应的小圆点
-	$('.small>li').eq(num1).siblings().css('opacity', '0.4');
-	$('.small>li').eq(num1).css('opacity', '1');
+	$('.small>li').eq(carouselIndex).siblings().css('opacity', '0.4');
+	$('.small>li').eq(carouselIndex).css('opacity', '1');
 	// 调整大图下方的轮播信息透明度，显示当前对应的信息
-	$('.big>li').eq(num1).siblings().css('opacity', '0');
-	$('.big>li').eq(num1).css('opacity', '0.3');
+	$('.big>li').eq(carouselIndex).siblings().css('opacity', '0');
+	$('.big>li').eq(carouselIndex).css('opacity', '0.3');
 });
 
 /*
@@ -136,18 +136,18 @@ $('.go1-left').click(function () {
 // 右箭头点击事件
 $('.go1-right').click(function () {
 	// 计数器递增
-	num1++;
+	carouselIndex++;
 	// 如果计数器达到8，则重置为0，实现循环轮播
-	if (num1 == 8) num1 = 0;
+	if (carouselIndex == 8) carouselIndex = 0;
 	// 切换显示对应的轮播图片
-	$('.go1>img').eq(num1).siblings('img').fadeOut();
-	$('.go1>img').eq(num1).fadeIn();
+	$('.go1>img').eq(carouselIndex).siblings('img').fadeOut();
+	$('.go1>img').eq(carouselIndex).fadeIn();
 	// 调整小圆点的透明度，显示当前对应的小圆点
-	$('.small>li').eq(num1).siblings().css('opacity', '0.4');
-	$('.small>li').eq(num1).css('opacity', '1');
+	$('.small>li').eq(carouselIndex).siblings().css('opacity', '0.4');
+	$('.small>li').eq(carouselIndex).css('opacity', '1');
 	// 调整大图下方的轮播信息透明度，显示当前对应的信息
-	$('.big>li').eq(num1).siblings().css('opacity', '0');
-	$('.big>li').eq(num1).css('opacity', '0.3');
+	$('.big>li').eq(carouselIndex).siblings().css('opacity', '0');
+	$('.big>li').eq(carouselIndex).css('opacity', '0.3');
 });
 
 // 鼠标悬停在左右箭头上的效果
@@ -173,30 +173,30 @@ $('.go2 span').hide();
 
 
 // 初始化第二个轮播区域的计数器和定时器变量
-var n = 0;
-var timer1;
+var secondCarouselIndex = 0;
+var secondCarouselTimer;
 
 // 定义第二个轮播函数
-function go2() {
+function startSecondCarousel() {
 	// 设定定时器，每隔10秒执行一次
-	timer1 = setInterval(function () {
+	secondCarouselTimer = setInterval(function () {
 		// 计数器递增
-		n++;
+		secondCarouselIndex++;
 		// 当计数器达到3时重置为0，实现循环轮播
-		if (n == 3) n = 0;
+		if (secondCarouselIndex == 3) secondCarouselIndex = 0;
 		// 淡出上一张图片，淡入当前轮播图片
-		$('.go2>div').eq(n).siblings('div').fadeOut();
-		$('.go2>div').eq(n).fadeIn();
+		$('.go2>div').eq(secondCarouselIndex).siblings('div').fadeOut();
+		$('.go2>div').eq(secondCarouselIndex).fadeIn();
 	}, 10000);
 }
 
 // 初始调用第二个轮播函数
-go2();
+startSecondCarousel();
 
 // 鼠标进入第二个轮播区域时执行的事件
 $('.go2').mouseenter(function () {
 	// 清除第二个轮播定时器，停止轮播
-	clearInterval(timer1);
+	clearInterval(secondCarouselTimer);
 	// 显示第二个轮播区域的箭头
 	$('.go2 span').show();
 });
@@ -206,48 +206,48 @@ $('.go2').mouseleave(function () {
 	// 隐藏第二个轮播区域的箭头
 	$('.go2 span').hide();
 	// 恢复第二个轮播定时器，继续轮播
-	go2();
+	startSecondCarousel();
 });
 
 // 左箭头点击事件
 $('.go2-left').click(function () {
 	// 计数器递减
-	n--;
+	secondCarouselIndex--;
 	// 如果计数器减到-1，则重置为2，实现循环轮播
-	if (n == -1) n = 2;
+	if (secondCarouselIndex == -1) secondCarouselIndex = 2;
 	// 切换显示对应的轮播图片
-	$('.go2>div').eq(n).siblings('div').fadeOut();
-	$('.go2>div').eq(n).fadeIn();
+	$('.go2>div').eq(secondCarouselIndex).siblings('div').fadeOut();
+	$('.go2>div').eq(secondCarouselIndex).fadeIn();
 });
 
 // 右箭头点击事件
 $('.go2-right').click(function () {
 	// 计数器递增
-	n++;
+	secondCarouselIndex++;
 	// 如果计数器达到3，则重置为0，实现循环轮播
-	if (n == 3) n = 0;
+	if (secondCarouselIndex == 3) secondCarouselIndex = 0;
 	// 切换显示对应的轮播图片
-	$('.go2>div').eq(n).siblings('div').fadeOut();
-	$('.go2>div').eq(n).fadeIn();
+	$('.go2>div').eq(secondCarouselIndex).siblings('div').fadeOut();
+	$('.go2>div').eq(secondCarouselIndex).fadeIn();
 });
 
 
 
 /*
-	此代码遍历图像文件名（arr）数组，并将每个span元素的背景图像设置在.one类中的li元素内。
+	此代码遍历图像文件名（imageFileNames）数组，并将每个span元素的背景图像设置在.one类中的li元素内。
 	每个背景图像URL都是基于数组中的文件名构建的，并应用额外的CSS样式来调整背景大小。
 */
 // 隐藏所有class为two的元素
 //$('.two').hide();
 
 // 图片数组
-var arr = ['1.png', '3.png', '5.png', '7.png', '9.png', '11.png', '13.png', '15.png', '17.png', '19.png', '21.png', '23.png'];
+var imageFileNames = ['1.png', '3.png', '5.png', '7.png', '9.png', '11.png', '13.png', '15.png', '17.png', '19.png', '21.png', '23.png'];
 
 // 循环遍历数组
-for (var i = 0; i < arr.length; i++) {
+for (var i = 0; i < imageFileNames.length; i++) {
 	// 设置每个li元素下子元素span的背景图片
 	$('.one li').eq(i).children('span')
-		.css('background', 'url(images/index/' + arr[i] + ')')
+		.css('background', 'url(images/index/' + imageFileNames[i] + ')')
 		.css('background-size', '24px 24px'); // 设置背景图片大小为24px x 24px
 }
 
@@ -259,19 +259,19 @@ for (var i = 0; i < arr.length; i++) {
 // 隐藏所有class为title的元素
 $('.title').hide();
 
-// 定义变量k
-var k;
+// 定义变量menuIndex
+var menuIndex;
 
 // 鼠标悬停在.banner>ul>li元素上时执行的事件
 $('.banner>ul>li').hover(function () {
 	// 获取当前li元素的索引
-	k = $(this).index();
-	// 隐藏除了当前索引对应的.title元素之外的所有.title元素，显示当前索引对应的.title元素
-	$('.title').eq(k).siblings('.title').hide();
-	$('.title').eq(k).show();
+	menuIndex = $(this).index();
+	// 隐藏除了当前索引对应的.title元��之外的所有.title元素，显示当前索引对应的.title元素
+	$('.title').eq(menuIndex).siblings('.title').hide();
+	$('.title').eq(menuIndex).show();
 }, function () {
 	// 鼠标移出时隐藏当前索引对应的.title元素
-	$('.title').eq(k).hide();
+	$('.title').eq(menuIndex).hide();
 });
 
 
@@ -279,34 +279,34 @@ $('.banner>ul>li').hover(function () {
 /*
 这段代码实现了一个轮播图的基本功能：
 	- 点击左右按钮可以切换图片，左侧按钮点击时图片向左移动，右侧按钮点击时图片向右移动。
-	- 使用了变量 m 来记录当前显示的图片索引。
-	- 当 m 达到临界值时（0和3），会进行特殊处理，即将 ul 元素的 left 属性设置为对应的位置。
+	- 使用了变量 middleSlideIndex 来记录当前显示的图片索引。
+	- 当 middleSlideIndex 达到临界值时（0和3），会进行特殊处理，即将 ul 元素的 left 属性设置为对应的位置。
 	- hover 方法用于鼠标悬停在 span 元素上时改变背景色。
 */
 
-// 定义变量m并初始化为0
-var m = 0;
+// 定义变量middleSlideIndex并初始化为0
+var middleSlideIndex = 0;
 
 // 点击事件处理函数：左侧按钮
 $('.mid-left').click(function () {
-	m--; // m减1
-	if (m == -1) { // 如果m减到-1
-		m = 3; // 将m设为3
-		$('.middle>ul').css({ 'left': '-812' * m + 'px' }) // 设置ul的left属性
-		m = 2; // 将m设为2
+	middleSlideIndex--; // middleSlideIndex减1
+	if (middleSlideIndex == -1) { // 如果middleSlideIndex减到-1
+		middleSlideIndex = 3; // 将middleSlideIndex设为3
+		$('.middle>ul').css({ 'left': '-812' * middleSlideIndex + 'px' }) // 设置ul的left属性
+		middleSlideIndex = 2; // 将middleSlideIndex设为2
 	};
-	$('.middle ul').stop().animate({ 'left': '-812' * m + 'px' }, 1000); // 动画效果移动ul的left属性
+	$('.middle ul').stop().animate({ 'left': '-812' * middleSlideIndex + 'px' }, 1000); // 动画效果移动ul的left属性
 });
 
 // 点击事件处理函数：右侧按钮
 $('.mid-right').click(function () {
-	m++; // m加1
-	if (m == 4) { // 如果m加到4
-		m = 0; // 将m设为0
-		$('.middle>ul').css({ 'left': '-812' * m + 'px' }) // 设置ul的left属性
-		m = 1; // 将m设为1
+	middleSlideIndex++; // middleSlideIndex加1
+	if (middleSlideIndex == 4) { // 如果middleSlideIndex加到4
+		middleSlideIndex = 0; // 将middleSlideIndex设为0
+		$('.middle>ul').css({ 'left': '-812' * middleSlideIndex + 'px' }) // 设置ul的left属性
+		middleSlideIndex = 1; // 将middleSlideIndex设为1
 	};
-	$('.middle>ul').stop().animate({ 'left': '-812' * m + 'px' }, 1000); // 动画效果移动ul的left属性
+	$('.middle>ul').stop().animate({ 'left': '-812' * middleSlideIndex + 'px' }, 1000); // 动画效果移动ul的left属性
 });
 
 // 鼠标悬停事件处理函数：span元素
@@ -320,25 +320,24 @@ $('.middle>span').hover(function () {
 
 
 
-
 //发现好货
-var tt = 0; // 初始化变量 tt 为 0，用于跟踪水平位置调整。
-var time2; // 声明变量 time2 用于存储定时器的引用。
+var middleSlideIndex = 0; // 初始化变量 middleSlideIndex 为 0，用于跟踪水平位置调整。
+var scrollTimer; // 声明变量 scrollTimer 用于存储定时器的引用。
 
-function toto() {
-	time2 = setInterval(function () { // 设置间隔函数，并将其赋给 time2。
-		tt++; // tt 每次增加 1。
-		if (tt >= 1200) { tt = 0; } // 如果 tt 达到或超过 1200，将其重置为 0。
-		$('.lun>ul').css('left', -1 * tt + 'px'); // 更新 .lun>ul 元素的 CSS 左侧属性，实现滚动效果。
+function startScroll() {
+	scrollTimer = setInterval(function () { // 设置间隔函数，并将其赋给 scrollTimer。
+		middleSlideIndex++; // middleSlideIndex 每次增加 1。
+		if (middleSlideIndex >= 1200) { middleSlideIndex = 0; } // 如果 middleSlideIndex 达到或超过 1200，将其重置为 0。
+		$('.lun>ul').css('left', -1 * middleSlideIndex + 'px'); // 更新 .lun>ul 元素的 CSS 左侧属性，实现滚动效果。
 	}, 10); // 每 10 毫秒执行一次。
 }
 
-toto(); // 立即调用 toto 函数以启动滚动。
+startScroll(); // 立即调用 startScroll 函数以启动滚动。
 
 $('.good2').hover(function () { // 定义 .good2 元素的悬停行为。
-	clearInterval(time2); // 当鼠标悬停在 .good2 上时，清除定时器（停止滚动）。
+	clearInterval(scrollTimer); // 当鼠标悬停在 .good2 上时，清除定时器（停止滚动）。
 }, function () {
-	toto(); // 当鼠标离开 .good2 时，重新调用 toto 函数（恢复滚动）。
+	startScroll(); // 当鼠标离开 .good2 时，重新调用 startScroll 函数（恢复滚动）。
 });
 
 //固定栏
