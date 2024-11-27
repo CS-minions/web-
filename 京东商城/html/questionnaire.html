@@ -5,157 +5,25 @@
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>京东首页用户体验调查</title>
     <style> h1 { text-align: center; } </style>
+    <link rel = "stylesheet" type = "text/css" href = "../css/questionnaire.css" />
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/tailwindcss/3.0.23/tailwind.min.css">
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0-beta3/css/all.min.css">
-    <style>
-        body {
-            background: linear-gradient(135deg, #f5f7fa 0%, #c3cfe2 100%);
-            font-family: 'Arial', sans-serif;
-            min-height: 100vh;
-            display: flex;
-            align-items: center;
-            justify-content: center;
-            margin: 0;
-            padding: 20px;
-        }
+    <!-- 引入 jQuery -->
+    <script src="https://code.jquery.com/jquery-3.6.0.min.js"></script>
+    <script src="../js/questionnaire.js"></script>
 
-        .form-card {
-            width: 90%;
-            max-width: 800px;
-            margin: 20px auto;
-            padding: 40px;
-            background-color: rgba(255, 255, 255, 0.95);
-            border-radius: 16px;
-            box-shadow: 0 10px 30px rgba(0, 0, 0, 0.1);
-            backdrop-filter: blur(5px);
-            transform: translateY(0);
-            transition: all 0.3s ease;
-        }
-
-        .form-card:hover {
-            transform: translateY(-5px);
-            box-shadow: 0 15px 35px rgba(0, 0, 0, 0.15);
-        }
-
-        h1 {
-            color: #2d3748;
-            font-size: 2.5rem;
-            margin-bottom: 1.5rem;
-            text-align: center;
-            font-weight: 700;
-            text-shadow: 1px 1px 2px rgba(0,0,0,0.1);
-        }
-
-        .form-card label {
-            color: #4a5568;
-            font-size: 1.1rem;
-            font-weight: 600;
-            margin-bottom: 0.75rem;
-            display: block;
-            transition: color 0.3s ease;
-        }
-
-        .form-card label:hover {
-            color: #2b6cb0;
-        }
-
-        .form-card textarea,
-        .form-card input[type="tel"] {
-            width: 100%;
-            padding: 15px;
-            border: 2px solid #e2e8f0;
-            border-radius: 12px;
-            font-size: 1rem;
-            transition: all 0.3s ease;
-            background-color: white;
-            resize: vertical;
-        }
-
-        .form-card textarea:focus,
-        .form-card input[type="tel"]:focus {
-            border-color: #4299e1;
-            box-shadow: 0 0 0 3px rgba(66, 153, 225, 0.2);
-            outline: none;
-        }
-
-        .form-card input[type="file"] {
-            width: 100%;
-            padding: 10px;
-            border: 2px dashed #cbd5e0;
-            border-radius: 12px;
-            cursor: pointer;
-            transition: all 0.3s ease;
-        }
-
-        .form-card input[type="file"]:hover {
-            border-color: #4299e1;
-            background-color: #ebf8ff;
-        }
-
-        .form-card button[type="submit"] {
-            background: linear-gradient(135deg, #4299e1 0%, #3182ce 100%);
-            color: white;
-            padding: 15px 30px;
-            border-radius: 12px;
-            font-size: 1.1rem;
-            font-weight: 600;
-            border: none;
-            cursor: pointer;
-            transition: all 0.3s ease;
-            display: flex;
-            align-items: center;
-            justify-content: center;
-            margin: 40px auto 0;
-            width: auto;
-            min-width: 200px;
-        }
-
-        .form-card button[type="submit"]:hover {
-            transform: translateY(-2px);
-            box-shadow: 0 5px 15px rgba(66, 153, 225, 0.4);
-        }
-
-        .form-card button[type="submit"] i {
-            margin-right: 10px;
-            font-size: 1.2rem;
-        }
-
-        .required::after {
-            content: " *";
-            color: #e53e3e;
-            font-size: 1.2rem;
-        }
-
-        .mb-8 {
-            margin-bottom: 2rem;
-        }
-
-        @media (max-width: 640px) {
-            .form-card {
-                padding: 20px;
-            }
-
-            h1 {
-                font-size: 2rem;
-            }
-
-            .form-card button[type="submit"] {
-                width: 100%;
-            }
-        }
-    </style>
 </head>
 <body>
     <div class="form-card">
         <h1 class="text-3xl text-center mb-6">京东首页-用户体验调查</h1>
         <p class="text-center mb-8 text-lg">尊敬的用户：您好！为了给您提供更好的产品和服务，我们非常想听取您使用京东首页的真实建议。对您的配合和支持表示衷心的感谢！</p>
-        <form>
+        <form id="feedbackForm">
             <div class="mb-8">
                 <label for="feedback" class="required">1. 如果您在使用京东首页时，有什么好或不好的地方，请在此留言：</label>
                 <textarea id="feedback" rows="5" class="border border-gray-300 rounded-md" placeholder="我们会关注您的反馈，持续优化产品，为您提供更好的服务！"></textarea>
             </div>
             <div class="mb-8">
-                <label class="required">2. 为了便于我们追查问题，可上传遇到问题的截图。</label>
+                <label>2. 为了便于我们追查问题，可上传遇到问题的截图。</label>
                 <input type="file" class="border border-gray-300 rounded-md">
             </div>
             <div class="mb-8">
