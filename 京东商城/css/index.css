@@ -118,13 +118,7 @@ html{
 	background: #c81623;
 	color: #fff;
 }
-.fix3 li:nth-of-type(2){
-	width: 58px;
-	height: 58px;
-	padding: 0px;
-	background: url("../images/index/aaa.gif");
-	background-size: 56px 56px;
-}
+
 
 .fix3 span{
 	margin-top: 12px;
@@ -132,33 +126,7 @@ html{
 	top:16px;
 	left: 14px;
 }
-.fix3 .a::after{
-	content: "";
-	width: 18px;
-	height: 18px;
-	top:-20px;
-	left: 5px;
-	background: url("../images/index/toolbars.png")no-repeat -95px -211px;
-	position: absolute;
-}
-.fix3 .b::after{
-	content: "";
-	width: 18px;
-	height: 18px;
-	top:-20px;
-	left: 4px;
-	background: url("../images/index/toolbars.png")no-repeat 0px -148px;
-	position: absolute;
-}
-.fix3 .c::after{
-	content: ""; 	
-	width: 18px;
-	height: 18px;
-	top:-13px;
-	left: 8px;
-	background: url("../images/index/toolbars.png")no-repeat -98px -98px;
-	position: absolute;
-}
+
 .fix3 img{
 	width: 55px;
 }
@@ -295,51 +263,7 @@ span.gps{
 	float: left;
 	margin-left: 30px;
 }
-.db .down dd:nth-of-type(1)::before{
-	content: "";
-	width: 16px;
-	height: 16px;
-	background: url("../images/下载.png")no-repeat 0px 0px;
-	position: absolute;
-	top:65px;
-	left: 10px;
-}
-.db .down dd:nth-of-type(2)::before{
-	content: "";
-	width: 16px;
-	height: 16px;
-	background: url("../images/下载.png")no-repeat -19px 0px;
-	position: absolute;
-	top:65px;
-	left: 158px;
-}
-.db .down dd:nth-of-type(3)::before{
-	content: "";
-	width: 16px;
-	height: 16px;
-	background: url("../images/下载.png")no-repeat 0px -16px;
-	position: absolute;
-	top:97px;
-	left: 10px;
-}
-.db .down dd:nth-of-type(4)::before{
-	content: "";
-	width: 16px;
-	height: 16px;
-	background: url("../images/下载.png")no-repeat -39px 0px;
-	position: absolute;
-	top:97px;
-	left: 158px;
-}
-.db .down dd:nth-of-type(5)::before{
-	content: "";
-	width: 16px;
-	height: 16px;
-	background: url("../images/下载.png")no-repeat -19px -16px;
-	position: absolute;
-	top:127px;
-	left: 10px;
-}
+
 .header-right{
 	width: 708px;
 	height: 16px;
@@ -646,6 +570,7 @@ nav{
 	margin: 0px auto;
 }
 .img4{
+	width: 190px;
 	height: 120px;
 	margin-top: 10px;
 	float: left;
@@ -752,7 +677,7 @@ nav>div .getred1{
 .bg2{
 	height: 471px;
 	margin-top: 10px;
-	background: url("../images/index/31.png.webp")no-repeat -215px 0px;
+	
 }
 .banner{
 	width: 1190px;
@@ -861,7 +786,7 @@ nav>div .getred1{
 	margin: 1px;
 }
 .banner>.go1{
-	width: 589px;
+	width: 500px;
 	height: 471px;
 	margin-left: 10px;
 	position: relative;
@@ -1864,19 +1789,6 @@ nav>div .getred1{
 .li-four>div:nth-of-type(2) img:nth-of-type(3){
 	margin-right: 0px;
 }
-
-
-
-
-
-
-
-
-
-
-
-
-
 
 footer{
 	height: 540px;

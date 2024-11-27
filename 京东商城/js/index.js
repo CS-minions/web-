@@ -73,7 +73,7 @@ function go1() {
 		// 计数器递增
 		num1++;
 		// 当计数器达到8时重置为0，实现循环轮播
-		if (num1 == 8) num1 = 0;
+		if (num1 == 4) num1 = 0;
 		// 淡出上一张图片，淡入当前轮播图片
 		$('.go1>img').eq(num1 - 1).fadeOut();
 		$('.go1>img').eq(num1).fadeIn();
@@ -317,35 +317,6 @@ $('.middle>span').hover(function () {
 });
 
 
-
-
-//secondkill 第二个轮播
-/*
-这段代码实现了一个自动轮播的功能：
-每隔1秒自动切换一次图片。
-使用变量 killnum 记录当前显示的图片索引，当 killnum 达到临界值3时重置为0。
-根据 killnum 的值来设置图片的显示位置和指示器的样式。
-*/
-// 定义变量killnum并初始化为0
-var killnum = 0;
-
-// 每隔1秒执行一次的定时器
-var time2 = setInterval(function () {
-	killnum++; // killnum加1
-	if (killnum == 3) { // 如果killnum达到3
-		killnum = 0; // 将killnum设为0
-		$('.behind>ul').css('left', -178 * killnum + 'px'); // 设置ul的left属性
-		killnum = 1; // 将killnum设为1
-	}
-	if (killnum == 0 || killnum == 2) { // 如果killnum为0或2
-		$('.behind>ol').children().eq(0).css('background', 'red'); // 设置第一个li的背景色
-		$('.behind>ol').children().eq(1).css('background', '#a1a1a1'); // 设置第二个li的背景色
-	} else { // 如果killnum为1
-		$('.behind>ol').children().eq(0).css('background', '#a1a1a1'); // 设置第一个li的背景色
-		$('.behind>ol').children().eq(1).css('background', 'red'); // 设置第二个li的背景色
-	}
-	$('.behind>ul').animate({ 'left': -178 * killnum + 'px' }, 500); // 动画效果移动ul的left属性
-}, 1000);
 
 
 
