@@ -22,8 +22,9 @@ $(document).ready(function() {
             return;
         }
 
-        // 提交成功提示
+        // 提交成功提示并跳转到主页面
         alert('感谢您的反馈！我们会尽快处理您的问题。');
+        window.location.href = '../index.html';
 
         // 重置表单
         $('#feedbackForm')[0].reset();
@@ -40,4 +41,9 @@ $(document).ready(function() {
         $(inputSelector).addClass('border-red-500'); // 给输入框加红色边框
         $(inputSelector).after('<div class="error-message text-red-500 text-sm">' + message + '</div>'); // 在输入框下方显示错误信息
     }
+
+    // 关闭按钮点击事件
+    $('#closeButton').on('click', function() {
+        window.location.href = '../index.html'; // 跳转到主页面
+    });
 });
