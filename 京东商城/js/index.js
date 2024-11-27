@@ -320,25 +320,7 @@ $('.middle>span').hover(function () {
 
 
 
-//发现好货
-var middleSlideIndex = 0; // 初始化变量 middleSlideIndex 为 0，用于跟踪水平位置调整。
-var scrollTimer; // 声明变量 scrollTimer 用于存储定时器的引用。
 
-function startScroll() {
-	scrollTimer = setInterval(function () { // 设置间隔函数，并将其赋给 scrollTimer。
-		middleSlideIndex++; // middleSlideIndex 每次增加 1。
-		if (middleSlideIndex >= 1200) { middleSlideIndex = 0; } // 如果 middleSlideIndex 达到或超过 1200，将其重置为 0。
-		$('.lun>ul').css('left', -1 * middleSlideIndex + 'px'); // 更新 .lun>ul 元素的 CSS 左侧属性，实现滚动效果。
-	}, 10); // 每 10 毫秒执行一次。
-}
-
-startScroll(); // 立即调用 startScroll 函数以启动滚动。
-
-$('.good2').hover(function () { // 定义 .good2 元素的悬停行为。
-	clearInterval(scrollTimer); // 当鼠标悬停在 .good2 上时，清除定时器（停止滚动）。
-}, function () {
-	startScroll(); // 当鼠标离开 .good2 时，重新调用 startScroll 函数（恢复滚动）。
-});
 
 //固定栏
 $('.fix1').hide(); // 隐藏 .fix1 元素。
@@ -376,33 +358,5 @@ $('.fix3 li').eq(4).click(function () { // 给 .fix3 下的第五个 li 元素�
 	window.location.href = 'html/life.html';
 });
 
-//侧边栏
-
-var secondkill = $('.secondkill').offset().top; // 获取类名为 .secondkill 的元素距离页面顶部的偏移量。
-var newyear = $('.newyear').offset().top; // 获取类名为 .newyear 的元素距离页面顶部的偏移量。
-var good = $('.good').offset().top; // 获取类名为 .good 的元素距离页面顶部的偏移量。
-
-$('.fix3 li').click(function () { // 给 .fix3 下的列表项绑定点击事件。
-	var index = $(this).index(); // 获取被点击列表项的索引。
-	if (index == 0) { // 如果点击的是第一个列表项。
-		$('html,body').animate({ 'scrollTop': secondkill - 100 }); // 平滑滚动到 .secondkill 元素的位置减去 100 像素。
-	} else if (index == 1) { // 如果点击的是第二个列表项。
-		$('html,body').animate({ 'scrollTop': newyear - 100 }); // 平滑滚动到 .newyear 元素的位置减去 100 像素。
-	} else if (index == 2) { // 如果点击的是第三个列表项。
-		$('html,body').animate({ 'scrollTop': good - 100 }); // 平滑滚动到 .good 元素的位置减去 100 像素。
-	}
-});
 
 
-setInterval(function () { // 每隔一秒执行以下函数。
-	var Time = new Date(); // 获取当前时间。
-	var key = new Date('2024,12,31'); // 设置目标日期为 2024 年 12 月 31 日。
-	var now = Time.getTime(); // 获取当前时间的毫秒数。
-	var center = key.getTime() - now; // 计算离目标日期的剩余毫秒数。
-	var hours = parseInt(center / 3600000); // 计算剩余小时数。
-	var minutes = parseInt((center % 3600000) / 60000); // 计算剩余分钟数。
-	var seconds = parseInt(((center % 3600000) % 60000) / 1000); // 计算剩余秒数。
-	$('.hours').html(hours); // 将剩余小时数显示在对应元素中。
-	$('.minutes').html(minutes); // 将剩余分钟数显示在对应元素中。
-	$('.seconds').html(seconds); // 将剩余秒数显示在对应元素中。
-}, 1000); // 每隔一秒执行一次。
