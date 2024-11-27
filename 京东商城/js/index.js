@@ -343,7 +343,7 @@ $('.fix3 li').eq(1).hover(function () { // 当鼠标悬停在 .fix3 下的第二
 
 $('.fix3 li').eq(7).hide(); // 隐藏 .fix3 下的第八个 li 元素。
 $(window).scroll(function (event) { // 绑定滚动事件处理函数。
-	if ($(window).scrollTop() >= 1200) { // 如果滚动距离大于等于 1200 像素。
+	if ($(window).scrollTop() >= 500) { // 如果滚动距离大于等于 1200 像素。
 		$('.fix3 li').eq(7).slideDown(); // 下拉显示 .fix3 下的第八个 li 元素。
 	} else {
 		$('.fix3 li').eq(7).slideUp(); // 向上收起隐藏 .fix3 下的第八个 li 元素。
