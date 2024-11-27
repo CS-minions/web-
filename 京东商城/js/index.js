@@ -402,6 +402,10 @@ $('.fix3 li').eq(7).click(function () { // 给 .fix3 下的第八个 li 元素�
 	$('html,body').animate({ 'scrollTop': 0 }); // 平滑滚动到页面顶部。
 });
 
+$('.fix3 li').eq(4).click(function () { // 给 .fix3 下的第五个 li 元素绑定点击事件。
+	window.location.href = 'html/life.html';
+});
+
 //侧边栏
 
 var secondkill = $('.secondkill').offset().top; // 获取类名为 .secondkill 的元素距离页面顶部的偏移量。

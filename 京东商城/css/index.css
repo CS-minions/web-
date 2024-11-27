@@ -113,6 +113,7 @@ html{
 	margin-left: 2px;
 	position: relative;
 }
+
 .fix3 li:hover{
 	background: #c81623;
 	color: #fff;
@@ -150,7 +151,7 @@ html{
 	position: absolute;
 }
 .fix3 .c::after{
-	content: "";
+	content: ""; 	
 	width: 18px;
 	height: 18px;
 	top:-13px;
