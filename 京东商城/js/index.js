@@ -56,8 +56,7 @@ $('.db .up dd').click(function () {
 /*
 	实现了一个简单的图片轮播功能，并且在鼠标悬停时可以切换轮播图片和对应的小圆点效果，增强了用户体验。
 */
-//轮播小圆点
-// $('.big>li').hide();
+
 // 隐藏所有轮播图片
 $('.go1>img').hide();
 // 显示第一张轮播图片
@@ -239,7 +238,7 @@ $('.go2-right').click(function () {
 	每个背景图像URL都是基于数组中的文件名构建的，并应用额外的CSS样式来调整背景大小。
 */
 // 隐藏所有class为two的元素
-$('.two').hide();
+//$('.two').hide();
 
 // 图片数组
 var arr = ['1.png', '3.png', '5.png', '7.png', '9.png', '11.png', '13.png', '15.png', '17.png', '19.png', '21.png', '23.png'];
@@ -390,17 +389,21 @@ $('.fix3 li').eq(1).hover(function () { // 当鼠标悬停在 .fix3 下的第二
 	$(this).css('background-size', '56px 56px'); // 设置背景大小为 56px x 56px。
 });
 
-$('.fix3 li').eq(7).hide(); // 隐藏 .fix3 下的第八个 li 元素。
+$('.fix3 li').eq(4).hide(); // 隐藏 .fix3 下的第八个 li 元素。
 $(window).scroll(function (event) { // 绑定滚动事件处理函数。
 	if ($(window).scrollTop() >= 1200) { // 如果滚动距离大于等于 1200 像素。
-		$('.fix3 li').eq(7).slideDown(); // 下拉显示 .fix3 下的第八个 li 元素。
+		$('.fix3 li').eq(4).slideDown(); // 下拉显示 .fix3 下的第八个 li 元素。
 	} else {
-		$('.fix3 li').eq(7).slideUp(); // 向上收起隐藏 .fix3 下的第八个 li 元素。
+		$('.fix3 li').eq(4).slideUp(); // 向上收起隐藏 .fix3 下的第八个 li 元素。
 	}
 });
 
 $('.fix3 li').eq(7).click(function () { // 给 .fix3 下的第八个 li 元素绑定点击事件。
 	$('html,body').animate({ 'scrollTop': 0 }); // 平滑滚动到页面顶部。
+});
+
+$('.fix3 li').eq(4).click(function () { // 给 .fix3 下的第五个 li 元素绑定点击事件。
+	window.location.href = 'html/life.html';
 });
 
 //侧边栏
@@ -423,7 +426,7 @@ $('.fix3 li').click(function () { // 给 .fix3 下的列表项绑定点击事件
 
 setInterval(function () { // 每隔一秒执行以下函数。
 	var Time = new Date(); // 获取当前时间。
-	var key = new Date('2024,6,3'); // 设置目标日期为 2024 年 6 月 3 日。
+	var key = new Date('2024,12,31'); // 设置目标日期为 2024 年 12 月 31 日。
 	var now = Time.getTime(); // 获取当前时间的毫秒数。
 	var center = key.getTime() - now; // 计算离目标日期的剩余毫秒数。
 	var hours = parseInt(center / 3600000); // 计算剩余小时数。

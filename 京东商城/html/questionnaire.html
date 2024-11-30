@@ -1,0 +1,42 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>京东首页用户体验调查</title>
+    <style> h1 { text-align: center; } </style>
+    <link rel = "stylesheet" type = "text/css" href = "../css/questionnaire.css" />
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/tailwindcss/3.0.23/tailwind.min.css">
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0-beta3/css/all.min.css">
+    <!-- 引入 jQuery -->
+    <script src="https://code.jquery.com/jquery-3.6.0.min.js"></script>
+    <script src="../js/questionnaire.js"></script>
+
+</head>
+<body>
+    <div class="form-card">
+        <button type="button" id="closeButton" class="fixed top-2 right-2 text-gray-500 hover:text-gray-700">
+            <i class="fas fa-times"></i> 关闭
+        </button>
+        <h1 class="text-3xl text-center mb-6">京东首页-用户体验调查</h1>
+        <p class="text-center mb-8 text-lg">尊敬的用户：您好！为了给您提供更好的产品和服务，我们非常想听取您使用京东首页的真实建议。对您的配合和支持表示衷心的感谢！</p>
+        <form id="feedbackForm">
+            <div class="mb-8">
+                <label for="feedback" class="required">1. 如果您在使用京东首页时，有什么好或不好的地方，请在此留言：</label>
+                <textarea id="feedback" rows="5" class="border border-gray-300 rounded-md" placeholder="我们会关注您的反馈，持续优化产品，为您提供更好的服务！"></textarea>
+            </div>
+            <div class="mb-8">
+                <label>2. 为了便于我们追查问题，可上传遇到问题的截图。</label>
+                <input type="file" class="border border-gray-300 rounded-md">
+            </div>
+            <div class="mb-8">
+                <label for="phone">3. 为了方便我们与您联系，可填写您的手机号。（选填，信息仅作为内部资料绝不外泄）</label>
+                <input type="tel" id="phone" class="border border-gray-300 rounded-md" placeholder="请输入您的手机号">
+            </div>
+            <div class="text-center">
+                <button type="submit" class="mx-auto block"><i class="fas fa-paper-plane"></i>提交反馈</button>
+            </div>
+        </form>
+    </div>
+</body>
+</html>
