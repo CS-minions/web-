@@ -1,0 +1,158 @@
+<!DOCTYPE html>
+<html lang="zh-CN">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>登录 - 旅游资讯平台</title>
+    <!-- Element UI -->
+    <link rel="stylesheet" href="https://unpkg.com/element-ui/lib/theme-chalk/index.css">
+    <!-- Animate.css -->
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/animate.css/4.1.1/animate.min.css">
+    <!-- Font Awesome -->
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/5.15.4/css/all.min.css">
+    <!-- Particles.js for background effect -->
+    <script src="https://cdn.jsdelivr.net/particles.js/2.0.0/particles.min.js"></script>
+    <link rel="stylesheet" href="../css/style.css">
+    <style>
+        #particles-js {
+            position: fixed;
+            width: 100%;
+            height: 100%;
+            background-color: #f0f2f5;
+            z-index: -1;
+        }
+        
+        .login-container {
+            position: relative;
+            z-index: 1;
+            backdrop-filter: blur(5px);
+            background: rgba(255, 255, 255, 0.9);
+            border-radius: 10px;
+            box-shadow: 0 8px 16px rgba(0,0,0,0.1);
+            padding: 2rem;
+            max-width: 400px;
+            margin: 4rem auto;
+        }
+
+        .login-header {
+            text-align: center;
+            margin-bottom: 2rem;
+        }
+
+        .login-header .logo-icon {
+            font-size: 3rem;
+            color: #409EFF;
+            margin-bottom: 1rem;
+        }
+
+        .social-login {
+            margin-top: 2rem;
+            text-align: center;
+        }
+
+        .divider {
+            margin: 1.5rem 0;
+            text-align: center;
+            position: relative;
+        }
+
+        .divider::before,
+        .divider::after {
+            content: '';
+            position: absolute;
+            top: 50%;
+            width: 45%;
+            height: 1px;
+            background-color: #dcdfe6;
+        }
+
+        .divider::before { left: 0; }
+        .divider::after { right: 0; }
+
+        .remember-forgot {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            margin: 1rem 0;
+        }
+    </style>
+</head>
+<body>
+    <div id="particles-js"></div>
+    <div id="login">
+        <header class="header animate__animated animate__fadeIn">
+            <nav class="nav">
+                <div class="logo">
+                    <i class="fas fa-globe-asia"></i> 旅游资讯
+                </div>
+                <div class="nav-links">
+                    <a href="../index.html">
+                        <i class="fas fa-home"></i> 返回首页
+                    </a>
+                </div>
+            </nav>
+        </header>
+
+        <main class="main-content">
+            <div class="login-container animate__animated animate__fadeInUp">
+                <div class="login-header">
+                    <i class="fas fa-user-circle logo-icon"></i>
+                    <h2>欢迎登录</h2>
+                </div>
+                
+                <el-form :model="loginForm" :rules="rules" ref="loginForm" label-width="0">
+                    <el-form-item prop="username">
+                        <el-input 
+                            v-model="loginForm.username"
+                            prefix-icon="el-icon-user"
+                            placeholder="请输入用户名">
+                        </el-input>
+                    </el-form-item>
+                    
+                    <el-form-item prop="password">
+                        <el-input 
+                            v-model="loginForm.password"
+                            prefix-icon="el-icon-lock"
+                            type="password"
+                            placeholder="请输入密码">
+                        </el-input>
+                    </el-form-item>
+
+                    <div class="remember-forgot">
+                        <el-checkbox v-model="loginForm.remember">记住我</el-checkbox>
+                        <el-link type="primary">忘记密码？</el-link>
+                    </div>
+
+                    <el-form-item>
+                        <el-button type="primary" 
+                                 @click="submitForm('loginForm')"
+                                 class="submit-btn" 
+                                 :loading="loading"
+                                 style="width: 100%">
+                            登 录
+                        </el-button>
+                    </el-form-item>
+                </el-form>
+
+                <div class="divider">其他登录方式</div>
+
+                <div class="social-login">
+                    <el-button type="success" icon="el-icon-chat-dot-round" circle></el-button>
+                    <el-button type="primary" icon="el-icon-message" circle></el-button>
+                    <el-button type="danger" icon="el-icon-phone" circle></el-button>
+                </div>
+
+                <div style="text-align: center; margin-top: 1rem;">
+                    <el-link @click="goToRegister" type="primary">
+                        还没有账号？立即注册
+                    </el-link>
+                </div>
+            </div>
+        </main>
+    </div>
+
+    <script src="https://cdn.jsdelivr.net/npm/vue@2.6.14"></script>
+    <script src="https://unpkg.com/element-ui/lib/index.js"></script>
+    <script src="../js/login.js"></script>
+</body>
+</html> 

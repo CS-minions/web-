@@ -1,0 +1,108 @@
+<!DOCTYPE html>
+<html lang="zh-CN">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>预订服务 - 旅游资讯平台</title>
+    <!-- Element UI -->
+    <link rel="stylesheet" href="https://unpkg.com/element-ui/lib/theme-chalk/index.css">
+    <!-- Animate.css -->
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/animate.css/4.1.1/animate.min.css">
+    <!-- Font Awesome -->
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/5.15.4/css/all.min.css">
+    <link rel="stylesheet" href="../css/style.css">
+</head>
+<body>
+    <div id="booking">
+        <header class="header animate__animated animate__fadeIn">
+            <nav class="nav">
+                <div class="logo">
+                    <i class="fas fa-globe-asia"></i> 旅游资讯
+                </div>
+                <div class="nav-links">
+                    <a href="../index.html">
+                        <i class="fas fa-home"></i> 返回首页
+                    </a>
+                </div>
+            </nav>
+        </header>
+
+        <main class="main-content">
+            <el-card class="booking-section animate__animated animate__fadeInUp">
+                <div slot="header">
+                    <h2><i class="fas fa-calendar-check"></i> 预订服务</h2>
+                </div>
+
+                <el-tabs v-model="bookingType" type="border-card">
+                    <el-tab-pane label="酒店预订" name="hotel">
+                        <i class="fas fa-hotel"></i>
+                    </el-tab-pane>
+                    <el-tab-pane label="门票预订" name="ticket">
+                        <i class="fas fa-ticket-alt"></i>
+                    </el-tab-pane>
+                    <el-tab-pane label="交通预订" name="transport">
+                        <i class="fas fa-bus"></i>
+                    </el-tab-pane>
+                </el-tabs>
+
+                <el-form :model="bookingForm" 
+                        ref="bookingForm" 
+                        label-width="100px" 
+                        class="booking-form">
+                    <!-- 酒店预订表单 -->
+                    <template v-if="bookingType === 'hotel'">
+                        <el-form-item label="酒店名称" prop="name">
+                            <el-input v-model="bookingForm.name" placeholder="请输入酒店名称"></el-input>
+                        </el-form-item>
+                        <el-form-item label="入住日期" prop="checkIn">
+                            <el-date-picker v-model="bookingForm.checkIn" type="date"></el-date-picker>
+                        </el-form-item>
+                        <el-form-item label="退房日期" prop="checkOut">
+                            <el-date-picker v-model="bookingForm.checkOut" type="date"></el-date-picker>
+                        </el-form-item>
+                        <el-form-item label="房间类型" prop="roomType">
+                            <el-select v-model="bookingForm.roomType">
+                                <el-option label="单人间" value="single"></el-option>
+                                <el-option label="双人间" value="double"></el-option>
+                                <el-option label="套房" value="suite"></el-option>
+                            </el-select>
+                        </el-form-item>
+                    </template>
+
+                    <!-- 门票预订表单 -->
+                    <template v-if="bookingType === 'ticket'">
+                        <!-- 类似的 Element UI 表单组件 -->
+                    </template>
+
+                    <!-- 交通预订表单 -->
+                    <template v-if="bookingType === 'transport'">
+                        <!-- 类似的 Element UI 表单组件 -->
+                    </template>
+
+                    <el-form-item label="支付方式">
+                        <el-radio-group v-model="bookingForm.paymentMethod">
+                            <el-radio label="wechat">
+                                <i class="fab fa-weixin"></i> 微信支付
+                            </el-radio>
+                            <el-radio label="alipay">
+                                <i class="fab fa-alipay"></i> 支付宝
+                            </el-radio>
+                        </el-radio-group>
+                    </el-form-item>
+
+                    <el-form-item>
+                        <el-button type="primary" @click="handleBooking">
+                            提交预订
+                        </el-button>
+                        <el-button @click="resetBookingForm">重置</el-button>
+                    </el-form-item>
+                </el-form>
+            </el-card>
+        </main>
+    </div>
+
+    <script src="https://cdn.jsdelivr.net/npm/vue@2.6.14"></script>
+    <script src="https://unpkg.com/element-ui/lib/index.js"></script>
+    <script src="../js/booking.js"></script>
+</body>
+</html> 

@@ -1,0 +1,86 @@
+<!DOCTYPE html>
+<html lang="zh-CN">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>旅游攻略 - 旅游资讯平台</title>
+    <link rel="stylesheet" href="https://unpkg.com/element-ui/lib/theme-chalk/index.css">
+    <link rel="stylesheet" href="../css/base.css">
+</head>
+<body>
+    <div id="guides">
+        <header class="header">
+            <nav class="nav">
+                <div class="nav-right">
+                    <el-menu mode="horizontal" class="main-menu">
+                        <el-menu-item index="home" @click="goToHome">返回首页</el-menu-item>
+                    </el-menu>
+                </div>
+            </nav>
+        </header>
+
+        <main class="main-content">
+            <div class="guides-container" style="margin-top: 80px;">
+                <el-card v-for="dest in destinations" :key="dest.id" style="margin-bottom: 20px;">
+                    <div slot="header">
+                        <h3>{{ dest.name }}</h3>
+                    </div>
+                    
+                    <div class="guide-list">
+                        <div v-for="guide in dest.guides" :key="guide.id" class="guide-item">
+                            <h4>{{ guide.title }}</h4>
+                            <p>{{ guide.content }}</p>
+                            <div class="guide-meta">
+                                <span>作者：{{ guide.author }}</span>
+                                <span>发布时间：{{ guide.publishTime }}</span>
+                            </div>
+                            <div class="guide-actions">
+                                <el-button type="text" @click="toggleLike(guide)">
+                                    <i :class="guide.isLiked ? 'el-icon-star-on' : 'el-icon-star-off'"></i>
+                                    {{ guide.likes }}
+                                </el-button>
+                                <el-button type="text" @click="showComments(guide)">
+                                    <i class="el-icon-chat-dot-round"></i>
+                                    评论 ({{ guide.comments.length }})
+                                </el-button>
+                            </div>
+                        </div>
+                    </div>
+                </el-card>
+            </div>
+        </main>
+
+        <!-- 评论对话框 -->
+        <el-dialog
+            title="评论"
+            :visible.sync="showCommentDialog"
+            width="50%">
+            <div class="comments-list">
+                <div v-for="comment in currentComments" :key="comment.id" class="comment-item">
+                    <el-avatar :size="32" icon="el-icon-user"></el-avatar>
+                    <div class="comment-content">
+                        <div class="comment-user">{{ comment.user }}</div>
+                        <div class="comment-text">{{ comment.content }}</div>
+                        <div class="comment-time">{{ comment.time }}</div>
+                    </div>
+                </div>
+            </div>
+            <div class="comment-form">
+                <el-input
+                    type="textarea"
+                    :rows="2"
+                    placeholder="写下你的评论..."
+                    v-model="newComment">
+                </el-input>
+                <el-button type="primary" @click="submitComment" style="margin-top: 10px;">
+                    发表评论
+                </el-button>
+            </div>
+        </el-dialog>
+    </div>
+
+    <script src="https://cdn.jsdelivr.net/npm/vue@2.6.14"></script>
+    <script src="https://unpkg.com/element-ui/lib/index.js"></script>
+    <script src="../js/guides.js"></script>
+</body>
+</html> 

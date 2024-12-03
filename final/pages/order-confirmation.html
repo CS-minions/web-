@@ -1,0 +1,67 @@
+<!DOCTYPE html>
+<html lang="zh-CN">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>订单确认 - 旅游资讯平台</title>
+    <!-- Element UI -->
+    <link rel="stylesheet" href="https://unpkg.com/element-ui/lib/theme-chalk/index.css">
+    <!-- Animate.css -->
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/animate.css/4.1.1/animate.min.css">
+    <!-- Font Awesome -->
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/5.15.4/css/all.min.css">
+    <!-- Lottie -->
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/lottie-web/5.7.14/lottie.min.js"></script>
+    <link rel="stylesheet" href="../css/style.css">
+</head>
+<body>
+    <div id="confirmation">
+        <header class="header animate__animated animate__fadeIn">
+            <nav class="nav">
+                <div class="logo">
+                    <i class="fas fa-globe-asia"></i> 旅游资讯
+                </div>
+                <div class="nav-links">
+                    <a href="../index.html">
+                        <i class="fas fa-home"></i> 返回首页
+                    </a>
+                </div>
+            </nav>
+        </header>
+
+        <main class="main-content">
+            <el-card class="confirmation-page animate__animated animate__fadeInUp">
+                <div class="success-animation" ref="successAnimation"></div>
+                
+                <div class="success-message">
+                    <h2><i class="fas fa-check-circle"></i> 支付成功！</h2>
+                    <el-tag type="success">订单号：{{ orderId }}</el-tag>
+                </div>
+
+                <el-steps :active="3" finish-status="success" simple style="margin: 20px 0">
+                    <el-step title="确认订单"></el-step>
+                    <el-step title="支付"></el-step>
+                    <el-step title="完成"></el-step>
+                </el-steps>
+
+                <div class="next-steps">
+                    <h3><i class="fas fa-flag"></i> 下一步</h3>
+                    <p>您可以在个人中心查看订单详情</p>
+                    <div class="action-buttons">
+                        <el-button type="primary" @click="goToHome" icon="el-icon-s-home">
+                            返回首页
+                        </el-button>
+                        <el-button type="success" @click="goToOrders" icon="el-icon-s-order">
+                            查看订单
+                        </el-button>
+                    </div>
+                </div>
+            </el-card>
+        </main>
+    </div>
+
+    <script src="https://cdn.jsdelivr.net/npm/vue@2.6.14"></script>
+    <script src="https://unpkg.com/element-ui/lib/index.js"></script>
+    <script src="../js/order-confirmation.js"></script>
+</body>
+</html> 

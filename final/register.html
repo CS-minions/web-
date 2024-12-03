@@ -1,0 +1,83 @@
+<!DOCTYPE html>
+<html lang="zh-CN">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>注册 - 旅游资讯平台</title>
+    <link rel="stylesheet" href="https://unpkg.com/element-ui/lib/theme-chalk/index.css">
+    <link rel="stylesheet" href="css/base.css">
+    <style>
+        .register-container {
+            min-height: 100vh;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            background: linear-gradient(rgba(0,0,0,0.5), rgba(0,0,0,0.5)), 
+                        url('https://images.unsplash.com/photo-1508804185872-d7badad00f7d?w=1600');
+            background-size: cover;
+        }
+        .register-box {
+            width: 400px;
+            padding: 2rem;
+            background: rgba(255, 255, 255, 0.95);
+            border-radius: 8px;
+            box-shadow: 0 8px 16px rgba(0,0,0,0.1);
+        }
+        #particles-js {
+            position: fixed;
+            width: 100%;
+            height: 100%;
+            top: 0;
+            left: 0;
+            z-index: -1;
+        }
+    </style>
+</head>
+<body>
+    <div id="particles-js"></div>
+    <div id="register" class="register-container">
+        <div class="register-box">
+            <h2 style="text-align: center; margin-bottom: 2rem;">注册</h2>
+            <el-form :model="registerForm" :rules="rules" ref="registerForm">
+                <el-form-item prop="username">
+                    <el-input v-model="registerForm.username" 
+                             prefix-icon="el-icon-user"
+                             placeholder="用户名"></el-input>
+                </el-form-item>
+                <el-form-item prop="password">
+                    <el-input v-model="registerForm.password" 
+                             type="password"
+                             prefix-icon="el-icon-lock"
+                             placeholder="密码"></el-input>
+                </el-form-item>
+                <el-form-item prop="confirmPassword">
+                    <el-input v-model="registerForm.confirmPassword" 
+                             type="password"
+                             prefix-icon="el-icon-lock"
+                             placeholder="确认密码"></el-input>
+                </el-form-item>
+                <el-form-item prop="email">
+                    <el-input v-model="registerForm.email" 
+                             prefix-icon="el-icon-message"
+                             placeholder="邮箱"></el-input>
+                </el-form-item>
+                <el-form-item>
+                    <el-button type="primary" 
+                              @click="submitForm('registerForm')"
+                              style="width: 100%">
+                        注册
+                    </el-button>
+                </el-form-item>
+                <div style="text-align: center;">
+                    <el-link type="primary" @click="goToLogin">已有账号？立即登录</el-link>
+                </div>
+            </el-form>
+        </div>
+    </div>
+
+    <script src="https://cdn.jsdelivr.net/npm/vue@2.6.14"></script>
+    <script src="https://unpkg.com/element-ui/lib/index.js"></script>
+    <script src="https://cdn.jsdelivr.net/particles.js/2.0.0/particles.min.js"></script>
+    <script src="js/register.js"></script>
+</body>
+</html> 

@@ -1,0 +1,22 @@
+.user-center-container {
+    padding: 2rem;
+    margin-top: 60px;
+}
+
+.user-info {
+    padding: 2rem;
+    background: #fff;
+    border-radius: 8px;
+    box-shadow: 0 2px 12px rgba(0,0,0,0.1);
+}
+
+.order-history {
+    margin-top: 2rem;
+}
+
+.order-card {
+    margin-bottom: 1rem;
+    padding: 1rem;
+    background: #f8f9fa;
+    border-radius: 4px;
+} 

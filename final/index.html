@@ -1,0 +1,233 @@
+<!DOCTYPE html>
+<html lang="zh-CN">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>探索美丽中国 - 旅游资讯平台</title>
+    <link rel="stylesheet" href="https://unpkg.com/element-ui/lib/theme-chalk/index.css">
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/5.15.4/css/all.min.css">
+    <link href="https://fonts.googleapis.com/css2?family=Noto+Serif+SC:wght@300;400;500;600&display=swap" rel="stylesheet">
+    <link rel="stylesheet" href="css/base.css">
+</head>
+<body>
+    <div id="app">
+        <!-- 导航栏 -->
+        <header class="header">
+            <nav class="nav">
+                <div class="nav-right">
+                    <el-menu mode="horizontal" 
+                            :default-active="currentSection" 
+                            @select="showSection"
+                            class="main-menu">
+                        <el-menu-item index="home">首页</el-menu-item>
+                        <el-menu-item index="destinations">目的地</el-menu-item>
+                        <el-menu-item index="activities">活动</el-menu-item>
+                        <el-menu-item index="guides">旅游攻略</el-menu-item>
+                        <el-menu-item index="booking">预订</el-menu-item>
+                    </el-menu>
+                </div>
+            </nav>
+        </header>
+
+        <!-- 主页面内容 -->
+        <div class="hero-section">
+            <div class="dynamic-bg">
+                <div class="bg-slide active"></div>
+            </div>
+            <div class="hero-content">
+                <h1>探索美丽中国</h1>
+                <div class="divider">
+                    <span class="line"></span>
+                    <i class="fas fa-compass"></i>
+                    <span class="line"></span>
+                </div>
+                <p class="subtitle">发现最美的风景，体验最真实的文化</p>
+            </div>
+            <div class="scroll-hint">
+                <span class="scroll-text">向下滚动探索更多</span>
+                <i class="fas fa-chevron-down"></i>
+            </div>
+        </div>
+
+        <!-- 数据统计区域 -->
+        <section class="stats-section">
+            <div class="stats-overlay"></div>
+            <div class="stats-content">
+                <el-row :gutter="20">
+                    <el-col :span="6" v-for="stat in statistics" :key="stat.id">
+                        <div class="stat-item">
+                            <i :class="stat.icon"></i>
+                            <div class="stat-number">{{ stat.number }}+</div>
+                            <div class="stat-label">{{ stat.label }}</div>
+                        </div>
+                    </el-col>
+                </el-row>
+            </div>
+        </section>
+
+        <!-- 目的地推荐 -->
+        <section class="destinations-section">
+            <div class="section-title">
+                <h2>热门目的地</h2>
+                <div class="title-divider">
+                    <span class="line"></span>
+                    <i class="fas fa-map-marker-alt"></i>
+                    <span class="line"></span>
+                </div>
+            </div>
+            <div class="destination-grid">
+                <el-row :gutter="20">
+                    <el-col :xs="24" :sm="12" :md="8" :lg="6" 
+                           v-for="dest in featuredDestinations" 
+                           :key="dest.id">
+                        <div class="destination-card">
+                            <div class="card-image">
+                                <img :src="dest.image" :alt="dest.name">
+                                <div class="card-overlay">
+                                    <h3>{{ dest.name }}</h3>
+                                    <p>{{ dest.description }}</p>
+                                    <div class="card-meta">
+                                        <el-rate v-model="dest.rating" disabled></el-rate>
+                                        <span class="visit-count">
+                                            <i class="el-icon-view"></i>
+                                            {{ dest.visitCount }}
+                                        </span>
+                                    </div>
+                                    <el-button type="primary" round>查看详情</el-button>
+                                </div>
+                            </div>
+                        </div>
+                    </el-col>
+                </el-row>
+            </div>
+        </section>
+
+        <!-- 季节推荐 -->
+        <section class="seasonal-section">
+            <div class="section-title">
+                <h2>当季推荐</h2>
+                <div class="title-divider">
+                    <span class="line"></span>
+                    <i class="fas fa-calendar"></i>
+                    <span class="line"></span>
+                </div>
+            </div>
+            <el-carousel :interval="4000" type="card" height="400px">
+                <el-carousel-item v-for="item in seasonalRecommends" :key="item.id">
+                    <div class="season-card">
+                        <img :src="item.image" :alt="item.title">
+                        <div class="season-content">
+                            <h3>{{ item.title }}</h3>
+                            <p>{{ item.description }}</p>
+                            <el-button type="primary" round>了解更多</el-button>
+                        </div>
+                    </div>
+                </el-carousel-item>
+            </el-carousel>
+        </section>
+
+        <!-- 特色体验 -->
+        <section class="features-section">
+            <div class="section-title">
+                <h2>特色体验</h2>
+                <div class="title-divider">
+                    <span class="line"></span>
+                    <i class="fas fa-star"></i>
+                    <span class="line"></span>
+                </div>
+            </div>
+            <div class="features-grid">
+                <el-row :gutter="30">
+                    <el-col :span="8" v-for="feature in features" :key="feature.id">
+                        <div class="feature-card">
+                            <div class="feature-icon">
+                                <i :class="feature.icon"></i>
+                            </div>
+                            <h3>{{ feature.title }}</h3>
+                            <p>{{ feature.description }}</p>
+                        </div>
+                    </el-col>
+                </el-row>
+            </div>
+        </section>
+
+        <!-- 订阅区域 -->
+        <section class="newsletter-section">
+            <div class="newsletter-content">
+                <h2>订阅我们的旅行资讯</h2>
+                <p>获取最新的旅行攻略、目的地推荐和独家优惠</p>
+                <div class="newsletter-form">
+                    <el-input 
+                        v-model="newsletterEmail" 
+                        placeholder="输入您的邮箱地址"
+                        class="newsletter-input">
+                        <el-button slot="append" @click="subscribeNewsletter">
+                            订阅 <i class="fas fa-paper-plane"></i>
+                        </el-button>
+                    </el-input>
+                </div>
+            </div>
+        </section>
+
+        <!-- 页脚 -->
+        <footer class="site-footer">
+            <div class="footer-content">
+                <div class="footer-grid">
+                    <el-row :gutter="30">
+                        <el-col :span="6">
+                            <div class="footer-section">
+                                <h3>关于我们</h3>
+                                <p>探索美丽中国，发现最美的风景，体验最真实的文化。</p>
+                                <div class="social-links">
+                                    <a href="#"><i class="fab fa-weixin"></i></a>
+                                    <a href="#"><i class="fab fa-weibo"></i></a>
+                                    <a href="#"><i class="fab fa-qq"></i></a>
+                                </div>
+                            </div>
+                        </el-col>
+                        <el-col :span="6">
+                            <div class="footer-section">
+                                <h3>快速链接</h3>
+                                <ul>
+                                    <li><a href="#">目的地</a></li>
+                                    <li><a href="#">旅游攻略</a></li>
+                                    <li><a href="#">特色体验</a></li>
+                                    <li><a href="#">帮助中心</a></li>
+                                </ul>
+                            </div>
+                        </el-col>
+                        <el-col :span="6">
+                            <div class="footer-section">
+                                <h3>热门目的地</h3>
+                                <ul>
+                                    <li><a href="#">北京</a></li>
+                                    <li><a href="#">上海</a></li>
+                                    <li><a href="#">西安</a></li>
+                                    <li><a href="#">成都</a></li>
+                                </ul>
+                            </div>
+                        </el-col>
+                        <el-col :span="6">
+                            <div class="footer-section">
+                                <h3>联系我们</h3>
+                                <ul class="contact-info">
+                                    <li><i class="fas fa-phone"></i> 400-123-4567</li>
+                                    <li><i class="fas fa-envelope"></i> info@example.com</li>
+                                    <li><i class="fas fa-map-marker-alt"></i> 中国·深圳</li>
+                                </ul>
+                            </div>
+                        </el-col>
+                    </el-row>
+                </div>
+                <div class="footer-bottom">
+                    <p>&copy; 2024 探索美丽中国. All rights reserved.</p>
+                </div>
+            </div>
+        </footer>
+    </div>
+
+    <script src="https://cdn.jsdelivr.net/npm/vue@2.6.14"></script>
+    <script src="https://unpkg.com/element-ui/lib/index.js"></script>
+    <script src="js/main.js"></script>
+</body>
+</html>
