@@ -63,12 +63,19 @@ new Vue({
 
         loadFavorites() {
             this.isFavoritesLoading = true;
-            // 从 localStorage 获取收藏数据
-            const savedFavorites = localStorage.getItem('userFavorites');
-            if (savedFavorites) {
-                this.favorites = JSON.parse(savedFavorites);
+            try {
+                const favorites = JSON.parse(localStorage.getItem('userFavorites') || '[]');
+                this.favorites = favorites.map(favorite => ({
+                    ...favorite,
+                    typeText: this.getFavoriteTypeText(favorite.type),
+                    dateText: this.formatDateTime(favorite.date)
+                }));
+            } catch (error) {
+                console.error('加载收藏失败:', error);
+                this.$message.error('加载收藏失败');
+            } finally {
+                this.isFavoritesLoading = false;
             }
-            this.isFavoritesLoading = false;
         },
 
         handleMenuSelect(key) {
@@ -217,15 +224,19 @@ new Vue({
             window.location.href = favorite.url;
         },
 
-        // 移除单个收藏
+        // 移除收藏
         removeFavorite(favorite) {
             this.$confirm('确定要取消收藏吗？', '提示', {
                 confirmButtonText: '确定',
                 cancelButtonText: '取消',
                 type: 'warning'
             }).then(() => {
-                this.favorites = this.favorites.filter(item => item.id !== favorite.id);
-                localStorage.setItem('userFavorites', JSON.stringify(this.favorites));
+                let favorites = JSON.parse(localStorage.getItem('userFavorites') || '[]');
+                favorites = favorites.filter(f => f.id !== favorite.id);
+                localStorage.setItem('userFavorites', JSON.stringify(favorites));
+                
+                // 更新显示
+                this.loadFavorites();
                 this.$message.success('已取消收藏');
             }).catch(() => {});
         },
@@ -256,6 +267,17 @@ new Vue({
                 this.history = JSON.parse(savedHistory);
             }
             this.isHistoryLoading = false;
+        },
+
+        // 获取收藏类型文本
+        getFavoriteTypeText(type) {
+            const types = {
+                guide: '旅游攻略',
+                hotel: '酒店',
+                scenic: '景点',
+                article: '文章'
+            };
+            return types[type] || type;
         }
     }
 }); 

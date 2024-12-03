@@ -174,7 +174,10 @@
                                         <div class="favorite-info">
                                             <h3>{{scope.row.title}}</h3>
                                             <p>{{scope.row.description}}</p>
-                                            <span class="add-time">收藏于 {{formatDateTime(scope.row.date)}}</span>
+                                            <div class="favorite-meta">
+                                                <span class="favorite-type">{{scope.row.typeText}}</span>
+                                                <span class="favorite-date">收藏于 {{scope.row.dateText}}</span>
+                                            </div>
                                         </div>
                                     </div>
                                 </template>

@@ -311,7 +311,8 @@ new Vue({
             scrollPosition: 0,
             isLikeAnimating: {},
             isFavoriteAnimating: {},
-            favoritesCounts: {}, // 存储收藏数量
+            likesCounts: {},  // 存储点赞数量
+            favoritesCounts: {},  // 存储收藏数量
             expandedGuide: null, // 当前展开的攻略ID
         };
     },
@@ -368,64 +369,76 @@ new Vue({
             this.guideDialogVisible = false;
         },
         
-        // 优化点赞方法
-        toggleLike(guideId) {
+        // 修改点赞方法
+        toggleLike(guide) {
             if (!this.checkLogin()) return;
-            
-            const guide = this.guides.find(g => g.id === guideId);
-            if (!guide) return;
-            
+
+            // 获取当前点赞数
+            const currentLikes = this.likesCounts[guide.id] || 0;
+
             // 设置动画状态
-            this.$set(this.isLikeAnimating, guideId, true);
+            this.$set(this.isLikeAnimating, guide.id, true);
             
-            if (this.userInteractions.likes.has(guideId)) {
-                this.userInteractions.likes.delete(guideId);
-                guide.likes = Math.max(0, (guide.likes || 1) - 1);
+            if (this.userInteractions.likes.has(guide.id)) {
+                // 取消点赞
+                this.userInteractions.likes.delete(guide.id);
+                // 立即更新点赞数
+                this.$set(this.likesCounts, guide.id, Math.max(0, currentLikes - 1));
+                guide.likes = Math.max(0, currentLikes - 1);  // 同时更新 guide 对象
+                this.$message.info('已取消点赞');
             } else {
-                this.userInteractions.likes.add(guideId);
-                guide.likes = (guide.likes || 0) + 1;
+                // 添加点赞
+                this.userInteractions.likes.add(guide.id);
+                // 立即更新点赞数
+                this.$set(this.likesCounts, guide.id, currentLikes + 1);
+                guide.likes = currentLikes + 1;  // 同时更新 guide 对象
+                this.$message.success('点赞成功');
             }
+            
+            // 保存状态
+            this.saveUserInteractions();
+            this.saveGuides();  // 保存更新后的攻略数据
             
             // 重置动画状态
             setTimeout(() => {
-                this.$set(this.isLikeAnimating, guideId, false);
+                this.$set(this.isLikeAnimating, guide.id, false);
             }, 400);
-            
-            this.saveUserInteractions();
-            this.saveGuides();
         },
         
-        // 优化收藏方法
-        toggleFavorite(guideId) {
+        // 修改收藏方法，模仿点赞的实现
+        toggleFavorite(guide) {
             if (!this.checkLogin()) return;
-            
+
+            // 获取当前收藏数
+            const currentFavorites = guide.favorites || 0;
+
             // 设置动画状态
-            this.$set(this.isFavoriteAnimating, guideId, true);
+            this.$set(this.isFavoriteAnimating, guide.id, true);
             
-            if (this.userInteractions.favorites.has(guideId)) {
-                this.userInteractions.favorites.delete(guideId);
-                this.$set(this.favoritesCounts, guideId, (this.favoritesCounts[guideId] || 1) - 1);
-                this.$message({
-                    message: '已取消收藏',
-                    type: 'info',
-                    duration: 1500
-                });
+            if (this.userInteractions.favorites.has(guide.id)) {
+                // 取消收藏
+                this.userInteractions.favorites.delete(guide.id);
+                // 立即更新收藏数
+                guide.favorites = Math.max(0, currentFavorites - 1);
+                this.$set(this.favoritesCounts, guide.id, guide.favorites);
+                this.$message.info('已取消收藏');
             } else {
-                this.userInteractions.favorites.add(guideId);
-                this.$set(this.favoritesCounts, guideId, (this.favoritesCounts[guideId] || 0) + 1);
-                this.$message({
-                    message: '收藏成功',
-                    type: 'success',
-                    duration: 1500
-                });
+                // 添加收藏
+                this.userInteractions.favorites.add(guide.id);
+                // 立即更新收藏数
+                guide.favorites = currentFavorites + 1;
+                this.$set(this.favoritesCounts, guide.id, guide.favorites);
+                this.$message.success('收藏成功');
             }
+            
+            // 保存状态
+            this.saveUserInteractions();
+            this.saveGuides();  // 保存更新后的攻略数据
             
             // 重置动画状态
             setTimeout(() => {
-                this.$set(this.isFavoriteAnimating, guideId, false);
+                this.$set(this.isFavoriteAnimating, guide.id, false);
             }, 400);
-            
-            this.saveUserInteractions();
         },
         
         // 评论功能
@@ -544,6 +557,7 @@ new Vue({
         },
         
         saveGuides() {
+            // 确保保存完整的 guide 对象，包括 likes 和 favorites
             localStorage.setItem('guides', JSON.stringify(this.guides));
         },
         
@@ -554,6 +568,14 @@ new Vue({
                 favorites: new Set(saved.favorites || []),
                 comments: saved.comments || {}
             };
+
+            // 初始化点赞和收藏计数
+            this.guides.forEach(guide => {
+                // 初始化点赞数
+                this.$set(this.likesCounts, guide.id, guide.likes || 0);
+                // 初始化收藏数
+                this.$set(this.favoritesCounts, guide.id, guide.favorites || 0);
+            });
         },
         
         loadGuides() {
@@ -765,7 +787,7 @@ new Vue({
             return DEFAULT_IMAGES[category] || DEFAULT_IMAGES.culture;
         },
 
-        // 添加全局错误处理
+        // 添加全局错误处
         handleError(error, context) {
             console.error(`Error in ${context}:`, error);
             this.$message({
@@ -776,14 +798,25 @@ new Vue({
             });
         },
 
+        // 获取点赞数量
+        getLikeCount(guideId) {
+            return this.likesCounts[guideId] || 0;
+        },
+
         // 获取收藏数量
         getFavoriteCount(guideId) {
             return this.favoritesCounts[guideId] || 0;
         },
 
-        // 获取评论数量
-        getCommentCount(guideId) {
-            return (this.userInteractions.comments[guideId] || []).length;
+        // 格式化数字显示
+        formatCount(count) {
+            if (count >= 1000000) {
+                return `${(count / 1000000).toFixed(1)}M`;
+            }
+            if (count >= 1000) {
+                return `${(count / 1000).toFixed(1)}k`;
+            }
+            return count.toString();
         },
 
         // 添加切换内容显示的方法
@@ -822,6 +855,28 @@ new Vue({
 
         handleViewDetail(item) {
             // ...
+        },
+
+       
+        // 修改检查收藏状态的方法
+        isFavorited(guideId) {
+            return this.userInteractions.favorites.has(guideId);
+        },
+
+        // 获取评论数量
+        getCommentCount(guideId) {
+            return (this.userInteractions.comments[guideId] || []).length;
+        },
+
+        // 格式化评论数量显示
+        formatCommentCount(count) {
+            if (count >= 1000000) {
+                return `${(count / 1000000).toFixed(1)}M`;
+            }
+            if (count >= 1000) {
+                return `${(count / 1000).toFixed(1)}k`;
+            }
+            return count.toString();
         }
     },
     
