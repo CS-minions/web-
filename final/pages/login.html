@@ -63,7 +63,7 @@
 
                     <el-form-item>
                         <el-button type="primary" 
-                                 @click="submitForm('loginForm')"
+                                 @click="handleLogin"
                                  class="submit-btn" 
                                  :loading="loading"
                                  style="width: 100%">
@@ -81,7 +81,7 @@
                 </div>
 
                 <div style="text-align: center; margin-top: 1rem;">
-                    <el-link @click="goToRegister" type="primary">
+                    <el-link @click="handleRegister" type="primary">
                         还没有账号？立即注册
                     </el-link>
                 </div>

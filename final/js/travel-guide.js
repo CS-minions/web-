@@ -814,6 +814,14 @@ new Vue({
             // 增加浏览量
             guide.views++;
             this.saveGuides();
+        },
+
+        handleGuideSelect(guide) {
+            // ...
+        },
+
+        handleViewDetail(item) {
+            // ...
         }
     },
     

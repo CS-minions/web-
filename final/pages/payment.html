@@ -14,94 +14,64 @@
         <header class="header">
             <nav class="nav">
                 <div class="logo">
-                    <i class="fas fa-globe-asia"></i> 旅游资讯
-                </div>
-                <div class="nav-links">
-                    <a href="../index.html">
-                        <i class="fas fa-home"></i> 返回首页
-                    </a>
+                    <i class="fas fa-globe-asia"></i>
+                    <span>旅游资讯</span>
                 </div>
             </nav>
         </header>
 
-        <main class="main-content" v-if="order">
-            <div class="payment-container">
+        <main class="main-content">
+            <el-card class="payment-card">
                 <div class="payment-header">
                     <h2>订单支付</h2>
-                    <div class="countdown" v-if="qrCodeVisible">
-                        支付倒计时：{{countdownFormat}}
+                    <div class="order-info">
+                        <p class="order-title">{{order.title}}</p>
+                        <p class="order-amount">￥{{order.amount}}</p>
+                    </div>
+                    <div class="payment-timer" v-if="remainingTime > 0">
+                        <i class="el-icon-time"></i>
+                        <span>支付剩余时间：{{formatTime(remainingTime)}}</span>
+                    </div>
+                    <div class="payment-status" v-if="order">
+                        <el-steps :active="paymentStep" finish-status="success">
+                            <el-step title="创建订单"></el-step>
+                            <el-step title="等待支付"></el-step>
+                            <el-step title="支付完成"></el-step>
+                        </el-steps>
                     </div>
                 </div>
 
-                <div class="order-info">
-                    <h3>订单信息</h3>
-                    <el-descriptions :column="1" border>
-                        <el-descriptions-item label="订单编号">{{order.orderId}}</el-descriptions-item>
-                        <el-descriptions-item label="预订类型">{{order.type}}</el-descriptions-item>
-                        <el-descriptions-item label="预订内容">
-                            <template v-if="order.type === 'hotel'">
-                                {{order.hotelName}} - {{order.roomType}}
-                            </template>
-                            <template v-else-if="order.type === 'ticket'">
-                                {{order.scenicSpot}} - {{order.ticketType}}
-                            </template>
-                            <template v-else>
-                                {{order.transportType}} - {{order.seatClass}}
-                            </template>
-                        </el-descriptions-item>
-                        <el-descriptions-item label="支付金额">
-                            <span class="price">￥{{order.totalAmount}}</span>
-                        </el-descriptions-item>
-                    </el-descriptions>
+                <div class="payment-body">
+                    <div class="qr-section">
+                        <img :src="order.payment.qrcode" class="qr-code" alt="支付二维码">
+                        <p class="qr-tip">请使用{{getPaymentMethodName}}扫码支付</p>
+                    </div>
+
+                    <div class="payment-method">
+                        <el-radio-group v-model="paymentMethod" @change="handlePaymentChange">
+                            <el-radio label="wechat">
+                                <i class="fab fa-weixin"></i> 微信支付
+                            </el-radio>
+                            <el-radio label="alipay">
+                                <i class="fab fa-alipay"></i> 支付宝
+                            </el-radio>
+                        </el-radio-group>
+                    </div>
                 </div>
 
-                <div class="payment-method">
-                    <h3>选择支付方式</h3>
-                    <el-radio-group v-model="paymentMethod">
-                        <el-radio label="wechat">
-                            <i class="fab fa-weixin"></i> 微信支付
-                        </el-radio>
-                        <el-radio label="alipay">
-                            <i class="fab fa-alipay"></i> 支付宝
-                        </el-radio>
-                    </el-radio-group>
-                </div>
-
-                <div class="payment-action">
+                <div class="payment-footer">
+                    <el-button @click="cancelPayment" :disabled="loading">取消支付</el-button>
                     <el-button type="primary" 
-                             @click="handlePayment" 
-                             :loading="loading"
-                             size="large"
-                             style="width: 200px">
-                        立即支付
+                               @click="checkPaymentStatus" 
+                               :loading="loading"
+                               :disabled="remainingTime <= 0">
+                        {{ loading ? '正在确认支付' : '已完成支付' }}
                     </el-button>
                 </div>
-
-                <el-dialog
-                    title="扫码支付"
-                    :visible.sync="qrCodeVisible"
-                    width="300px"
-                    center
-                    :close-on-click-modal="false"
-                    :close-on-press-escape="false"
-                    :show-close="false">
-                    <div class="qr-code-container">
-                        <div id="paymentQrCode"></div>
-                        <p>请使用{{paymentMethod === 'wechat' ? '微信' : '支付宝'}}扫码支付</p>
-                        <div class="qr-code-tips">
-                            <p class="amount">￥{{order.totalAmount}}</p>
-                            <p class="countdown">支付剩余时间：{{countdownFormat}}</p>
-                        </div>
-                        <el-button type="success" @click="simulatePaymentSuccess" class="dev-button">
-                            模拟支付成功
-                        </el-button>
-                    </div>
-                </el-dialog>
-            </div>
+            </el-card>
         </main>
     </div>
 
-    <script src="https://cdn.jsdelivr.net/npm/qrcodejs@1.0.0/qrcode.min.js"></script>
     <script src="https://cdn.jsdelivr.net/npm/vue@2.6.14"></script>
     <script src="https://unpkg.com/element-ui/lib/index.js"></script>
     <script src="../js/payment.js"></script>

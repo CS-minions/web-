@@ -159,7 +159,7 @@ new Vue({
     },
     methods: {
         // 搜索功能
-        onSearch(value) {
+        handleSearch(value) {
             if (!value.trim()) {
                 this.$message.warning('请输入搜索内容');
                 return;
@@ -273,6 +273,10 @@ new Vue({
         // 修改登录按钮点击处理
         handleLogin() {
             window.location.href = 'pages/login.html';
+        },
+
+        handleCategorySelect(category) {
+            // ...
         }
     },
     mounted() {
