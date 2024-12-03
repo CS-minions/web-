@@ -4,35 +4,79 @@
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>探索美丽中国 - 旅游资讯平台</title>
+    
+    <!-- Element UI -->
     <link rel="stylesheet" href="https://unpkg.com/element-ui/lib/theme-chalk/index.css">
+    
+    <!-- Font Awesome -->
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/5.15.4/css/all.min.css">
-    <link href="https://fonts.googleapis.com/css2?family=Noto+Serif+SC:wght@300;400;500;600&display=swap" rel="stylesheet">
+    
+    <!-- 自定义样式 -->
     <link rel="stylesheet" href="css/base.css">
+    <link rel="stylesheet" href="css/style.css">
 </head>
 <body>
     <div id="app">
         <!-- 导航栏 -->
         <header class="header">
             <nav class="nav">
-                <div class="logo">
-                    <i class="fas fa-globe-asia"></i> 旅游资讯
-                </div>
-                <div class="nav-links">
-                    <a href="index.html" class="active">
-                        <i class="fas fa-home"></i> 首页
-                    </a>
-                    <a href="pages/travel-guide.html">
-                        <i class="fas fa-map-marked-alt"></i> 旅游攻略
-                    </a>
-                    <a href="pages/login.html" v-if="!isLoggedIn">
-                        <i class="fas fa-sign-in-alt"></i> 登录
-                    </a>
-                    <a href="pages/register.html" v-if="!isLoggedIn">
-                        <i class="fas fa-user-plus"></i> 注册
-                    </a>
-                    <a href="#" @click="logout" v-if="isLoggedIn">
-                        <i class="fas fa-sign-out-alt"></i> 退出
-                    </a>
+              
+                <el-menu mode="horizontal" :default-active="currentPath" @select="handleMenuClick">
+                    <el-menu-item v-for="item in menuItems" 
+                                  :key="item.key" 
+                                  :index="item.key">
+                        <i :class="item.icon"></i> {{item.text}}
+                    </el-menu-item>
+                </el-menu>
+                <div class="nav-right">
+                    <el-input
+                        placeholder="搜索目的地/攻略/酒店"
+                        prefix-icon="el-icon-search"
+                        v-model="searchText"
+                        @keyup.enter.native="onSearch">
+                    </el-input>
+                    <template v-if="!isLoggedIn">
+                        <el-button type="text" @click="handleLogin">
+                            <i class="fas fa-user"></i> 登录
+                        </el-button>
+                        <el-button type="primary" round @click="handleLogin">注册</el-button>
+                    </template>
+                    <el-dropdown v-else trigger="click">
+                        <div class="user-profile">
+                            <el-avatar 
+                                :size="36"
+                                :src="userAvatar"
+                                :alt="username"
+                                class="user-avatar"
+                                icon="el-icon-user-solid">
+                                {{ username.charAt(0).toUpperCase() }}
+                            </el-avatar>
+                            <span class="username">{{ username }}</span>
+                            <i class="el-icon-caret-bottom"></i>
+                        </div>
+                        <el-dropdown-menu slot="dropdown">
+                            <el-dropdown-item @click="handleMenuClick('profile')">
+                                <i class="fas fa-user-circle"></i>
+                                个人中心
+                            </el-dropdown-item>
+                            <el-dropdown-item>
+                                <i class="fas fa-shopping-bag"></i>
+                                我的订单
+                            </el-dropdown-item>
+                            <el-dropdown-item>
+                                <i class="fas fa-heart"></i>
+                                我的收藏
+                            </el-dropdown-item>
+                            <el-dropdown-item>
+                                <i class="fas fa-cog"></i>
+                                设置
+                            </el-dropdown-item>
+                            <el-dropdown-item divided class="danger" @click="logout">
+                                <i class="fas fa-sign-out-alt"></i>
+                                退出登录
+                            </el-dropdown-item>
+                        </el-dropdown-menu>
+                    </el-dropdown>
                 </div>
             </nav>
         </header>
@@ -234,7 +278,8 @@
         </footer>
     </div>
 
-    <script src="https://cdn.jsdelivr.net/npm/vue@2.6.14"></script>
+    <script src="https://cdn.jsdelivr.net/npm/dayjs/dayjs.min.js"></script>
+    <script src="https://cdn.jsdelivr.net/npm/vue@2.6.14/dist/vue.min.js"></script>
     <script src="https://unpkg.com/element-ui/lib/index.js"></script>
     <script src="js/main.js"></script>
 </body>

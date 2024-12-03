@@ -69,31 +69,62 @@ new Vue({
                             localStorage.removeItem('rememberedUser');
                         }
 
+                        // 统一使用 userInfo 存储用户信息
+                        const userData = {
+                            username: this.loginForm.username,
+                            email: 'example@email.com',
+                            registerTime: '2024-01-01',
+                            avatar: '../assets/default-avatar.png'
+                        };
+
                         // 存储登录状态
                         localStorage.setItem('isLoggedIn', 'true');
-                        localStorage.setItem('currentUser', JSON.stringify({
-                            username: this.loginForm.username
-                        }));
+                        localStorage.setItem('userInfo', JSON.stringify(userData));
 
-                        this.$message({
-                            message: '登录成功！',
-                            type: 'success'
-                        });
-
+                        this.$message.success('登录成功！');
                         this.loading = false;
 
-                        // 跳转到首页
-                        setTimeout(() => {
+                        // 检查是否有重定向路径
+                        const redirectPath = localStorage.getItem('redirectPath');
+                        if (redirectPath) {
+                            localStorage.removeItem('redirectPath');
+                            // 确保路径正确
+                            if (redirectPath.startsWith('pages/')) {
+                                window.location.href = './' + redirectPath.substring(6);
+                            } else {
+                                window.location.href = '../' + redirectPath;
+                            }
+                        } else {
                             window.location.href = '../index.html';
-                        }, 500);
+                        }
                     }, 1000);
-                } else {
-                    return false;
                 }
             });
         },
         goToRegister() {
             window.location.href = 'register.html';
+        },
+        // 登录成功后的处理
+        handleLoginSuccess(userData) {
+            // 保存登录状态和用户信息
+            localStorage.setItem('isLoggedIn', 'true');
+            localStorage.setItem('userInfo', JSON.stringify(userData));
+
+            this.$message.success('登录成功');
+
+            // 检查是否有重定向路径
+            const redirectPath = localStorage.getItem('redirectPath');
+            if (redirectPath) {
+                localStorage.removeItem('redirectPath');
+                // 确保路径正确
+                if (redirectPath.startsWith('pages/')) {
+                    window.location.href = './' + redirectPath.substring(6);
+                } else {
+                    window.location.href = '../' + redirectPath;
+                }
+            } else {
+                window.location.href = '../index.html';
+            }
         }
     }
 }); 
