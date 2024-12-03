@@ -6,15 +6,18 @@
     <title>预订服务 - 旅游资讯平台</title>
     <!-- Element UI -->
     <link rel="stylesheet" href="https://unpkg.com/element-ui/lib/theme-chalk/index.css">
+    <!-- Font Awesome -->
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
     <!-- Animate.css -->
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/animate.css/4.1.1/animate.min.css">
-    <!-- Font Awesome -->
-    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/5.15.4/css/all.min.css">
+    <!-- Swiper -->
+    <link rel="stylesheet" href="https://unpkg.com/swiper/swiper-bundle.min.css">
     <link rel="stylesheet" href="../css/style.css">
+    <link rel="stylesheet" href="../css/booking.css">
 </head>
 <body>
     <div id="booking">
-        <header class="header animate__animated animate__fadeIn">
+        <header class="header">
             <nav class="nav">
                 <div class="logo">
                     <i class="fas fa-globe-asia"></i> 旅游资讯
@@ -28,81 +31,199 @@
         </header>
 
         <main class="main-content">
-            <el-card class="booking-section animate__animated animate__fadeInUp">
-                <div slot="header">
-                    <h2><i class="fas fa-calendar-check"></i> 预订服务</h2>
+            <div class="booking-container">
+                <div class="booking-header animate__animated animate__fadeIn">
+                    <h2><i class="fas fa-hotel"></i> 预订服务</h2>
+                    <p>选择心仪的酒店，开启完美旅程</p>
                 </div>
 
-                <el-tabs v-model="bookingType" type="border-card">
-                    <el-tab-pane label="酒店预订" name="hotel">
-                        <i class="fas fa-hotel"></i>
-                    </el-tab-pane>
-                    <el-tab-pane label="门票预订" name="ticket">
-                        <i class="fas fa-ticket-alt"></i>
-                    </el-tab-pane>
-                    <el-tab-pane label="交通预订" name="transport">
-                        <i class="fas fa-bus"></i>
-                    </el-tab-pane>
-                </el-tabs>
+                <!-- 酒店展示轮播 -->
+                <div class="hotel-showcase swiper-container animate__animated animate__fadeInUp">
+                    <div class="swiper-wrapper">
+                        <div class="swiper-slide" v-for="hotel in hotels" :key="hotel.id">
+                            <div class="hotel-card" @click="selectHotel(hotel)">
+                                <div class="hotel-image">
+                                    <img :src="hotel.image" :alt="hotel.name">
+                                    <div class="hotel-tag" v-if="hotel.tag">{{hotel.tag}}</div>
+                                </div>
+                                <div class="hotel-info">
+                                    <h3>{{hotel.name}}</h3>
+                                    <div class="hotel-rating">
+                                        <i class="fas fa-star" v-for="n in hotel.rating" :key="n"></i>
+                                    </div>
+                                    <p class="hotel-location">
+                                        <i class="fas fa-map-marker-alt"></i> {{hotel.location}}
+                                    </p>
+                                    <div class="hotel-features">
+                                        <span v-for="feature in hotel.features" :key="feature">
+                                            <i :class="feature.icon"></i> {{feature.text}}
+                                        </span>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                    <div class="swiper-pagination"></div>
+                    <div class="swiper-button-next"></div>
+                    <div class="swiper-button-prev"></div>
+                </div>
 
-                <el-form :model="bookingForm" 
-                        ref="bookingForm" 
-                        label-width="100px" 
-                        class="booking-form">
-                    <!-- 酒店预订表单 -->
-                    <template v-if="bookingType === 'hotel'">
-                        <el-form-item label="酒店名称" prop="name">
-                            <el-input v-model="bookingForm.name" placeholder="请输入酒店名称"></el-input>
-                        </el-form-item>
-                        <el-form-item label="入住日期" prop="checkIn">
-                            <el-date-picker v-model="bookingForm.checkIn" type="date"></el-date-picker>
-                        </el-form-item>
-                        <el-form-item label="退房日期" prop="checkOut">
-                            <el-date-picker v-model="bookingForm.checkOut" type="date"></el-date-picker>
-                        </el-form-item>
-                        <el-form-item label="房间类型" prop="roomType">
-                            <el-select v-model="bookingForm.roomType">
-                                <el-option label="单人间" value="single"></el-option>
-                                <el-option label="双人间" value="double"></el-option>
-                                <el-option label="套房" value="suite"></el-option>
-                            </el-select>
-                        </el-form-item>
-                    </template>
+                <el-form :model="bookingForm" :rules="rules" ref="bookingForm" 
+                        label-width="100px" class="booking-form animate__animated animate__fadeInUp"
+                        :hide-required-asterisk="false" :status-icon="true" @submit.native.prevent>
+                    
+                    <!-- 日期和人数选择 -->
+                    <div class="form-section date-guest-section">
+                        <div class="form-grid">
+                            <el-form-item label="入住日期" prop="startDate">
+                                <el-date-picker
+                                    v-model="bookingForm.startDate"
+                                    type="date"
+                                    placeholder="选择入住日期"
+                                    :picker-options="pickerOptions"
+                                    @change="handleStartDateChange"
+                                    :clearable="false"
+                                    value-format="yyyy-MM-dd">
+                                </el-date-picker>
+                            </el-form-item>
 
-                    <!-- 门票预订表单 -->
-                    <template v-if="bookingType === 'ticket'">
-                        <!-- 类似的 Element UI 表单组件 -->
-                    </template>
+                            <el-form-item label="离店日期" prop="endDate">
+                                <el-date-picker
+                                    v-model="bookingForm.endDate"
+                                    type="date"
+                                    placeholder="选择离店日期"
+                                    :picker-options="pickerOptions"
+                                    ref="endDate"
+                                    :clearable="false"
+                                    value-format="yyyy-MM-dd">
+                                </el-date-picker>
+                            </el-form-item>
 
-                    <!-- 交通预订表单 -->
-                    <template v-if="bookingType === 'transport'">
-                        <!-- 类似的 Element UI 表单组件 -->
-                    </template>
+                            <el-form-item label="入住人数">
+                                <div class="guest-selector">
+                                    <div class="guest-type">
+                                        <span>成人</span>
+                                        <el-input-number v-model="bookingForm.adults" :min="1" :max="10" size="small"></el-input-number>
+                                    </div>
+                                    <div class="guest-type">
+                                        <span>儿童</span>
+                                        <el-input-number v-model="bookingForm.children" :min="0" :max="10" size="small"></el-input-number>
+                                    </div>
+                                </div>
+                            </el-form-item>
+                        </div>
+                    </div>
 
-                    <el-form-item label="支付方式">
-                        <el-radio-group v-model="bookingForm.paymentMethod">
-                            <el-radio label="wechat">
-                                <i class="fab fa-weixin"></i> 微信支付
-                            </el-radio>
-                            <el-radio label="alipay">
-                                <i class="fab fa-alipay"></i> 支付宝
-                            </el-radio>
-                        </el-radio-group>
-                    </el-form-item>
+                    <!-- 房型选择 -->
+                    <div class="form-section room-selection">
+                        <h3 class="section-title"><i class="fas fa-bed"></i> 选择房型</h3>
+                        <div class="room-cards">
+                            <div v-for="(room, type) in prices.hotel" :key="type"
+                                 class="room-card" 
+                                 :class="{ selected: bookingForm.roomType === type }"
+                                 @click="selectRoom(type)">
+                                <div class="room-image">
+                                    <img :src="room.image" :alt="room.name">
+                                </div>
+                                <div class="room-details">
+                                    <h4>{{room.name}}</h4>
+                                    <p class="room-desc">{{room.desc}}</p>
+                                    <div class="room-amenities">
+                                        <span v-for="amenity in room.amenities" :key="amenity">
+                                            <i :class="amenity.icon"></i> {{amenity.text}}
+                                        </span>
+                                    </div>
+                                    <div class="room-price">
+                                        <span class="price">￥{{room.price}}</span>/晚
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
 
-                    <el-form-item>
-                        <el-button type="primary" @click="handleBooking">
-                            提交预订
+                    <!-- 附加服务 -->
+                    <div class="form-section additional-services">
+                        <h3 class="section-title"><i class="fas fa-concierge-bell"></i> 附加服务</h3>
+                        <div class="services-grid">
+                            <el-checkbox v-model="bookingForm.breakfast" class="service-item">
+                                <i class="fas fa-coffee"></i>
+                                <span>早餐服务</span>
+                                <span class="service-price">￥68/人</span>
+                            </el-checkbox>
+                            <el-checkbox v-model="bookingForm.pickup" class="service-item">
+                                <i class="fas fa-car"></i>
+                                <span>接机服务</span>
+                                <span class="service-price">￥120/次</span>
+                            </el-checkbox>
+                            <el-checkbox v-model="bookingForm.insurance" class="service-item">
+                                <i class="fas fa-shield-alt"></i>
+                                <span>旅行保险</span>
+                                <span class="service-price">￥50/人</span>
+                            </el-checkbox>
+                        </div>
+                    </div>
+
+                    <!-- 联系人信息 -->
+                    <div class="form-section contact-info">
+                        <h3 class="section-title"><i class="fas fa-user"></i> 联系人信息</h3>
+                        <div class="contact-grid">
+                            <el-form-item label="联系人" prop="contactName">
+                                <el-input v-model="bookingForm.contactName" prefix-icon="el-icon-user"></el-input>
+                            </el-form-item>
+                            <el-form-item label="手机号码" prop="contactPhone">
+                                <el-input v-model="bookingForm.contactPhone" prefix-icon="el-icon-phone"></el-input>
+                            </el-form-item>
+                            <el-form-item label="电子邮箱" prop="contactEmail">
+                                <el-input v-model="bookingForm.contactEmail" prefix-icon="el-icon-message"></el-input>
+                            </el-form-item>
+                        </div>
+                    </div>
+
+                    <!-- 价格摘要 -->
+                    <div class="price-summary">
+                        <div class="price-details">
+                            <div class="price-item">
+                                <span>房费 ({{calculateNights()}}晚)</span>
+                                <span>￥{{roomSubtotal}}</span>
+                            </div>
+                            <div class="price-item" v-if="bookingForm.breakfast">
+                                <span>早餐费用</span>
+                                <span>￥{{breakfastTotal}}</span>
+                            </div>
+                            <div class="price-item" v-if="bookingForm.pickup">
+                                <span>接机服务</span>
+                                <span>￥120</span>
+                            </div>
+                            <div class="price-item" v-if="bookingForm.insurance">
+                                <span>旅行保险</span>
+                                <span>￥{{insuranceTotal}}</span>
+                            </div>
+                            <div class="price-total">
+                                <span>总价</span>
+                                <span>￥{{totalPrice}}</span>
+                            </div>
+                        </div>
+                    </div>
+
+                    <!-- 提交按钮 -->
+                    <div class="form-actions">
+                        <el-button type="primary" 
+                                 @click="submitBooking" 
+                                 :loading="loading"
+                                 :disabled="!isFormValid"
+                                 class="submit-btn">
+                            <i class="fas fa-check"></i> 提交预订
                         </el-button>
-                        <el-button @click="resetBookingForm">重置</el-button>
-                    </el-form-item>
+                        <el-button @click="resetForm" icon="el-icon-refresh-right">重置</el-button>
+                    </div>
                 </el-form>
-            </el-card>
+            </div>
         </main>
     </div>
 
     <script src="https://cdn.jsdelivr.net/npm/vue@2.6.14"></script>
     <script src="https://unpkg.com/element-ui/lib/index.js"></script>
+    <script src="https://unpkg.com/swiper/swiper-bundle.min.js"></script>
     <script src="../js/booking.js"></script>
 </body>
 </html> 

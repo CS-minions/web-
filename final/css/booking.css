@@ -1,20 +1,289 @@
 .booking-container {
-    padding: 2rem;
-    margin-top: 60px;
-}
-
-.booking-form {
-    max-width: 800px;
-    margin: 0 auto;
+    max-width: 1200px;
+    margin: 2rem auto;
     padding: 2rem;
     background: #fff;
-    border-radius: 8px;
-    box-shadow: 0 2px 12px rgba(0,0,0,0.1);
+    border-radius: 15px;
+    box-shadow: 0 4px 20px rgba(0,0,0,0.08);
 }
 
-.price-info {
-    margin-top: 2rem;
-    padding: 1rem;
+.booking-header {
+    text-align: center;
+    margin-bottom: 3rem;
+}
+
+.booking-header h2 {
+    color: #2c3e50;
+    margin-bottom: 1rem;
+    font-size: 2.2rem;
+}
+
+.booking-header p {
+    color: #7f8c8d;
+    font-size: 1.1rem;
+}
+
+/* 酒店展示轮播 */
+.hotel-showcase {
+    margin-bottom: 3rem;
+    border-radius: 12px;
+    overflow: hidden;
+}
+
+.hotel-card {
+    background: #fff;
+    border-radius: 12px;
+    overflow: hidden;
+    cursor: pointer;
+    transition: transform 0.3s ease;
+}
+
+.hotel-card:hover {
+    transform: translateY(-5px);
+}
+
+.hotel-image {
+    position: relative;
+    height: 250px;
+    overflow: hidden;
+}
+
+.hotel-image img {
+    width: 100%;
+    height: 100%;
+    object-fit: cover;
+}
+
+.hotel-tag {
+    position: absolute;
+    top: 1rem;
+    right: 1rem;
+    background: rgba(52, 152, 219, 0.9);
+    color: #fff;
+    padding: 0.5rem 1rem;
+    border-radius: 20px;
+    font-size: 0.9rem;
+}
+
+.hotel-info {
+    padding: 1.5rem;
+}
+
+.hotel-info h3 {
+    margin: 0 0 0.5rem 0;
+    color: #2c3e50;
+    font-size: 1.3rem;
+}
+
+.hotel-rating {
+    color: #f1c40f;
+    margin-bottom: 0.5rem;
+}
+
+.hotel-location {
+    color: #7f8c8d;
+    margin-bottom: 1rem;
+}
+
+.hotel-features {
+    display: flex;
+    gap: 1rem;
+    flex-wrap: wrap;
+}
+
+.hotel-features span {
+    font-size: 0.9rem;
+    color: #34495e;
+}
+
+/* 表单样式 */
+.form-section {
     background: #f8f9fa;
-    border-radius: 4px;
+    border-radius: 12px;
+    padding: 2rem;
+    margin-bottom: 2rem;
+}
+
+.section-title {
+    color: #2c3e50;
+    margin-bottom: 1.5rem;
+    font-size: 1.3rem;
+    display: flex;
+    align-items: center;
+    gap: 0.5rem;
+}
+
+.form-grid {
+    display: grid;
+    grid-template-columns: repeat(auto-fit, minmax(250px, 1fr));
+    gap: 1.5rem;
+}
+
+/* 房型选择 */
+.room-cards {
+    display: grid;
+    grid-template-columns: repeat(auto-fit, minmax(300px, 1fr));
+    gap: 1.5rem;
+}
+
+.room-card {
+    background: #fff;
+    border-radius: 12px;
+    overflow: hidden;
+    cursor: pointer;
+    transition: all 0.3s ease;
+    border: 2px solid transparent;
+}
+
+.room-card:hover {
+    transform: translateY(-5px);
+    box-shadow: 0 4px 15px rgba(0,0,0,0.1);
+}
+
+.room-card.selected {
+    border-color: #409EFF;
+    background: #ecf5ff;
+}
+
+.room-image {
+    height: 200px;
+    overflow: hidden;
+}
+
+.room-image img {
+    width: 100%;
+    height: 100%;
+    object-fit: cover;
+}
+
+.room-details {
+    padding: 1.5rem;
+}
+
+.room-details h4 {
+    margin: 0 0 0.5rem 0;
+    color: #2c3e50;
+}
+
+.room-desc {
+    color: #7f8c8d;
+    font-size: 0.9rem;
+    margin-bottom: 1rem;
+}
+
+.room-amenities {
+    display: flex;
+    flex-wrap: wrap;
+    gap: 1rem;
+    margin-bottom: 1rem;
+}
+
+.room-amenities span {
+    font-size: 0.9rem;
+    color: #34495e;
+}
+
+.room-price {
+    text-align: right;
+}
+
+.room-price .price {
+    color: #e74c3c;
+    font-size: 1.5rem;
+    font-weight: bold;
+}
+
+/* 附加服务 */
+.services-grid {
+    display: grid;
+    grid-template-columns: repeat(auto-fit, minmax(200px, 1fr));
+    gap: 1rem;
+}
+
+.service-item {
+    background: #fff;
+    padding: 1rem;
+    border-radius: 8px;
+    display: flex;
+    align-items: center;
+    gap: 0.5rem;
+}
+
+.service-price {
+    margin-left: auto;
+    color: #e74c3c;
+}
+
+/* 价格摘要 */
+.price-summary {
+    background: #2c3e50;
+    color: #fff;
+    border-radius: 12px;
+    padding: 2rem;
+    margin: 2rem 0;
+}
+
+.price-item {
+    display: flex;
+    justify-content: space-between;
+    margin-bottom: 1rem;
+    color: #ecf0f1;
+}
+
+.price-total {
+    border-top: 1px solid rgba(255,255,255,0.2);
+    margin-top: 1rem;
+    padding-top: 1rem;
+    font-size: 1.2rem;
+    font-weight: bold;
+}
+
+/* 按钮样式 */
+.form-actions {
+    text-align: center;
+    margin-top: 2rem;
+}
+
+.submit-btn {
+    padding: 1rem 3rem;
+    font-size: 1.1rem;
+}
+
+/* 响应式设计 */
+@media (max-width: 768px) {
+    .booking-container {
+        margin: 1rem;
+        padding: 1rem;
+    }
+    
+    .form-grid {
+        grid-template-columns: 1fr;
+    }
+    
+    .room-cards {
+        grid-template-columns: 1fr;
+    }
+    
+    .services-grid {
+        grid-template-columns: 1fr;
+    }
+}
+
+/* 动画效果 */
+.animate__animated {
+    animation-duration: 0.8s;
+}
+
+/* Swiper 样式覆盖 */
+.swiper-button-next,
+.swiper-button-prev {
+    color: #fff;
+    background: rgba(0,0,0,0.5);
+    width: 40px;
+    height: 40px;
+    border-radius: 50%;
+}
+
+.swiper-pagination-bullet-active {
+    background: #409EFF;
 } 

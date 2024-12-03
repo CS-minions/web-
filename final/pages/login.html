@@ -13,69 +13,7 @@
     <!-- Particles.js for background effect -->
     <script src="https://cdn.jsdelivr.net/particles.js/2.0.0/particles.min.js"></script>
     <link rel="stylesheet" href="../css/style.css">
-    <style>
-        #particles-js {
-            position: fixed;
-            width: 100%;
-            height: 100%;
-            background-color: #f0f2f5;
-            z-index: -1;
-        }
-        
-        .login-container {
-            position: relative;
-            z-index: 1;
-            backdrop-filter: blur(5px);
-            background: rgba(255, 255, 255, 0.9);
-            border-radius: 10px;
-            box-shadow: 0 8px 16px rgba(0,0,0,0.1);
-            padding: 2rem;
-            max-width: 400px;
-            margin: 4rem auto;
-        }
-
-        .login-header {
-            text-align: center;
-            margin-bottom: 2rem;
-        }
-
-        .login-header .logo-icon {
-            font-size: 3rem;
-            color: #409EFF;
-            margin-bottom: 1rem;
-        }
-
-        .social-login {
-            margin-top: 2rem;
-            text-align: center;
-        }
-
-        .divider {
-            margin: 1.5rem 0;
-            text-align: center;
-            position: relative;
-        }
-
-        .divider::before,
-        .divider::after {
-            content: '';
-            position: absolute;
-            top: 50%;
-            width: 45%;
-            height: 1px;
-            background-color: #dcdfe6;
-        }
-
-        .divider::before { left: 0; }
-        .divider::after { right: 0; }
-
-        .remember-forgot {
-            display: flex;
-            justify-content: space-between;
-            align-items: center;
-            margin: 1rem 0;
-        }
-    </style>
+    <link rel="stylesheet" href="../css/login.css">
 </head>
 <body>
     <div id="particles-js"></div>

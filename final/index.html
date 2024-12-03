@@ -14,17 +14,25 @@
         <!-- 导航栏 -->
         <header class="header">
             <nav class="nav">
-                <div class="nav-right">
-                    <el-menu mode="horizontal" 
-                            :default-active="currentSection" 
-                            @select="showSection"
-                            class="main-menu">
-                        <el-menu-item index="home">首页</el-menu-item>
-                        <el-menu-item index="destinations">目的地</el-menu-item>
-                        <el-menu-item index="activities">活动</el-menu-item>
-                        <el-menu-item index="guides">旅游攻略</el-menu-item>
-                        <el-menu-item index="booking">预订</el-menu-item>
-                    </el-menu>
+                <div class="logo">
+                    <i class="fas fa-globe-asia"></i> 旅游资讯
+                </div>
+                <div class="nav-links">
+                    <a href="index.html" class="active">
+                        <i class="fas fa-home"></i> 首页
+                    </a>
+                    <a href="pages/travel-guide.html">
+                        <i class="fas fa-map-marked-alt"></i> 旅游攻略
+                    </a>
+                    <a href="pages/login.html" v-if="!isLoggedIn">
+                        <i class="fas fa-sign-in-alt"></i> 登录
+                    </a>
+                    <a href="pages/register.html" v-if="!isLoggedIn">
+                        <i class="fas fa-user-plus"></i> 注册
+                    </a>
+                    <a href="#" @click="logout" v-if="isLoggedIn">
+                        <i class="fas fa-sign-out-alt"></i> 退出
+                    </a>
                 </div>
             </nav>
         </header>

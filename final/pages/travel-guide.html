@@ -1,0 +1,373 @@
+<!DOCTYPE html>
+<html lang="zh-CN">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>旅游攻略 - 旅游资讯平台</title>
+    <link rel="stylesheet" href="https://unpkg.com/element-ui/lib/theme-chalk/index.css">
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
+    <link rel="stylesheet" href="../css/style.css">
+    <link rel="stylesheet" href="../css/travel-guide.css">
+</head>
+<body>
+    <div id="travelGuide">
+        <!-- 修改页面加载动画 -->
+        <div id="pageLoading" v-if="isLoading && !guides.length" class="page-loading">
+            <div class="loading-spinner">
+                <i class="fas fa-globe-asia fa-spin"></i>
+                <span>正在加载精彩内容...</span>
+            </div>
+        </div>
+
+        <header class="header">
+            <nav class="nav">
+                <div class="logo">
+                    <i class="fas fa-globe-asia"></i>
+                    <span>旅游攻略</span>
+                </div>
+                <div class="nav-links">
+                    <el-button type="text" icon="el-icon-s-home" @click="goHome">返回首页</el-button>
+                    <el-button type="text" icon="el-icon-switch-button" @click="logout" v-if="isLoggedIn">退出登录</el-button>
+                </div>
+            </nav>
+        </header>
+
+        <main class="main-content">
+            <!-- 攻略分类 -->
+            <section class="guide-categories">
+                <div class="section-header">
+                    <div class="section-title">
+                        <h2>旅游攻略</h2>
+                        <p>分享你的旅行故事</p>
+                    </div>
+                    <div class="header-actions">
+                        <el-button type="text" @click="showMyGuides" icon="el-icon-document">
+                            我的发布
+                        </el-button>
+                        <el-button type="primary" @click="openShareForm" icon="el-icon-edit">
+                            发布攻略
+                        </el-button>
+                    </div>
+                </div>
+
+                <el-tabs v-model="activeCategory" @tab-click="handleCategoryChange" class="category-tabs">
+                    <el-tab-pane v-for="cat in categories" :key="cat.id" :label="cat.name" :name="cat.id">
+                        <div class="category-description" v-if="cat.description">
+                            <i :class="cat.icon"></i>
+                            <p>{{cat.description}}</p>
+                        </div>
+                        <div class="guides-grid">
+                            <template v-if="!isLoading">
+                                <div class="guide-card" 
+                                     :id="'guide-' + guide.id"
+                                     v-for="guide in filteredGuides" 
+                                     :key="guide.id" 
+                                     @click="viewGuide(guide)">
+                                    <div class="guide-image">
+                                        <img :src="guide.image" 
+                                             :alt="guide.title"
+                                             @error="handleImageError(guide.category)"
+                                             @load="handleImageLoad">
+                                        <div class="guide-category-tag">{{getCategoryName(guide.category)}}</div>
+                                    </div>
+                                    <div class="guide-content">
+                                        <h3>{{guide.title}}</h3>
+                                        <p class="guide-excerpt">{{guide.excerpt}}</p>
+                                        <div class="guide-full-content" v-if="expandedGuide === guide.id">
+                                            <div class="content-wrapper" v-html="guide.content"></div>
+                                        </div>
+                                        <div class="expand-button" @click.stop="toggleContent(guide.id)">
+                                            <span>{{ expandedGuide === guide.id ? '收起' : '查看更多' }}</span>
+                                            <i :class="['fas', expandedGuide === guide.id ? 'fa-chevron-up' : 'fa-chevron-down']"></i>
+                                        </div>
+                                        <div class="guide-meta">
+                                            <span><i class="fas fa-user"></i> {{guide.author}}</span>
+                                            <span><i class="fas fa-eye"></i> {{guide.views}}阅读</span>
+                                            <span><i class="fas fa-calendar"></i> {{formatDate(guide.date)}}</span>
+                                        </div>
+                                        <div class="guide-interactions">
+                                            <span class="interaction-btn like-btn" 
+                                                  :class="{ 
+                                                      'active': userInteractions.likes.has(guide.id)
+                                                  }"
+                                                  @click.stop="toggleLike(guide.id)">
+                                                <i class="fas fa-heart"></i>
+                                                <span class="interaction-count" 
+                                                      :class="{ 'bounce': isLikeAnimating[guide.id] }">
+                                                    {{getLikeText(guide)}}
+                                                </span>
+                                            </span>
+                                            <span class="interaction-btn favorite-btn" 
+                                                  :class="{ active: userInteractions.favorites.has(guide.id) }"
+                                                  @click.stop="toggleFavorite(guide.id)">
+                                                <i class="fas fa-star"></i>
+                                                <span class="interaction-count" 
+                                                      :class="{ 'bounce': isFavoriteAnimating[guide.id] }">
+                                                    {{getFavoriteCount(guide.id)}}
+                                                </span>
+                                            </span>
+                                            <span class="interaction-btn comment-btn" 
+                                                  @click.stop="showCommentForm = true; currentGuideId = guide.id">
+                                                <i class="fas fa-comment"></i>
+                                                <span class="interaction-count">
+                                                    {{getCommentCount(guide.id)}}
+                                                </span>
+                                            </span>
+                                        </div>
+                                    </div>
+                                </div>
+                            </template>
+                            <div v-else class="loading-placeholder">
+                                <el-skeleton :rows="3" animated />
+                            </div>
+                        </div>
+                    </el-tab-pane>
+                </el-tabs>
+            </section>
+        </main>
+
+        <!-- 攻略详情对话框 -->
+        <el-dialog
+            :title="currentGuide ? currentGuide.title : ''"
+            :visible.sync="guideDialogVisible"
+            @closed="handleDialogClose"
+            width="70%"
+            class="guide-dialog">
+            <div class="guide-detail" v-if="currentGuide">
+                <img :src="currentGuide.image" 
+                     :alt="currentGuide.title" 
+                     class="guide-detail-image"
+                     @error="handleImageError">
+                <div class="guide-detail-content">
+                    <div class="guide-detail-meta">
+                        <span><i class="fas fa-user"></i> {{currentGuide.author}}</span>
+                        <span><i class="fas fa-calendar"></i> {{currentGuide.date}}</span>
+                        <span><i class="fas fa-eye"></i> {{currentGuide.views}}阅读</span>
+                    </div>
+                    <div class="guide-detail-text" v-html="currentGuide.content"></div>
+                    <div class="comments-section">
+                        <h3>评论 ({{getCommentCount(currentGuide.id)}})</h3>
+                        <div class="comment-list">
+                            <div class="comment-item" v-for="comment in getComments(currentGuide.id)" :key="comment.id">
+                                <div class="comment-header">
+                                    <div class="comment-user">
+                                        <i class="fas fa-user-circle"></i>
+                                        <span>{{comment.username}}</span>
+                                    </div>
+                                    <div class="comment-rating">
+                                        <el-rate v-model="comment.rating" disabled></el-rate>
+                                    </div>
+                                </div>
+                                <div class="comment-content">{{comment.content}}</div>
+                                <div class="comment-footer">
+                                    <span class="comment-time">{{formatTime(comment.time)}}</span>
+                                    <div class="comment-actions">
+                                        <span @click="likeComment(comment)">
+                                            <i class="fas fa-thumbs-up"></i> {{comment.likes}}
+                                        </span>
+                                        <span @click="replyComment(comment)">
+                                            <i class="fas fa-reply"></i> 回复
+                                        </span>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </el-dialog>
+
+        <!-- 评论表单对话框 -->
+        <el-dialog title="发表评论" :visible.sync="showCommentForm" width="500px">
+            <el-form :model="commentForm" label-width="80px">
+                <el-form-item label="评分">
+                    <el-rate v-model="commentForm.rating"></el-rate>
+                </el-form-item>
+                <el-form-item label="评论内容">
+                    <el-input type="textarea" 
+                              v-model="commentForm.content" 
+                              :rows="4" 
+                              placeholder="分享你的旅行体验...">
+                    </el-input>
+                </el-form-item>
+            </el-form>
+            <span slot="footer">
+                <el-button @click="showCommentForm = false">取消</el-button>
+                <el-button type="primary" @click="submitComment(currentGuideId)">发表评论</el-button>
+            </span>
+        </el-dialog>
+
+        <!-- 发布攻略表单 -->
+        <el-dialog title="发布攻略" :visible.sync="shareFormVisible" width="60%">
+            <el-form :model="shareForm" :rules="shareRules" ref="shareForm" label-width="80px">
+                <el-form-item label="标题" prop="title">
+                    <el-input v-model="shareForm.title" placeholder="给你的攻略起个标题"></el-input>
+                </el-form-item>
+                <el-form-item label="分类" prop="category">
+                    <el-select v-model="shareForm.category" placeholder="选择分类">
+                        <el-option v-for="cat in categories.filter(c => c.id !== 'all')" 
+                                  :key="cat.id" 
+                                  :label="cat.name" 
+                                  :value="cat.id">
+                        </el-option>
+                    </el-select>
+                </el-form-item>
+                <el-form-item label="内容" prop="content">
+                    <el-input type="textarea" 
+                              v-model="shareForm.content" 
+                              :rows="8"
+                              placeholder="分享你的旅行经验...">
+                    </el-input>
+                </el-form-item>
+                <el-form-item label="图片">
+                    <el-upload
+                        action="#"
+                        list-type="picture-card"
+                        :auto-upload="false"
+                        :file-list="[]"
+                        :on-preview="handlePreview"
+                        :on-remove="handleRemove"
+                        :before-upload="beforeUpload"
+                        :on-success="handleSuccess"
+                        :on-error="handleError"
+                        :limit="1">
+                        <i class="el-icon-plus"></i>
+                        <div slot="tip" class="el-upload__tip">
+                            只能上传 jpg/png 文件，且不超过 5MB
+                        </div>
+                    </el-upload>
+                </el-form-item>
+                <el-form-item label="标签">
+                    <el-tag :key="tag"
+                            v-for="tag in shareForm.tags"
+                            closable
+                            :disable-transitions="false"
+                            @close="handleTagClose(tag)">
+                        {{tag}}
+                    </el-tag>
+                    <el-input class="input-new-tag"
+                              v-if="inputTagVisible"
+                              v-model="inputTagValue"
+                              ref="saveTagInput"
+                              size="small"
+                              @keyup.enter.native="handleInputConfirm"
+                              @blur="handleInputConfirm">
+                    </el-input>
+                    <el-button v-else size="small" @click="showInputTag">
+                        + 新标签
+                    </el-button>
+                </el-form-item>
+            </el-form>
+            <span slot="footer">
+                <el-button @click="shareFormVisible = false">取消</el-button>
+                <el-button type="primary" @click="submitShare">发布</el-button>
+            </span>
+        </el-dialog>
+
+        <!-- 添加我的发布对话框 -->
+        <el-dialog
+            title="我的发布"
+            :visible.sync="myGuidesVisible"
+            width="80%"
+            class="my-guides-dialog">
+            <div class="my-guides-content">
+                <el-table
+                    :data="myGuides"
+                    style="width: 100%">
+                    <el-table-column
+                        prop="date"
+                        label="发布日期"
+                        width="180">
+                        <template slot-scope="scope">
+                            {{formatDate(scope.row.date)}}
+                        </template>
+                    </el-table-column>
+                    <el-table-column
+                        prop="title"
+                        label="标题"
+                        width="280">
+                    </el-table-column>
+                    <el-table-column
+                        prop="category"
+                        label="分类"
+                        width="120">
+                        <template slot-scope="scope">
+                            {{getCategoryName(scope.row.category)}}
+                        </template>
+                    </el-table-column>
+                    <el-table-column
+                        prop="views"
+                        label="浏览"
+                        width="100">
+                    </el-table-column>
+                    <el-table-column
+                        prop="likes"
+                        label="点赞"
+                        width="100">
+                    </el-table-column>
+                    <el-table-column
+                        label="操作"
+                        width="180">
+                        <template slot-scope="scope">
+                            <el-button
+                                size="mini"
+                                @click="viewGuide(scope.row)">查看</el-button>
+                            <el-button
+                                size="mini"
+                                type="danger"
+                                @click="handleDeleteGuide(scope.row)">删除</el-button>
+                        </template>
+                    </el-table-column>
+                </el-table>
+            </div>
+        </el-dialog>
+
+        <!-- 添加返回顶部按钮 -->
+        <el-backtop :right="30" :bottom="30">
+            <div class="backtop-inner">
+                <i class="el-icon-caret-top"></i>
+            </div>
+        </el-backtop>
+    </div>
+
+    <footer class="footer">
+        <div class="footer-content">
+            <div class="footer-section">
+                <h3>关于我们</h3>
+                <p>致力于为旅行者提供最优质的旅游攻略和体验分享平台</p>
+            </div>
+            <div class="footer-section">
+                <h3>快速链接</h3>
+                <ul>
+                    <li><a href="../index.html">首页</a></li>
+                    <li><a href="#" @click.prevent="openShareForm">发布攻略</a></li>
+                    <li><a href="#" @click.prevent="showMyGuides">我的发布</a></li>
+                </ul>
+            </div>
+            <div class="footer-section">
+                <h3>联系我们</h3>
+                <ul>
+                    <li><i class="fas fa-envelope"></i> contact@travel.com</li>
+                    <li><i class="fas fa-phone"></i> +86 123 4567 8900</li>
+                    <li><i class="fas fa-map-marker-alt"></i> 中国·深圳</li>
+                </ul>
+            </div>
+            <div class="footer-section">
+                <h3>关注我们</h3>
+                <div class="social-links">
+                    <a href="#"><i class="fab fa-weixin"></i></a>
+                    <a href="#"><i class="fab fa-weibo"></i></a>
+                    <a href="#"><i class="fab fa-qq"></i></a>
+                </div>
+            </div>
+        </div>
+        <div class="footer-bottom">
+            <p>&copy; 2024 旅游攻略平台 All Rights Reserved.</p>
+        </div>
+    </footer>
+
+    <script src="https://cdn.jsdelivr.net/npm/vue@2.6.14"></script>
+    <script src="https://unpkg.com/element-ui/lib/index.js"></script>
+    <script src="../js/travel-guide.js"></script>
+</body>
+</html> 
