@@ -1,0 +1,227 @@
+<!DOCTYPE html>
+<html lang="zh-CN">
+<head>
+    <meta charset="UTF-8">
+    <title>消息对话框综合应用</title>
+    <style>
+        /* 全局样式 */
+        body {
+            margin: 0;
+            padding: 20px;
+            font-family: SimSun, serif;
+            background-color: #f0f0f0;
+        }
+
+        /* 主容器样式 */
+        .container {
+            width: 400px;
+            margin: 50px auto;
+            padding: 20px;
+            background-color: #90EE90;
+            border: 4px solid #000080;
+            border-radius: 5px;
+        }
+
+        /* 标题样式 */
+        .title {
+            text-align: center;
+            color: #000080;
+            font-size: 18px;
+            margin-bottom: 30px;
+        }
+
+        /* 表单样式 */
+        .form-group {
+            margin: 20px 0;
+            text-align: center;
+        }
+
+        /* 按钮容器 */
+        .button-group {
+            text-align: center;
+            margin-top: 20px;
+        }
+
+        /* 按钮样式 */
+        button {
+            padding: 5px 20px;
+            margin: 0 10px;
+            border: 1px solid #ccc;
+            background-color: #f0f0f0;
+            cursor: pointer;
+            border-radius: 3px;
+        }
+
+        button:hover {
+            background-color: #e0e0e0;
+        }
+
+        /* 对话框样式 */
+        .dialog {
+            display: none;
+            position: fixed;
+            top: 50%;
+            left: 50%;
+            transform: translate(-50%, -50%);
+            background: white;
+            padding: 20px;
+            border: 1px solid #ccc;
+            box-shadow: 0 2px 10px rgba(0,0,0,0.1);
+            border-radius: 5px;
+            min-width: 300px;
+            z-index: 1000;
+        }
+
+        .dialog-content {
+            margin-bottom: 20px;
+            text-align: center;
+        }
+
+        .dialog-content input[type="text"] {
+            width: 200px;
+            padding: 5px;
+            margin-top: 10px;
+            border: 1px solid #ccc;
+            border-radius: 3px;
+        }
+
+        .dialog-buttons {
+            text-align: center;
+        }
+
+        /* 遮罩层 */
+        .overlay {
+            display: none;
+            position: fixed;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 100%;
+            background: rgba(0,0,0,0.5);
+            z-index: 999;
+        }
+
+        /* 警告图标 */
+        .warning-icon {
+            color: #FFD700;
+            font-size: 24px;
+            margin-right: 10px;
+        }
+
+        /* 显示姓名的文本框 */
+        #displayName {
+            text-align: center;
+            font-size: 16px;
+            margin: 20px 0;
+            padding: 10px;
+            background-color: white;
+            border-radius: 3px;
+            display: none;
+        }
+    </style>
+</head>
+<body>
+    <!-- 主容器 -->
+    <div class="container">
+        <div class="title">消息对话框综合应用</div>
+        <div id="displayName"></div>
+        <div class="button-group">
+            <button onclick="showInputDialog()">输入姓名</button>
+            <button onclick="clearName()">清空</button>
+        </div>
+    </div>
+
+    <!-- 输入对话框 -->
+    <div id="inputDialog" class="dialog">
+        <div class="dialog-content">
+            <div>请你输入姓名：</div>
+            <input type="text" id="nameInput">
+        </div>
+        <div class="dialog-buttons">
+            <button onclick="submitName()">确定</button>
+            <button onclick="closeDialog('inputDialog')">取消</button>
+        </div>
+    </div>
+
+    <!-- 警告对话框 -->
+    <div id="warningDialog" class="dialog">
+        <div class="dialog-content">
+            <span class="warning-icon">⚠</span>
+            <span id="warningMessage"></span>
+        </div>
+        <div class="dialog-buttons">
+            <button onclick="closeDialog('warningDialog')">确定</button>
+        </div>
+    </div>
+
+    <!-- 遮罩层 -->
+    <div id="overlay" class="overlay"></div>
+
+    <script>
+        /**
+         * 显示输入对话框
+         */
+        function showInputDialog() {
+            document.getElementById('inputDialog').style.display = 'block';
+            document.getElementById('overlay').style.display = 'block';
+            document.getElementById('nameInput').value = '';
+            document.getElementById('nameInput').focus();
+        }
+
+        /**
+         * 关闭对话框
+         * @param {string} dialogId - 要关闭的对话框的ID
+         */
+        function closeDialog(dialogId) {
+            document.getElementById(dialogId).style.display = 'none';
+            document.getElementById('overlay').style.display = 'none';
+        }
+
+        /**
+         * 显示警告对话框
+         * @param {string} message - 警告消息
+         */
+        function showWarning(message) {
+            document.getElementById('warningMessage').textContent = message;
+            document.getElementById('warningDialog').style.display = 'block';
+            document.getElementById('overlay').style.display = 'block';
+        }
+
+        /**
+         * 提交姓名
+         */
+        function submitName() {
+            const nameInput = document.getElementById('nameInput');
+            const name = nameInput.value.trim();
+            
+            if (!name) {
+                showWarning('请你输入姓名！');
+                return;
+            }
+
+            // 显示姓名
+            const displayName = document.getElementById('displayName');
+            displayName.textContent = `你的姓名是：${name}`;
+            displayName.style.display = 'block';
+
+            // 关闭输入对话框
+            closeDialog('inputDialog');
+        }
+
+        /**
+         * 清空姓名显示
+         */
+        function clearName() {
+            document.getElementById('displayName').style.display = 'none';
+            document.getElementById('nameInput').value = '';
+        }
+
+        // 添加回车键提交功能
+        document.getElementById('nameInput').addEventListener('keypress', function(e) {
+            if (e.key === 'Enter') {
+                submitName();
+            }
+        });
+    </script>
+</body>
+</html> 

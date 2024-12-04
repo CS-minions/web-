@@ -1,0 +1,275 @@
+<!DOCTYPE html>
+<html lang="zh-CN">
+<head>
+    <meta charset="UTF-8">
+    <title>用JavaScript改变新闻网页中字号</title>
+    <style>
+        /* CSS变量定义 - 用于主题切换和样式统一 */
+        :root {
+            --primary-color: #4a90e2;    /* 主要颜色 */
+            --secondary-color: #f39c12;   /* 次要颜色 */
+            --bg-color: #f8f9fa;         /* 背景颜色 */
+            --text-color: #2c3e50;       /* 文本颜色 */
+            --panel-bg: #ffffff;         /* 面板背景色 */
+            --border-radius: 8px;        /* 统一圆角大小 */
+            --box-shadow: 0 2px 4px rgba(0, 0, 0, 0.1); /* 统一阴影效果 */
+        }
+
+        /* 基础布局样式 */
+        body {
+            margin: 0 auto;
+            max-width: 800px;
+            padding: 20px;
+            font-family: SimSun, serif;
+            background-color: var(--bg-color);
+            color: var(--text-color);
+            transition: all 0.3s ease;
+        }
+
+        /* 控制面板样式 */
+        .control-panel {
+            background-color: var(--panel-bg);
+            padding: 15px;
+            margin-bottom: 20px;
+            border-radius: var(--border-radius);
+            box-shadow: var(--box-shadow);
+            width: 600px;
+            margin-left: auto;
+            margin-right: auto;
+        }
+
+        /* Flex布局实现按钮对齐 */
+        .control-group {
+            display: flex;
+            align-items: center;
+            margin: 8px 0;
+            padding: 5px 0;
+        }
+
+        .control-label {
+            width: 50px;
+            text-align: right;
+            margin-right: 10px;
+            color: var(--secondary-color);
+            font-weight: bold;
+        }
+
+        .control-buttons {
+            display: flex;
+            gap: 10px;
+        }
+
+        /* 按钮统一样式 */
+        .control-panel span {
+            display: inline-block;
+            padding: 4px 12px;
+            cursor: pointer;
+            color: var(--primary-color);
+            background-color: rgba(74, 144, 226, 0.1);
+            border-radius: 4px;
+            font-size: 14px;
+            min-width: 40px;
+            text-align: center;
+        }
+
+        /* 内容区域样式 */
+        .content-box {
+            background-color: var(--panel-bg);
+            padding: 20px;
+            border-radius: var(--border-radius);
+            box-shadow: var(--box-shadow);
+            margin-bottom: 20px;
+            position: relative;
+        }
+
+        .news-content {
+            line-height: 1.8;
+            font-size: 16px;
+            text-indent: 2em;
+            padding: 10px;
+            background-color: rgba(255, 255, 255, 0.8);
+            border-radius: 4px;
+            margin-bottom: 30px;
+        }
+
+        /* 深色主题样式 */
+        .dark-theme {
+            --bg-color: #1a1a1a;
+            --text-color: #ffffff;
+            --panel-bg: #2d2d2d;
+            --primary-color: #66b3ff;
+        }
+
+        /* 关键词高亮样式 */
+        .highlight {
+            background-color: rgba(243, 156, 18, 0.3);
+            padding: 0 2px;
+            border-radius: 2px;
+        }
+
+        /* 字数统计样式 */
+        #wordCount {
+            position: absolute;
+            bottom: 10px;
+            right: 20px;
+            font-size: 12px;
+            color: var(--text-color);
+            padding: 3px 8px;
+            background-color: rgba(0, 0, 0, 0.05);
+            border-radius: 4px;
+        }
+    </style>
+</head>
+<body>
+    <!-- 页面头部和控制面板 -->
+    <div class="header">
+        <h1>用JavaScript改变新闻网页中字号</h1>
+        <div class="control-panel">
+            <!-- 字号控制组 -->
+            <div class="control-group">
+                <div class="control-label">字号</div>
+                <div class="control-buttons">
+                    <span onclick="changeFontSize('small')">小</span>
+                    <span onclick="changeFontSize('medium')">中</span>
+                    <span onclick="changeFontSize('large')">大</span>
+                </div>
+            </div>
+            <!-- 字体控制组 -->
+            <div class="control-group">
+                <div class="control-label">字体</div>
+                <div class="control-buttons">
+                    <span onclick="changeStyle('fontFamily', 'SimSun')">宋体</span>
+                    <span onclick="changeStyle('fontFamily', 'KaiTi')">楷体</span>
+                    <span onclick="changeStyle('fontFamily', 'SimHei')">黑体</span>
+                </div>
+            </div>
+            <!-- 字体粗细控制组 -->
+            <div class="control-group">
+                <div class="control-label">粗细</div>
+                <div class="control-buttons">
+                    <span onclick="changeStyle('fontWeight', 'normal')">正常</span>
+                    <span onclick="changeStyle('fontWeight', 'bold')">加粗</span>
+                </div>
+            </div>
+            <!-- 对齐方式控制组 -->
+            <div class="control-group">
+                <div class="control-label">对齐</div>
+                <div class="control-buttons">
+                    <span onclick="changeStyle('textAlign', 'left')">左对齐</span>
+                    <span onclick="changeStyle('textAlign', 'center')">居中</span>
+                    <span onclick="changeStyle('textAlign', 'right')">右对齐</span>
+                </div>
+            </div>
+            <!-- 特效控制组 -->
+            <div class="control-group">
+                <div class="control-label">特效</div>
+                <div class="control-buttons">
+                    <span onclick="toggleTheme()">主题</span>
+                    <span onclick="highlightKeywords()">高亮</span>
+                    <span onclick="autoScroll()">滚动</span>
+                </div>
+            </div>
+        </div>
+    </div>
+    
+    <!-- 内容展示区域 -->
+    <div class="content-box">
+        <div class="content-header">
+            <h2>JavaScript简介</h2>
+        </div>
+        <div class="news-content" id="newsContent">
+            JavaScript是一种能让你的网页更加生动活泼的程式语言，也是目前网页中设计中最容易学又最方便的语言。你可以利用JavaScript轻易的做出亲切的欢迎讯息、漂亮的数字钟、有广告效果的跑马灯及简易的选举，还可以显示浏览器停留的时间。让这些特殊效果提高网页的可观性。
+        </div>
+        <div id="wordCount"></div>
+    </div>
+
+    <script>
+        // 页面加载完成后初始化
+        document.addEventListener('DOMContentLoaded', function() {
+            updateWordCount();
+        });
+
+        /**
+         * 改变文本字号
+         * @param {string} size - 字号大小：'small', 'medium', 'large'
+         */
+        function changeFontSize(size) {
+            const content = document.getElementById('newsContent');
+            switch(size) {
+                case 'small':
+                    content.style.fontSize = '14px';
+                    break;
+                case 'medium':
+                    content.style.fontSize = '16px';
+                    break;
+                case 'large':
+                    content.style.fontSize = '20px';
+                    break;
+            }
+        }
+
+        /**
+         * 改变文本样式
+         * @param {string} property - CSS属性名
+         * @param {string} value - CSS属性值
+         */
+        function changeStyle(property, value) {
+            const content = document.getElementById('newsContent');
+            content.style[property] = value;
+        }
+
+        /**
+         * 切换深色/浅色主题
+         */
+        function toggleTheme() {
+            document.body.classList.toggle('dark-theme');
+        }
+
+        /**
+         * 高亮显示关键词
+         * 使用正则表达式匹配关键词并添加高亮样式
+         */
+        function highlightKeywords() {
+            const content = document.getElementById('newsContent');
+            const keywords = ['JavaScript', '网页', '程式语言'];
+            let text = content.innerHTML;
+            
+            keywords.forEach(keyword => {
+                const regex = new RegExp(keyword, 'g');
+                text = text.replace(regex, `<span class="highlight">${keyword}</span>`);
+            });
+            
+            content.innerHTML = text;
+        }
+
+        /**
+         * 实现文本自动滚动
+         * 使用setTimeout实现平滑滚动效果
+         */
+        function autoScroll() {
+            const content = document.getElementById('newsContent');
+            const scrollStep = 1;  // 每次滚动的像素
+            const scrollInterval = 50;  // 滚动间隔时间（毫秒）
+            
+            const scroll = () => {
+                if (content.scrollTop < content.scrollHeight) {
+                    content.scrollTop += scrollStep;
+                    setTimeout(scroll, scrollInterval);
+                }
+            };
+            
+            scroll();
+        }
+
+        /**
+         * 更新字数统计
+         * 计算文本内容的字数并显示
+         */
+        function updateWordCount() {
+            const content = document.getElementById('newsContent');
+            const wordCount = content.textContent.trim().length;
+            document.getElementById('wordCount').textContent = `字数统计：${wordCount}个字`;
+        }
+    </script>
+</body>
+</html> 

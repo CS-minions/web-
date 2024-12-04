@@ -1,0 +1,125 @@
+<!DOCTYPE html>
+<html lang="zh">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>100以内的素数计算器</title>
+    <style>
+        body {
+            font-family: Arial, sans-serif;
+            max-width: 800px;
+            margin: 20px auto;
+            padding: 0 20px;
+            background-color: #f5f5f5;
+        }
+        .container {
+            background-color: white;
+            padding: 20px;
+            border-radius: 8px;
+            box-shadow: 0 2px 4px rgba(0,0,0,0.1);
+        }
+        h1 {
+            color: #333;
+            text-align: center;
+            margin-bottom: 30px;
+        }
+        .result-container {
+            margin-top: 20px;
+            padding: 15px;
+            border: 1px solid #ddd;
+            border-radius: 4px;
+            background-color: #f9f9f9;
+        }
+        .prime-number {
+            display: inline-block;
+            padding: 5px 10px;
+            margin: 5px;
+            background-color: #4CAF50;
+            color: white;
+            border-radius: 3px;
+            font-weight: bold;
+        }
+        .stats {
+            margin-top: 20px;
+            padding: 10px;
+            background-color: #e8f5e9;
+            border-radius: 4px;
+        }
+        button {
+            background-color: #4CAF50;
+            color: white;
+            padding: 10px 20px;
+            border: none;
+            border-radius: 4px;
+            cursor: pointer;
+            font-size: 16px;
+            margin: 10px 0;
+        }
+        button:hover {
+            background-color: #45a049;
+        }
+    </style>
+</head>
+<body>
+    <div class="container">
+        <h1>100以内的素数计算器</h1>
+        <button onclick="calculatePrimes()">计算素数</button>
+        <div class="result-container" id="result">
+            <!-- 这里将显示素数 -->
+        </div>
+        <div class="stats" id="stats">
+            <!-- 这里将显示统计信息 -->
+        </div>
+    </div>
+
+    <script>
+        function isPrime(num) {
+            // 如果数字小于2，不是素数
+            if (num < 2) return false;
+            
+            // 如果数字是2，是素数
+            if (num === 2) return true;
+            
+            // 如果是偶数且不是2，不是素数
+            if (num % 2 === 0) return false;
+            
+            // 只需要检查到平方根，从3开始，每次加2（跳过偶数）
+            const sqrt = Math.sqrt(num);
+            for (let i = 3; i <= sqrt; i += 2) {
+                if (num % i === 0) return false;
+            }
+            
+            return true;
+        }
+
+        function calculatePrimes() {
+            const primes = [];
+            const resultDiv = document.getElementById('result');
+            const statsDiv = document.getElementById('stats');
+            
+            // 计算100以内的所有素数
+            for (let i = 2; i <= 100; i++) {
+                if (isPrime(i)) {
+                    primes.push(i);
+                }
+            }
+            
+            // 显示素数
+            resultDiv.innerHTML = '<h3>找到的素数：</h3>' + 
+                primes.map(num => `<span class="prime-number">${num}</span>`).join(' ');
+            
+            // 显示统计信息
+            statsDiv.innerHTML = `
+                <h3>统计信息：</h3>
+                <p>共找到 ${primes.length} 个素数</p>
+                <p>最小的素数是：${primes[0]}</p>
+                <p>最大的素数是：${primes[primes.length - 1]}</p>
+                <p>素数的平均值：${(primes.reduce((a, b) => a + b, 0) / primes.length).toFixed(2)}</p>
+            `;
+        }
+
+        // 页面加载完成后自动计算一次
+        window.onload = calculatePrimes;
+    </script>
+</body>
+</html> 

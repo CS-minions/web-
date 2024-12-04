@@ -1,0 +1,344 @@
+<!DOCTYPE html>
+<html lang="zh-CN">
+<head>
+    <meta charset="UTF-8">
+    <title>计算任意区间内连续自然数的累加和</title>
+    <style>
+        /* 全局样式设置 */
+        body {
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            min-height: 100vh;
+            margin: 0;
+            font-family: SimSun, serif;
+            background-color: #f5f5f5;
+        }
+
+        /* 主容器样式 */
+        .container {
+            background-color: white;
+            padding: 30px;
+            border: 8px solid #4CAF50; /* 使用绿色边框突出显示 */
+            border-radius: 5px;
+            box-shadow: 0 0 10px rgba(0,0,0,0.1); /* 添加阴影效果 */
+            min-width: 400px;
+        }
+
+        /* 表单区域样式 */
+        .form-group {
+            margin-bottom: 20px;
+        }
+
+        /* 输入组样式 */
+        .input-group {
+            margin-bottom: 10px;
+            display: flex;
+            align-items: center;
+        }
+
+        /* 标签样式 */
+        .input-group label {
+            width: 60px;
+            text-align: right;
+            margin-right: 10px;
+        }
+
+        /* 输入框样式 */
+        .input-group input {
+            width: 150px;
+            padding: 5px;
+            border: 1px solid #ccc;
+            border-radius: 3px;
+        }
+
+        /* 区间范围指示器样式 */
+        .range-indicator {
+            height: 5px;
+            background-color: #e0e0e0;
+            margin: 10px 0;
+            border-radius: 2px;
+            position: relative;
+        }
+
+        /* 区间范围进度条样式 */
+        .range-progress {
+            position: absolute;
+            height: 100%;
+            background-color: #4CAF50;
+            border-radius: 2px;
+            width: 0;
+            transition: width 0.5s; /* 添加过渡动画 */
+        }
+
+        /* 按钮组样式 */
+        .button-group {
+            text-align: center;
+            margin-top: 20px;
+        }
+
+        /* 按钮样式 */
+        button {
+            padding: 5px 20px;
+            margin: 0 10px;
+            border: 1px solid #ccc;
+            background-color: #f0f0f0;
+            cursor: pointer;
+            border-radius: 3px;
+            transition: all 0.3s; /* 添加过渡效果 */
+        }
+
+        /* 按钮悬停效果 */
+        button:hover {
+            background-color: #4CAF50;
+            color: white;
+        }
+
+        /* 计算过程容器样式 */
+        .process-container {
+            margin-top: 20px;
+            padding: 10px;
+            border: 1px solid #ddd;
+            border-radius: 4px;
+            display: none; /* 初始隐藏 */
+        }
+
+        /* 计算步骤样式 */
+        .process-step {
+            margin: 5px 0;
+            padding: 5px;
+            background-color: #f9f9f9;
+            border-radius: 3px;
+            transition: background-color 0.3s;
+        }
+
+        /* 计算步骤高亮效果 */
+        .process-step.highlight {
+            background-color: #e8f5e9;
+        }
+
+        /* 输入错误样式 */
+        .input-error {
+            border-color: #ff0000 !important;
+        }
+
+        /* 输入提示样式 */
+        .input-tip {
+            font-size: 12px;
+            color: #666;
+            margin-top: 3px;
+            display: none;
+        }
+    </style>
+</head>
+<body>
+    <div class="container">
+        <h1>计算任意区间内连续自然数的累加和</h1>
+        <div class="form-group">
+            <div class="form-title">定义区间</div>
+            <!-- 起始数输入区域 -->
+            <div class="input-group">
+                <label for="startNum">起始数：</label>
+                <input type="text" id="startNum" name="startNum" oninput="handleInput(this)">
+                <div class="input-tip">请输入正整数</div>
+            </div>
+            <!-- 区间范围可视化 -->
+            <div class="range-indicator">
+                <div class="range-progress"></div>
+            </div>
+            <!-- 终止数输入区域 -->
+            <div class="input-group">
+                <label for="endNum">终止数：</label>
+                <input type="text" id="endNum" name="endNum" oninput="handleInput(this)">
+                <div class="input-tip">请输入正整数</div>
+            </div>
+            <!-- 结果显示区域 -->
+            <div class="input-group">
+                <label for="result">累加和：</label>
+                <input type="text" id="result" name="result" readonly>
+            </div>
+        </div>
+        <!-- 操作按钮区域 -->
+        <div class="button-group">
+            <button onclick="calculate()">计算</button>
+            <button onclick="clearAll()">清空</button>
+        </div>
+        <!-- 计算过程展示区域 -->
+        <div class="process-container" id="processContainer">
+            <div class="process-title">计算过程</div>
+            <div id="processSteps"></div>
+        </div>
+    </div>
+
+    <script>
+        /**
+         * 验证输入是否为有效的正整数
+         * @param {string} value - 输入值
+         * @returns {boolean} - 返回验证结果
+         */
+        function isValidPositiveInteger(value) {
+            // 检查是否为空
+            if (!value || !value.trim()) {
+                return false;
+            }
+            // 检查是否为正整数：不是NaN、大于0、是整数、匹配数字格式
+            const num = parseInt(value);
+            return !isNaN(num) && num > 0 && num === parseFloat(value) && /^\d+$/.test(value);
+        }
+
+        /**
+         * 处理输入事件
+         * @param {HTMLInputElement} input - 输入框元素
+         */
+        function handleInput(input) {
+            const value = input.value;
+            const tip = input.nextElementSibling;
+            
+            if (value === '') {
+                // 输入框为空时，清除错误状态
+                input.classList.remove('input-error');
+                tip.style.display = 'none';
+            } else if (!isValidPositiveInteger(value)) {
+                // 输入无效时，显示错误状态
+                input.classList.add('input-error');
+                tip.style.display = 'block';
+                tip.style.color = '#ff0000';
+            } else {
+                // 输入有效时，清除错误状态
+                input.classList.remove('input-error');
+                tip.style.display = 'none';
+            }
+
+            // 更新范围指示器
+            updateRangeIndicator();
+        }
+
+        /**
+         * 更新范围指示器
+         * 根据输入的起始数和终止数更新进度条
+         */
+        function updateRangeIndicator() {
+            const start = parseInt(document.getElementById('startNum').value) || 0;
+            const end = parseInt(document.getElementById('endNum').value) || 0;
+            
+            if (isValidPositiveInteger(start.toString()) && isValidPositiveInteger(end.toString())) {
+                const progress = document.querySelector('.range-progress');
+                // 计算进度条宽度：区间长度相对于最大值的比例
+                const width = ((end - start) / Math.max(end, 1000)) * 100;
+                // 确保宽度在0-100%之间
+                progress.style.width = Math.max(0, Math.min(width, 100)) + '%';
+            }
+        }
+
+        /**
+         * 计算按钮点击处理函数
+         * 验证输入并计算结果
+         */
+        function calculate() {
+            const startInput = document.getElementById('startNum');
+            const endInput = document.getElementById('endNum');
+            const startNum = parseInt(startInput.value);
+            const endNum = parseInt(endInput.value);
+
+            // 验证起始数
+            if (!isValidPositiveInteger(startInput.value)) {
+                alert('请输入有效的起始数！');
+                startInput.focus();
+                return;
+            }
+
+            // 验证终止数
+            if (!isValidPositiveInteger(endInput.value)) {
+                alert('请输入有效的终止数！');
+                endInput.focus();
+                return;
+            }
+
+            // 验证数字大小关系
+            if (startNum > endNum) {
+                alert('起始数不能大于终止数，请重新输入！');
+                startInput.focus();
+                return;
+            }
+
+            // 计算并显示结果
+            const result = sum(startNum, endNum);
+            document.getElementById('result').value = result;
+            
+            // 显示计算过程
+            showProcess(startNum, endNum);
+        }
+
+        /**
+         * 计算区间内数字的累加和
+         * @param {number} n1 - 起始数
+         * @param {number} n2 - 终止数
+         * @returns {number} - 累加和结果
+         */
+        function sum(n1, n2) {
+            // 使用等差数列求和公式：(首项 + 末项) × 项数 ÷ 2
+            return (n1 + n2) * (n2 - n1 + 1) / 2;
+        }
+
+        /**
+         * 显示计算过程
+         * @param {number} n1 - 起始数
+         * @param {number} n2 - 终止数
+         */
+        function showProcess(n1, n2) {
+            const container = document.getElementById('processContainer');
+            const steps = document.getElementById('processSteps');
+            container.style.display = 'block';
+            steps.innerHTML = '';
+
+            // 定义计算步骤
+            const steps_info = [
+                {text: `计算公式：(首项 + 末项) × 项数 ÷ 2`, type: 'formula'},
+                {text: `(${n1} + ${n2}) × (${n2} - ${n1} + 1) ÷ 2`, type: 'substitution'},
+                {text: `= (${n1 + n2}) × ${n2 - n1 + 1} ÷ 2`, type: 'step1'},
+                {text: `= ${(n1 + n2) * (n2 - n1 + 1)} ÷ 2`, type: 'step2'},
+                {text: `= ${(n1 + n2) * (n2 - n1 + 1) / 2}`, type: 'result'}
+            ];
+
+            // 创建并显示每个步骤
+            steps_info.forEach((step, index) => {
+                const div = document.createElement('div');
+                div.className = 'process-step';
+                div.textContent = step.text;
+                steps.appendChild(div);
+
+                // 添加渐进式高亮效果
+                setTimeout(() => {
+                    div.classList.add('highlight');
+                }, index * 300);
+            });
+        }
+
+        /**
+         * 清空所有输入和显示
+         */
+        function clearAll() {
+            // 清空输入值
+            document.getElementById('startNum').value = '';
+            document.getElementById('endNum').value = '';
+            document.getElementById('result').value = '';
+            
+            // 隐藏计算过程
+            document.getElementById('processContainer').style.display = 'none';
+            
+            // 重置范围指示器
+            document.querySelector('.range-progress').style.width = '0';
+            
+            // 清除所有错误状态
+            document.querySelectorAll('.input-error').forEach(input => {
+                input.classList.remove('input-error');
+            });
+            
+            // 隐藏所有提示
+            document.querySelectorAll('.input-tip').forEach(tip => {
+                tip.style.display = 'none';
+            });
+        }
+    </script>
+</body>
+</html> 
