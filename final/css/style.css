@@ -7,139 +7,156 @@
 }
 
 .header {
-    background: #fff;
-    box-shadow: 0 2px 8px rgba(0,0,0,0.08);
     position: fixed;
-    width: 100%;
     top: 0;
+    right: 0;
     z-index: 1000;
+    background: transparent;
+    transition: all 0.3s ease;
+    width: auto;
 }
 
-.nav-container {
-    max-width: 1200px;
-    margin: 0 auto;
-    height: 64px;
+.header.scrolled {
+    background: rgba(255, 255, 255, 0.95);
+    box-shadow: 0 2px 10px rgba(0, 0, 0, 0.1);
+}
+
+.header.scrolled .el-menu-item {
+    color: #606266;
+}
+
+.nav {
     display: flex;
     align-items: center;
-    padding: 0 24px;
+    gap: 20px;
+    padding: 0 20px;
+    height: 60px;
+    background: transparent;
+    transition: all 0.3s ease;
+    border-radius: 0 0 0 8px;
 }
 
-.nav-brand {
-    margin-right: 48px;
+.nav .el-menu {
+    border: none;
+    background: transparent;
+    padding: 0;
+    min-width: auto;
 }
 
-.logo-wrapper {
+.nav .el-menu-item {
+    height: 60px;
+    line-height: 60px;
+    color: #fff;
+    transition: all 0.3s ease;
+    padding: 0 15px;
+}
+
+.nav .el-menu-item.is-active {
+    color: #fff;
+    border-bottom-color: #fff;
+}
+
+.header.scrolled .el-menu-item.is-active {
+    color: #409EFF;
+    border-bottom-color: #409EFF;
+}
+
+.nav .el-input {
+    width: 200px;
+}
+
+.nav .el-input__inner {
+    height: 36px;
+    line-height: 36px;
+    border-radius: 18px;
+    padding-left: 35px;
+    background: rgba(255, 255, 255, 0.1);
+    border: 1px solid rgba(255, 255, 255, 0.2);
+    color: #fff;
+    transition: all 0.3s ease;
+}
+
+.header.scrolled .el-input__inner {
+    background: #f5f7fa;
+    border-color: #dcdfe6;
+    color: #606266;
+}
+
+.nav .el-input__inner::placeholder {
+    color: rgba(255, 255, 255, 0.7);
+    transition: all 0.3s ease;
+}
+
+.header.scrolled .el-input__inner::placeholder {
+    color: #909399;
+}
+
+.nav .el-input__prefix {
+    left: 12px;
+    color: rgba(255, 255, 255, 0.7);
+    transition: all 0.3s ease;
+}
+
+.header.scrolled .el-input__prefix {
+    color: #909399;
+}
+
+.nav .user-profile {
     display: flex;
     align-items: center;
     gap: 8px;
-}
-
-.logo-wrapper i {
-    font-size: 28px;
-    color: var(--primary-color);
-    background: linear-gradient(45deg, #1890ff, #36cfc9);
-    -webkit-background-clip: text;
-    -webkit-text-fill-color: transparent;
-}
-
-.logo-text {
-    font-size: 20px;
-    font-weight: 600;
-    background: linear-gradient(45deg, #1890ff, #36cfc9);
-    -webkit-background-clip: text;
-    -webkit-text-fill-color: transparent;
-}
-
-.nav-menu {
-    flex: 1;
-}
-
-.ant-menu-horizontal {
-    border-bottom: none;
-}
-
-.nav-menu .ant-menu-item {
-    padding: 0 20px;
-    margin: 0 4px;
-}
-
-.nav-menu .anticon {
-    margin-right: 8px;
-    font-size: 18px;
-}
-
-.nav-right {
-    display: flex;
-    align-items: center;
-    gap: 24px;
-}
-
-.search-wrapper .ant-input-affix-wrapper {
-    border-radius: 20px;
-}
-
-.search-wrapper .ant-input-affix-wrapper:hover {
-    border-color: var(--primary-color);
-}
-
-.user-section {
-    display: flex;
-    align-items: center;
-    gap: 12px;
-}
-
-.login-btn {
-    font-size: 14px;
-}
-
-.register-btn {
-    border-radius: 20px;
-    height: 32px;
-    padding: 0 20px;
-}
-
-.user-profile {
-    display: flex;
-    align-items: center;
     cursor: pointer;
-    padding: 4px 8px;
-    border-radius: 20px;
-    transition: all 0.3s ease;
 }
 
-.user-profile:hover {
-    background: rgba(64, 158, 255, 0.1);
-}
-
-.user-profile .el-avatar {
-    background: linear-gradient(135deg, #409EFF, #36cfc9);
-    color: #fff;
-    font-weight: 500;
-    border: 2px solid #fff;
-    box-shadow: 0 2px 8px rgba(0, 0, 0, 0.1);
-    transition: all 0.3s ease;
-}
-
-.user-profile:hover .el-avatar {
-    transform: scale(1.05);
-    box-shadow: 0 4px 12px rgba(0, 0, 0, 0.15);
-}
-
-.username {
+.nav .username {
     font-size: 14px;
+    color: #fff;
+    transition: all 0.3s ease;
+}
+
+.header.scrolled .username {
     color: #606266;
-    margin: 0 8px;
-    font-weight: 500;
 }
 
-.el-icon-caret-bottom {
+.nav .el-icon-caret-bottom {
     font-size: 12px;
-    color: #909399;
-    transition: transform 0.3s ease;
+    color: rgba(255, 255, 255, 0.7);
+    transition: all 0.3s ease;
 }
 
-.user-profile:hover .el-icon-caret-bottom {
-    transform: rotate(180deg);
+.header.scrolled .el-icon-caret-bottom {
+    color: #909399;
+}
+
+.nav .el-button--text {
+    color: #fff;
+    transition: all 0.3s ease;
+}
+
+.header.scrolled .el-button--text {
+    color: #606266;
+}
+
+.nav .el-button--primary {
+    background: rgba(64, 158, 255, 0.1);
+    border: 1px solid rgba(255, 255, 255, 0.3);
+    color: #fff;
+    transition: all 0.3s ease;
+}
+
+.header.scrolled .el-button--primary {
+    background: #409EFF;
+    border-color: #409EFF;
+    color: #fff;
+}
+
+.nav .el-avatar {
+    border: 2px solid rgba(255, 255, 255, 0.8);
+    transition: all 0.3s ease;
+}
+
+.header.scrolled .el-avatar {
+    border-color: rgba(64, 158, 255, 0.3);
 }
 
 /* 响应式设计 */
@@ -161,9 +178,13 @@
 
 /* 下拉菜单样式 */
 .el-dropdown-menu {
-    padding: 8px 0;
-    border-radius: 8px;
-    box-shadow: 0 4px 16px rgba(0, 0, 0, 0.1);
+    padding: 5px 0;
+    min-width: 160px;
+    background: rgba(255, 255, 255, 0.95);
+    backdrop-filter: blur(10px);
+    border: none;
+    box-shadow: 0 2px 12px rgba(0, 0, 0, 0.1);
+    margin-top: 5px;
 }
 
 .el-dropdown-menu__item {
@@ -171,25 +192,44 @@
     align-items: center;
     padding: 10px 20px;
     font-size: 14px;
-}
-
-.el-dropdown-menu__item i {
-    margin-right: 8px;
-    font-size: 16px;
+    line-height: 1.5;
+    white-space: nowrap;
+    position: relative;
+    overflow: visible;
+    background: transparent !important;
+    color: #303133;
 }
 
 .el-dropdown-menu__item:hover {
-    background: rgba(64, 158, 255, 0.1);
-    color: #409EFF;
+    background: rgba(64, 158, 255, 0.1) !important;
+}
+
+.el-dropdown-menu__item i {
+    margin-right: 10px;
+    font-size: 16px;
+    width: 20px;
+    text-align: center;
+    flex-shrink: 0;
 }
 
 .el-dropdown-menu__item.danger {
     color: #F56C6C;
+    justify-content: center;
+}
+
+.el-dropdown-menu__item.danger i {
+    margin-right: 8px;
 }
 
 .el-dropdown-menu__item.danger:hover {
-    background: rgba(245, 108, 108, 0.1);
+    background: rgba(245, 108, 108, 0.1) !important;
     color: #F56C6C;
+}
+
+.el-dropdown-menu__item.el-dropdown-menu__item--divided {
+    border-top: 1px solid rgba(235, 238, 245, 0.5);
+    margin-top: 6px;
+    padding-top: 12px;
 }
 
 /* 个人中心样式 */
@@ -348,4 +388,427 @@
 .order-details strong {
     color: #303133;
     margin-right: 5px;
+}
+
+/* 用户下拉菜单样式 */
+.el-dropdown-menu {
+    padding: 5px 0;
+    min-width: 160px;
+}
+
+.el-dropdown-menu__item {
+    display: flex;
+    align-items: center;
+    padding: 10px 20px;
+    font-size: 14px;
+    line-height: 1.5;
+    white-space: nowrap;
+    position: relative;
+    overflow: visible;
+}
+
+.el-dropdown-menu__item i {
+    margin-right: 10px;
+    font-size: 16px;
+    width: 20px;
+    text-align: center;
+    flex-shrink: 0;
+}
+
+.el-dropdown-menu__item.danger {
+    color: #F56C6C;
+    justify-content: center;
+}
+
+.el-dropdown-menu__item.danger i {
+    margin-right: 8px;
+    position: relative;
+}
+
+.el-dropdown-menu__item.danger:hover {
+    background: rgba(245, 108, 108, 0.1);
+    color: #F56C6C;
+}
+
+.el-dropdown-menu__item.el-dropdown-menu__item--divided {
+    border-top: 1px solid #ebeef5;
+    margin-top: 6px;
+    padding-top: 12px;
+}
+
+/* 用户头像和下拉菜单样式 */
+.user-profile {
+    display: flex;
+    align-items: center;
+    cursor: pointer;
+    padding: 4px 8px;
+    border-radius: 20px;
+    transition: all 0.3s ease;
+}
+
+.user-profile:hover {
+    background: rgba(64, 158, 255, 0.1);
+}
+
+.user-profile .el-avatar {
+    margin-right: 8px;
+}
+
+.user-profile .username {
+    margin: 0 4px;
+    font-size: 14px;
+}
+
+.user-profile .el-icon-caret-bottom {
+    font-size: 12px;
+    margin-left: 4px;
+}
+
+/* 搜索框样式 */
+.nav-right .el-input {
+    width: 200px;
+}
+
+.nav-right .el-input__inner {
+    background: rgba(255, 255, 255, 0.15);
+    border: 1px solid rgba(255, 255, 255, 0.2);
+    border-radius: 20px;
+    color: #fff;
+    height: 36px;
+    line-height: 36px;
+    padding-left: 35px;
+    transition: all 0.3s ease;
+}
+
+.nav-right .el-input__inner::placeholder {
+    color: rgba(255, 255, 255, 0.7);
+    transition: all 0.3s ease;
+}
+
+.nav-right .el-input__prefix {
+    color: rgba(255, 255, 255, 0.7);
+    font-size: 16px;
+    left: 12px;
+    transition: all 0.3s ease;
+}
+
+.nav-right .el-input__inner:hover,
+.nav-right .el-input__inner:focus {
+    background: rgba(255, 255, 255, 0.2);
+    border-color: rgba(255, 255, 255, 0.3);
+}
+
+.header.scrolled .nav-right .el-input__inner:hover,
+.header.scrolled .nav-right .el-input__inner:focus {
+    background: rgba(0, 0, 0, 0.08);
+    border-color: #c0c4cc;
+}
+
+/* 登录按钮样式 */
+.nav-right .el-button--text {
+    color: #fff;
+    background: transparent;
+    padding: 8px 15px;
+}
+
+.nav-right .el-button--text:hover {
+    color: #409EFF;
+    background: rgba(255, 255, 255, 0.1);
+}
+
+.nav-right .el-button--primary {
+    background: rgba(64, 158, 255, 0.1);
+    border: 1px solid rgba(255, 255, 255, 0.3);
+    color: #fff;
+    padding: 8px 20px;
+}
+
+.nav-right .el-button--primary:hover {
+    background: #409EFF;
+    border-color: #409EFF;
+    color: #fff;
+}
+
+/* 导航菜单样式 */
+.el-menu.el-menu--horizontal {
+    border: none;
+    background: transparent;
+}
+
+.el-menu--horizontal > .el-menu-item {
+    height: 60px;
+    line-height: 60px;
+    border-bottom: none;
+    color: #303133;
+    background: transparent !important;
+}
+
+.el-menu--horizontal > .el-menu-item:hover {
+    background: rgba(255, 255, 255, 0.1) !important;
+    color: #409EFF;
+}
+
+.el-menu--horizontal > .el-menu-item.is-active {
+    border-bottom: 2px solid #409EFF;
+    color: #409EFF;
+    background: transparent !important;
+}
+
+/* 导航栏右侧样式 */
+.nav-right {
+    display: flex;
+    align-items: center;
+    gap: 20px;
+    background: transparent;
+}
+
+/* 搜索框样式 */
+.nav-right .el-input {
+    width: 200px;
+}
+
+.nav-right .el-input__inner {
+    background: rgba(255, 255, 255, 0.15);
+    border: 1px solid rgba(255, 255, 255, 0.2);
+    border-radius: 20px;
+    color: #fff;
+    height: 36px;
+    line-height: 36px;
+    padding-left: 35px;
+}
+
+.nav-right .el-input__inner::placeholder {
+    color: rgba(255, 255, 255, 0.7);
+}
+
+.nav-right .el-input__prefix {
+    color: rgba(255, 255, 255, 0.7);
+    font-size: 16px;
+    left: 12px;
+}
+
+.nav-right .el-input__inner:hover,
+.nav-right .el-input__inner:focus {
+    background: rgba(255, 255, 255, 0.2);
+    border-color: rgba(255, 255, 255, 0.3);
+}
+
+/* 登录按钮样式 */
+.nav-right .el-button--text {
+    color: #fff;
+    background: transparent;
+    padding: 8px 15px;
+}
+
+.nav-right .el-button--text:hover {
+    color: #409EFF;
+    background: rgba(255, 255, 255, 0.1);
+}
+
+.nav-right .el-button--primary {
+    background: rgba(64, 158, 255, 0.1);
+    border: 1px solid rgba(255, 255, 255, 0.3);
+    color: #fff;
+    padding: 8px 20px;
+}
+
+.nav-right .el-button--primary:hover {
+    background: #409EFF;
+    border-color: #409EFF;
+    color: #fff;
+}
+
+/* 用户头像和下拉菜单样式 */
+.user-profile {
+    display: flex;
+    align-items: center;
+    cursor: pointer;
+    padding: 4px 12px;
+    border-radius: 20px;
+    transition: all 0.3s ease;
+    background: transparent;
+}
+
+.user-profile:hover {
+    background: rgba(255, 255, 255, 0.1);
+}
+
+/* 下拉菜单样式 */
+.el-dropdown-menu {
+    padding: 5px 0;
+    min-width: 160px;
+    background: rgba(255, 255, 255, 0.95);
+    backdrop-filter: blur(10px);
+    border: none;
+    box-shadow: 0 2px 12px rgba(0, 0, 0, 0.1);
+    margin-top: 5px;
+}
+
+.el-dropdown-menu__item {
+    display: flex;
+    align-items: center;
+    padding: 10px 20px;
+    font-size: 14px;
+    line-height: 1.5;
+    white-space: nowrap;
+    position: relative;
+    overflow: visible;
+    background: transparent !important;
+    color: #303133;
+}
+
+.el-dropdown-menu__item:hover {
+    background: rgba(64, 158, 255, 0.1) !important;
+}
+
+.el-dropdown-menu__item i {
+    margin-right: 10px;
+    font-size: 16px;
+    width: 20px;
+    text-align: center;
+    flex-shrink: 0;
+}
+
+.el-dropdown-menu__item.danger {
+    color: #F56C6C;
+    justify-content: center;
+}
+
+.el-dropdown-menu__item.danger i {
+    margin-right: 8px;
+}
+
+.el-dropdown-menu__item.danger:hover {
+    background: rgba(245, 108, 108, 0.1) !important;
+    color: #F56C6C;
+}
+
+.el-dropdown-menu__item.el-dropdown-menu__item--divided {
+    border-top: 1px solid rgba(235, 238, 245, 0.5);
+    margin-top: 6px;
+    padding-top: 12px;
+}
+
+.nav .el-avatar {
+    border: 2px solid rgba(255, 255, 255, 0.8);
+    transition: all 0.3s ease;
+}
+
+.header.scrolled .el-avatar {
+    border-color: rgba(64, 158, 255, 0.3);
+}
+
+.nav .search-input {
+    width: 300px;
+}
+
+.nav .el-autocomplete {
+    width: 100%;
+}
+
+.nav .el-input__inner {
+    height: 36px;
+    line-height: 36px;
+    border-radius: 18px;
+    padding-left: 35px;
+    background: rgba(255, 255, 255, 0.1);
+    border: 1px solid rgba(255, 255, 255, 0.2);
+    color: #fff;
+    transition: all 0.3s ease;
+}
+
+.header.scrolled .el-input__inner {
+    background: #f5f7fa;
+    border-color: #dcdfe6;
+    color: #606266;
+}
+
+.nav .el-input__inner::placeholder {
+    color: rgba(255, 255, 255, 0.7);
+    transition: all 0.3s ease;
+}
+
+.header.scrolled .el-input__inner::placeholder {
+    color: #909399;
+}
+
+.nav .el-input__prefix {
+    left: 12px;
+    color: rgba(255, 255, 255, 0.7);
+    transition: all 0.3s ease;
+}
+
+.header.scrolled .el-input__prefix {
+    color: #909399;
+}
+
+/* 搜索框样式 */
+.search-box {
+    max-width: 300px;
+    width: 100%;
+    margin: 0 auto;
+}
+
+.search-box .input-group {
+    background-color: rgba(255, 255, 255, 0.1);
+    border-radius: 20px;
+    padding: 3px 15px;
+    transition: all 0.3s ease;
+}
+
+.search-box .input-group:hover,
+.search-box .input-group:focus-within {
+    background-color: rgba(255, 255, 255, 0.2);
+}
+
+.search-box .form-control {
+    background: transparent;
+    border: none;
+    color: #fff;
+    padding: 6px 5px;
+    font-size: 14px;
+    height: 32px;
+}
+
+.search-box .form-control::placeholder {
+    color: rgba(255, 255, 255, 0.7);
+    font-size: 14px;
+}
+
+.search-box .form-control:focus {
+    box-shadow: none;
+    outline: none;
+}
+
+/* 当页面滚动时搜索框样式 */
+.navbar.scrolled .search-box .input-group {
+    background-color: rgba(0, 0, 0, 0.05);
+}
+
+.navbar.scrolled .search-box .form-control {
+    color: #333;
+}
+
+.navbar.scrolled .search-box .form-control::placeholder {
+    color: rgba(0, 0, 0, 0.5);
+}
+
+/* 导航栏样式 */
+.navbar {
+    transition: all 0.3s ease;
+    padding: 20px 0;
+}
+
+.navbar.scrolled {
+    background-color: #fff;
+    box-shadow: 0 2px 10px rgba(0, 0, 0, 0.1);
+    padding: 10px 0;
+}
+
+.navbar.scrolled .nav-link {
+    color: #333;
+}
+
+.navbar.scrolled .nav-link:hover {
+    color: #409EFF;
 } 

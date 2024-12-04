@@ -405,7 +405,7 @@ new Vue({
             }, 400);
         },
         
-        // 修改收藏方法，模仿点赞的实现
+        // 修改收藏方法，保持原有动态效果，添加数据同步
         toggleFavorite(guide) {
             if (!this.checkLogin()) return;
 
@@ -422,6 +422,11 @@ new Vue({
                 guide.favorites = Math.max(0, currentFavorites - 1);
                 this.$set(this.favoritesCounts, guide.id, guide.favorites);
                 this.$message.info('已取消收藏');
+
+                // 同步到 userFavorites
+                let favorites = JSON.parse(localStorage.getItem('userFavorites') || '[]');
+                favorites = favorites.filter(f => f.id !== guide.id);
+                localStorage.setItem('userFavorites', JSON.stringify(favorites));
             } else {
                 // 添加收藏
                 this.userInteractions.favorites.add(guide.id);
@@ -429,6 +434,21 @@ new Vue({
                 guide.favorites = currentFavorites + 1;
                 this.$set(this.favoritesCounts, guide.id, guide.favorites);
                 this.$message.success('收藏成功');
+
+                // 同步到 userFavorites
+                let favorites = JSON.parse(localStorage.getItem('userFavorites') || '[]');
+                favorites.push({
+                    id: guide.id,
+                    type: 'guide',
+                    title: guide.title,
+                    description: guide.description,
+                    image: guide.image,
+                    rating: guide.rating || 0,
+                    tags: guide.tags || [],
+                    favoriteTime: new Date().toISOString(),
+                    fromPage: 'travel-guide'
+                });
+                localStorage.setItem('userFavorites', JSON.stringify(favorites));
             }
             
             // 保存状态
@@ -897,6 +917,14 @@ new Vue({
         window.addEventListener('error', (e) => {
             console.error('Error:', e);
             this.$message.error('操作失败，请刷新页面重试');
+        });
+        
+        // 同步收藏状态
+        const favorites = JSON.parse(localStorage.getItem('userFavorites') || '[]');
+        favorites.forEach(f => {
+            if (f.fromPage === 'travel-guide') {
+                this.userInteractions.favorites.add(f.id);
+            }
         });
     },
 

@@ -20,7 +20,6 @@
         <!-- 导航栏 -->
         <header class="header">
             <nav class="nav">
-              
                 <el-menu mode="horizontal" :default-active="currentPath" @select="handleMenuClick">
                     <el-menu-item v-for="item in menuItems" 
                                   :key="item.key" 
@@ -28,20 +27,26 @@
                         <i :class="item.icon"></i> {{item.text}}
                     </el-menu-item>
                 </el-menu>
-                <div class="nav-right">
-                    <el-input
-                        placeholder="搜索目的地/攻略/酒店"
-                        prefix-icon="el-icon-search"
-                        v-model="searchText"
-                        @keyup.enter.native="onSearch">
-                    </el-input>
+                <el-input
+                    placeholder="搜索目的地/攻略/酒店"
+                    prefix-icon="el-icon-search"
+                    v-model="searchText" 
+                    @keyup.enter.native="handleSearch"
+                    size="small"
+                    style="width: 250px; margin: 0 20px;">
+                </el-input>
+                <template v-if="!isLoggedIn">
+                    <el-button type="text" @click="handleLogin">登录</el-button>
+                    <el-button type="text" @click="handleRegister">注册</el-button>
+                </template>
+                <div class="nav-right ms-auto">
                     <template v-if="!isLoggedIn">
                         <el-button type="text" @click="handleLogin">
                             <i class="fas fa-user"></i> 登录
                         </el-button>
                         <el-button type="primary" round @click="handleLogin">注册</el-button>
                     </template>
-                    <el-dropdown v-else trigger="click">
+                    <el-dropdown v-else trigger="click" @command="handleMenuClick">
                         <div class="user-profile">
                             <el-avatar 
                                 :size="36"
@@ -55,23 +60,19 @@
                             <i class="el-icon-caret-bottom"></i>
                         </div>
                         <el-dropdown-menu slot="dropdown">
-                            <el-dropdown-item @click="handleMenuClick('profile')">
+                            <el-dropdown-item command="profile">
                                 <i class="fas fa-user-circle"></i>
                                 个人中心
                             </el-dropdown-item>
-                            <el-dropdown-item>
+                            <el-dropdown-item command="orders">
                                 <i class="fas fa-shopping-bag"></i>
                                 我的订单
                             </el-dropdown-item>
-                            <el-dropdown-item>
+                            <el-dropdown-item command="favorites">
                                 <i class="fas fa-heart"></i>
                                 我的收藏
                             </el-dropdown-item>
-                            <el-dropdown-item>
-                                <i class="fas fa-cog"></i>
-                                设置
-                            </el-dropdown-item>
-                            <el-dropdown-item divided class="danger" @click="logout">
+                            <el-dropdown-item divided class="danger" @click.native="logout">
                                 <i class="fas fa-sign-out-alt"></i>
                                 退出登录
                             </el-dropdown-item>
@@ -244,7 +245,7 @@
                                     <li><a href="#">目的地</a></li>
                                     <li><a href="#">旅游攻略</a></li>
                                     <li><a href="#">特色体验</a></li>
-                                    <li><a href="#">帮助中心</a></li>
+                                    <li><a href="#">帮助中</a></li>
                                 </ul>
                             </div>
                         </el-col>

@@ -11,7 +11,14 @@ new Vue({
             userAvatar: '',
             currentUser: null,
             searchText: '',
-            newsletterEmail: '', // 添加订阅邮箱字段
+            newsletterEmail: '',
+            searchResults: [],
+            destinations: [
+                { value: '北京', link: 'pages/destination.html?id=1' },
+                { value: '上海', link: 'pages/destination.html?id=2' },
+                { value: '西安', link: 'pages/destination.html?id=3' },
+                { value: '成都', link: 'pages/destination.html?id=4' }
+            ],
             
             // 数据统计
             statistics: [
@@ -146,25 +153,38 @@ new Vue({
                     icon: 'fas fa-calendar-check',
                     text: '预定',
                     path: 'pages/booking.html'
-                },
+                }
+            ],
+
+            // 添加用户菜单配置
+            userMenuItems: [
                 {
                     key: 'profile',
-                    icon: 'fas fa-user',
+                    icon: 'fas fa-user-circle',
                     text: '个人中心',
-                    path: 'pages/user-center.html',
-                    requireAuth: true
+                    path: 'pages/user-center.html'
+                },
+                {
+                    key: 'orders',
+                    icon: 'fas fa-shopping-bag',
+                    text: '我的订单',
+                    path: 'pages/user-center.html?tab=orders'
+                },
+                {
+                    key: 'favorites',
+                    icon: 'fas fa-heart',
+                    text: '我的收藏',
+                    path: 'pages/user-center.html?tab=favorites'
                 }
             ]
         }
     },
     methods: {
-        // 搜索功能
-        handleSearch(value) {
-            if (!value.trim()) {
-                this.$message.warning('请输入搜索内容');
-                return;
+        // 处理搜索
+        handleSearch() {
+            if (this.searchText.trim()) {
+                window.location.href = `pages/search.html?q=${encodeURIComponent(this.searchText.trim())}`;
             }
-            this.$message.info(`正在搜索: ${value}`);
         },
         
         // 订阅功能
@@ -198,13 +218,20 @@ new Vue({
             }
         },
         
-        // 导航处理方法
-        handleMenuClick(e) {
-            const key = e.index || e;
-            const menuItem = this.menuItems.find(item => item.key === key);
+        // 导航理方法
+        handleMenuClick(key) {
+            console.log('点击菜单项:', key);
+            // 首先检查是否是用户菜单项
+            let menuItem = this.userMenuItems.find(item => item.key === key);
+            if (!menuItem) {
+                // 如果不是用户菜单项，则查找主导航菜单项
+                menuItem = this.menuItems.find(item => item.key === key);
+            }
             
             if (menuItem) {
-                if (menuItem.requireAuth) {
+                console.log('找到菜单项:', menuItem);
+                // 用户菜单项都需要登录
+                if (menuItem.key === 'profile' || menuItem.key === 'orders' || menuItem.key === 'favorites') {
                     const isLoggedIn = localStorage.getItem('isLoggedIn') === 'true';
                     const userInfo = localStorage.getItem('userInfo');
                     
@@ -215,7 +242,31 @@ new Vue({
                         return;
                     }
                 }
-                window.location.href = menuItem.path;
+                
+                // 获取当前页面的路径信息
+                const currentPath = window.location.pathname;
+                console.log('当前路径:', currentPath);
+                
+                // 构建目标路径
+                let targetPath = menuItem.path;
+                
+                // 如果是用户中心相关的页面，添加对应的tab参数
+                if (menuItem.key === 'orders' || menuItem.key === 'favorites') {
+                    const baseUrl = targetPath.split('?')[0];
+                    targetPath = `${baseUrl}?tab=${menuItem.key}`;
+                }
+                
+                // 根据当前位置调整路径
+                if (currentPath.includes('/pages/')) {
+                    // 如果当前在pages目录下，需要添加../
+                    targetPath = '../' + targetPath;
+                } else if (!targetPath.startsWith('pages/') && targetPath !== 'index.html') {
+                    // 如果在根目录，且目标不是index.html，需要添加pages/
+                    targetPath = 'pages/' + targetPath;
+                }
+                
+                console.log('跳转到:', targetPath);
+                window.location.href = targetPath;
             }
         },
         
@@ -277,6 +328,23 @@ new Vue({
 
         handleCategorySelect(category) {
             // ...
+        },
+
+        // 搜索建议
+        querySearchAsync(queryString, cb) {
+            const results = queryString ? this.destinations.filter(item => {
+                return item.value.toLowerCase().indexOf(queryString.toLowerCase()) > -1
+            }) : [];
+            
+            // 模拟异步请求
+            setTimeout(() => {
+                cb(results);
+            }, 200);
+        },
+
+        // 选择搜索建议
+        handleSelect(item) {
+            window.location.href = item.link;
         }
     },
     mounted() {
@@ -298,7 +366,7 @@ new Vue({
             this.currentPath = 'destination';
         }
         
-        // 添加滚动监听
+        // 添加滚监听
         window.addEventListener('scroll', this.handleScroll);
     },
     

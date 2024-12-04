@@ -1177,4 +1177,22 @@
 
 .guide-detail-actions .favorite-btn.active {
     color: #E6A23C;
+}
+
+/* 返回主页按钮样式 */
+.nav-links .el-button--primary {
+    background-color: #409EFF;
+    border-color: #409EFF;
+    padding: 10px 20px;
+    border-radius: 20px;
+    transition: all 0.3s ease;
+}
+
+.nav-links .el-button--primary:hover {
+    transform: translateY(-2px);
+    box-shadow: 0 4px 12px rgba(64, 158, 255, 0.3);
+}
+
+.nav-links .el-button--primary i {
+    margin-right: 5px;
 } 

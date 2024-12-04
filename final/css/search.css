@@ -1,0 +1,191 @@
+/* 导航栏搜索框样式优化 */
+.navbar .search-box {
+    position: relative;
+    width: 100%;
+    max-width: 500px;
+    margin: 0 auto;
+}
+
+.navbar .search-input {
+    width: 100%;
+}
+
+.navbar .search-input .el-input__inner {
+    border-radius: 20px 0 0 20px;
+    height: 40px;
+}
+
+.navbar .el-input-group__append {
+    border-radius: 0 20px 20px 0;
+    background-color: #fff;
+}
+
+/* 搜索建议下拉框样式 */
+.search-suggestions {
+    position: absolute;
+    width: 100%;
+    z-index: 1000;
+    margin-top: 5px;
+}
+
+.suggestions-card {
+    border-radius: 8px;
+    box-shadow: 0 2px 12px rgba(0, 0, 0, 0.1);
+}
+
+.suggestion-item {
+    padding: 10px 15px;
+    cursor: pointer;
+    display: flex;
+    align-items: center;
+    gap: 8px;
+    transition: background-color 0.2s;
+}
+
+.suggestion-item:hover {
+    background-color: #f5f7fa;
+}
+
+.suggestion-item i {
+    color: #909399;
+    font-size: 14px;
+}
+
+.suggestion-item span {
+    flex: 1;
+    color: #606266;
+}
+
+/* 热门搜索和历史记录区域样式 */
+.search-history-section {
+    background-color: #fff;
+    border-radius: 8px;
+    padding: 20px;
+    margin: 20px 0;
+    box-shadow: 0 2px 12px rgba(0, 0, 0, 0.05);
+}
+
+.search-history-section h6 {
+    font-size: 16px;
+    margin-bottom: 15px;
+    color: #303133;
+}
+
+.search-history-section .tag-cloud {
+    display: flex;
+    flex-wrap: wrap;
+    gap: 10px;
+}
+
+.tag-item {
+    padding: 6px 16px;
+    background-color: #f5f7fa;
+    border-radius: 20px;
+    font-size: 14px;
+    color: #606266;
+    cursor: pointer;
+    transition: all 0.3s;
+    display: flex;
+    align-items: center;
+    gap: 8px;
+}
+
+.tag-item:hover {
+    background-color: #e4e7ed;
+}
+
+.tag-item .fa-times {
+    font-size: 12px;
+    opacity: 0.6;
+}
+
+.tag-item .fa-times:hover {
+    opacity: 1;
+}
+
+/* 推荐卡片样式 */
+.recommendations {
+    margin-top: 40px;
+    padding-top: 20px;
+    border-top: 1px solid #ebeef5;
+}
+
+.recommendations h5 {
+    margin-bottom: 20px;
+    color: #303133;
+}
+
+.recommendations h5 i {
+    color: #409EFF;
+    margin-right: 8px;
+}
+
+.recommendation-card {
+    transition: transform 0.2s, box-shadow 0.2s;
+    height: 100%;
+    border: none;
+    border-radius: 8px;
+    overflow: hidden;
+    box-shadow: 0 2px 12px rgba(0, 0, 0, 0.05);
+}
+
+.recommendation-card:hover {
+    transform: translateY(-5px);
+    box-shadow: 0 4px 16px rgba(0, 0, 0, 0.1);
+}
+
+.recommendation-card .card-img-top {
+    height: 200px;  /* 统一图片高度 */
+    object-fit: cover;  /* 保持图片比例并填充指定区域 */
+    width: 100%;
+}
+
+.recommendation-card .card-body {
+    padding: 15px;
+}
+
+.recommendation-card .card-title {
+    font-size: 16px;
+    margin-bottom: 8px;
+    color: #303133;
+    display: -webkit-box;
+    -webkit-line-clamp: 1;
+    -webkit-box-orient: vertical;
+    overflow: hidden;
+}
+
+.recommendation-card .card-text {
+    color: #606266;
+    font-size: 14px;
+    margin-bottom: 0;
+    display: -webkit-box;
+    -webkit-line-clamp: 2;  /* 限制描述文本为2行 */
+    -webkit-box-orient: vertical;
+    overflow: hidden;
+    line-height: 1.5;
+}
+
+/* 响应式优化 */
+@media (max-width: 768px) {
+    .navbar .search-box {
+        margin: 10px 0;
+    }
+    
+    .search-history-section {
+        margin: 10px 0;
+        padding: 15px;
+    }
+    
+    .tag-item {
+        padding: 4px 12px;
+        font-size: 13px;
+    }
+    
+    .recommendation-card {
+        margin-bottom: 20px;
+    }
+    
+    .recommendation-card .card-img-top {
+        height: 160px;  /* 移动端稍微降低图片高度 */
+    }
+} 
