@@ -47,7 +47,7 @@
 ### 功能说明
 1. 动态透明效果
    - 页面顶部时导航栏完全透明
-   - 向下滚动时渐变显示背景色
+   - ��动时渐变显示背景色
    - 添加毛玻璃效果增强视觉层次感
 
 2. 用户状态管理
@@ -145,7 +145,7 @@ export default {
             })
         },
         
-        // 初始化动画效果
+        // ���始化动画效果
         initAnimations() {
             // 标题文字渐变动画
             const title = document.querySelector('.hero-title')
@@ -232,7 +232,7 @@ export default {
 
 2. 滚动性能优化
    - 滚动事件防抖处理
-   - 使用transform��替定位
+   - 使用transform替定位
    - 启用硬件加速
 
 3. 状态管理优化
@@ -294,3 +294,193 @@ export default {
    - 沉浸式的视觉体验
    - 智能的个性化推荐
    - 便捷的操作流程
+
+## 1. 轮播图模块（季节推荐）
+
+### 核心代码
+html
+<!-- 轮播图核心实现 -->
+<el-carousel :interval="4000" type="card" height="400px">
+    <el-carousel-item v-for="item in seasonalRecommends" :key="item.id">
+        <div class="season-card">
+            <img :src="item.image" :alt="item.title">
+            <div class="season-content">
+                <h3>{{ item.title }}</h3>
+                <p>{{ item.description }}</p>
+            </div>
+        </div>
+    </el-carousel-item>
+</el-carousel>
+```
+
+```css
+/* 轮播图核心样式 */
+.el-carousel__item--card {
+    transform: translateX(50%) scale(0.8);
+    transition: transform 0.4s ease;
+}
+
+.el-carousel__item--card.is-active {
+    transform: translateX(0) scale(1);
+}
+```
+
+## 2. 页脚模块
+
+### 核心代码
+```html
+<!-- 页脚核心结构 -->
+<footer class="site-footer">
+    <div class="footer-content">
+        <el-row :gutter="30">
+            <!-- 关于我们 -->
+            <el-col :span="6">
+                <div class="footer-section">
+                    <h3>关于我们</h3>
+                    <p>探索美丽中国，发现最美的风景。</p>
+                    <div class="social-links">
+                        <a href="#"><i class="fab fa-weixin"></i></a>
+                        <a href="#"><i class="fab fa-weibo"></i></a>
+                    </div>
+                </div>
+            </el-col>
+            
+            <!-- 快速链接 -->
+            <el-col :span="6">
+                <div class="footer-section">
+                    <h3>快速链接</h3>
+                    <ul>
+                        <li><a href="#">目的地</a></li>
+                        <li><a href="#">旅游攻略</a></li>
+                    </ul>
+                </div>
+            </el-col>
+        </el-row>
+    </div>
+</footer>
+```
+
+```css
+/* 页脚核心样式 */
+.site-footer {
+    background: #f8f9fa;
+    padding: 60px 0 20px;
+}
+
+.social-links a {
+    transition: all 0.3s ease;
+}
+
+.social-links a:hover {
+    transform: translateY(-3px);
+    color: #409EFF;
+}
+```
+
+## 3. 登录状态管理
+
+### 功能说明
+1. 登录状态存储
+   - 使用localStorage存储登录状态和用户信息
+   - isLoggedIn标记用户是否登录
+   - userInfo存储用户基本信息（用户名、头像）
+   - 避免存储敏感信息
+
+2. 状态检查机制
+   - 页面加载时自动检查登录状态
+   - 实时监听登录状态变化
+   - 异常状态自动处理（如登录过期）
+
+3. 权限控制
+   - 未登录用户访问限制
+   - 自动重定向到登录页面
+   - 登录成功后返回原页面
+
+### 核心代码
+javascript
+// 保存登录状态
+localStorage.setItem('isLoggedIn', 'true');
+localStorage.setItem('userInfo', JSON.stringify({
+    username: '用户名',
+    avatar: '头像URL'
+}));
+
+// 检查登录状态
+checkLoginStatus() {
+    const isLoggedIn = localStorage.getItem('isLoggedIn') === 'true';
+    const userInfo = localStorage.getItem('userInfo');
+    
+    if (isLoggedIn && userInfo) {
+        const user = JSON.parse(userInfo);
+        this.isLoggedIn = true;
+        this.username = user.username;
+        this.userAvatar = user.avatar;
+    } else {
+        this.isLoggedIn = false;
+        this.username = '';
+        this.userAvatar = '';
+    }
+}
+
+// 登出处理
+logout() {
+    localStorage.removeItem('isLoggedIn');
+    localStorage.removeItem('userInfo');
+    this.isLoggedIn = false;
+    window.location.href = 'index.html';
+}
+
+// 页面权限控制
+if (menuItem.key === 'profile' || menuItem.key === 'orders') {
+    if (!localStorage.getItem('isLoggedIn')) {
+        this.$message.warning('请先登录');
+        localStorage.setItem('redirectPath', menuItem.path);
+        window.location.href = 'pages/login.html';
+        return;
+    }
+}
+```
+
+### 工作流程
+1. 用户登录
+   - 输入用户名密码登录
+   - 验证成功后保存登录状态
+   - 存储用户基本信息
+   - 更新页面显示状态
+
+2. 状态维护
+   - 每次页面加载检查登录状态
+   - 登录信息存储在localStorage
+   - 可跨页面保持登录状态
+   - 浏览器关闭后状态保留
+
+3. 权限验证
+   - 访问需要登录的页面时检查状态
+   - 未登录自动跳转到登录页
+   - 记录原访问页面路径
+   - 登录成功后自动返回
+
+4. 登出处理
+   - 清除localStorage中的登录信息
+   - 重置页面显示状态
+   - 跳转到首页
+   - 需要重新登录才能访问受限页面
+
+### 安全考虑
+1. 数据安全
+   - 不存储敏感信息（如密码）
+   - 只保存必要的用户信息
+   - 及时清理过期数据
+
+2. 状态管理
+   - 定期检查登录状态
+   - 异常状态自动处理
+   - 登录超时自动登出
+
+3. 用户体验
+   - 登录状态实时更新
+   - 清晰的登录提示
+   - 友好的重定向机制
+   - 平滑的状态切换
+```
+```

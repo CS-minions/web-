@@ -1,39 +1,42 @@
 .booking-container {
-    max-width: 1200px;
-    margin: 2rem auto;
-    padding: 2rem;
+    max-width: 700px;
+    margin: 1.5rem auto;
+    padding: 1.5rem;
     background: #fff;
-    border-radius: 15px;
-    box-shadow: 0 4px 20px rgba(0,0,0,0.08);
+    border-radius: 12px;
+    box-shadow: 0 2px 12px rgba(0,0,0,0.06);
 }
 
 .booking-header {
     text-align: center;
-    margin-bottom: 3rem;
+    margin-bottom: 2rem;
 }
 
 .booking-header h2 {
     color: #2c3e50;
-    margin-bottom: 1rem;
-    font-size: 2.2rem;
+    margin-bottom: 0.8rem;
+    font-size: 1.8rem;
 }
 
 .booking-header p {
     color: #7f8c8d;
-    font-size: 1.1rem;
+    font-size: 1rem;
 }
 
 /* 表单样式 */
 .booking-form {
-    padding: 20px;
+    padding: 15px;
+    max-width: 600px;
+    margin: 0 auto;
 }
 
 .el-form-item {
-    margin-bottom: 25px;
+    margin-bottom: 20px;
 }
 
 .el-form-item__label {
     font-weight: 500;
+    font-size: 0.95rem;
 }
 
 .el-input, .el-select {
@@ -43,135 +46,94 @@
 /* 支付方式样式 */
 .el-radio-group {
     display: flex;
-    gap: 20px;
+    gap: 15px;
 }
 
 .el-radio {
     display: flex;
     align-items: center;
-    padding: 10px;
+    padding: 8px;
 }
 
 /* 响应式设计 */
 @media (max-width: 768px) {
+    .nav {
+        height: 48px;
+    }
+
+    .logo {
+        font-size: 1.1rem;
+    }
+
+    .logo i {
+        font-size: 1.3rem;
+    }
+
+    .nav-links a {
+        padding: 5px 10px;
+        font-size: 0.85rem;
+    }
+
+    .main-content {
+        margin-top: 58px;
+        padding: 10px;
+    }
+
     .booking-container {
         margin: 1rem;
         padding: 1rem;
+        max-width: 100%;
     }
     
     .booking-section {
         margin: 10px;
+        padding: 15px;
     }
     
     .el-form-item__label {
         float: none;
         display: block;
         text-align: left;
-        padding: 0 0 10px;
+        padding: 0 0 8px;
+        font-size: 0.9rem;
     }
     
     .el-form-item__content {
         margin-left: 0 !important;
     }
-}
 
-/* 添加 tab 样式 */
-.el-tabs {
-    margin-bottom: 20px;
-}
-
-.el-tabs__content {
-    padding: 20px;
-}
-
-/* 修改表单布局 */
-.booking-section {
-    max-width: 800px;
-    margin: 0 auto;
-}
-
-/* 调整按钮布局 */
-.el-form-item:last-child {
-    margin-bottom: 0;
-    text-align: center;
-}
-
-.el-form-item:last-child .el-form-item__content {
-    margin-left: 0 !important;
-}
-
-/* 价格预览样式 */
-.price-preview {
-    margin-top: 20px;
-    padding: 15px;
-    background: #f8f9fa;
-    border-radius: 4px;
-    text-align: right;
-}
-
-.price-label {
-    color: #606266;
-    margin-right: 10px;
-}
-
-.price-amount {
-    color: #F56C6C;
-    font-size: 18px;
-    font-weight: bold;
-}
-
-/* 改进表单布局 */
-.el-form-item {
-    margin-bottom: 25px;
-}
-
-.el-form-item__label {
-    font-weight: 500;
-}
-
-.el-input, .el-select {
-    width: 100%;
-}
-
-/* 改进日期选择器样式 */
-.el-date-editor.el-input {
-    width: 100%;
-}
-
-/* 改进数字输入框样式 */
-.el-input-number {
-    width: 180px;
-}
-
-/* 添加响应式布局 */
-@media (max-width: 768px) {
-    .booking-section {
-        margin: 10px;
+    .booking-header h2 {
+        font-size: 1.5rem;
     }
-    
-    .el-form-item__label {
-        float: none;
-        display: block;
-        text-align: left;
-        padding: 0 0 10px;
-    }
-    
-    .el-form-item__content {
-        margin-left: 0 !important;
+
+    .booking-header p {
+        font-size: 0.9rem;
     }
 }
 
 /* 导航栏样式优化 */
 .header {
     background: #fff;
-    box-shadow: 0 2px 8px rgba(0,0,0,0.08);
-    margin-bottom: 30px;
+    box-shadow: 0 1px 6px rgba(0,0,0,0.05);
+    position: fixed;
+    top: 0;
+    left: 0;
+    right: 0;
+    z-index: 1000;
+}
+
+/* 主内容区域样式 */
+.main-content {
+    margin-top: 74px;
+    padding: 15px;
+    background-color: #f8f9fa;
+    min-height: calc(100vh - 74px);
 }
 
 .nav {
-    max-width: 1200px;
+    max-width: 900px;
     margin: 0 auto;
-    height: 64px;
+    height: 54px;
     display: flex;
     justify-content: space-between;
     align-items: center;
@@ -179,28 +141,28 @@
 }
 
 .logo {
-    font-size: 1.5rem;
+    font-size: 1.3rem;
     font-weight: 600;
     color: #2c3e50;
     display: flex;
     align-items: center;
-    gap: 10px;
+    gap: 8px;
 }
 
 .logo i {
     color: var(--primary-color);
-    font-size: 1.8rem;
+    font-size: 1.5rem;
 }
 
 .nav-links a {
     display: inline-flex;
     align-items: center;
-    padding: 8px 16px;
+    padding: 6px 12px;
     color: #606266;
     text-decoration: none;
     border-radius: 4px;
     transition: all 0.3s ease;
-    font-size: 14px;
+    font-size: 0.9rem;
 }
 
 .nav-links a:hover {
@@ -209,25 +171,6 @@
 }
 
 .nav-links i {
-    margin-right: 6px;
-    font-size: 16px;
-}
-
-/* 响应式调整 */
-@media (max-width: 768px) {
-    .nav {
-        height: 56px;
-    }
-
-    .logo {
-        font-size: 1.2rem;
-    }
-
-    .logo i {
-        font-size: 1.5rem;
-    }
-
-    .nav-links a {
-        padding: 6px 12px;
-    }
+    margin-right: 5px;
+    font-size: 14px;
 } 
