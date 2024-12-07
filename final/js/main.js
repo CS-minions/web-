@@ -326,6 +326,11 @@ new Vue({
             window.location.href = 'pages/login.html';
         },
 
+        // 添加注册按钮点击处理
+        handleRegister() {
+            window.location.href = 'pages/register.html';
+        },
+
         handleCategorySelect(category) {
             // ...
         },

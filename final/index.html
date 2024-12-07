@@ -35,16 +35,12 @@
                     size="small"
                     style="width: 250px; margin: 0 20px;">
                 </el-input>
-                <template v-if="!isLoggedIn">
-                    <el-button type="text" @click="handleLogin">登录</el-button>
-                    <el-button type="text" @click="handleRegister">注册</el-button>
-                </template>
                 <div class="nav-right ms-auto">
                     <template v-if="!isLoggedIn">
                         <el-button type="text" @click="handleLogin">
                             <i class="fas fa-user"></i> 登录
                         </el-button>
-                        <el-button type="primary" round @click="handleLogin">注册</el-button>
+                        <el-button type="primary" round @click="handleRegister">注册</el-button>
                     </template>
                     <el-dropdown v-else trigger="click" @command="handleMenuClick">
                         <div class="user-profile">
@@ -245,7 +241,7 @@
                                     <li><a href="#">目的地</a></li>
                                     <li><a href="#">旅游攻略</a></li>
                                     <li><a href="#">特色体验</a></li>
-                                    <li><a href="#">帮助中</a></li>
+                                    <li><a href="#">帮助中心</a></li>
                                 </ul>
                             </div>
                         </el-col>
@@ -279,9 +275,13 @@
         </footer>
     </div>
 
-    <script src="https://cdn.jsdelivr.net/npm/dayjs/dayjs.min.js"></script>
+    <!-- Vue.js -->
     <script src="https://cdn.jsdelivr.net/npm/vue@2.6.14/dist/vue.min.js"></script>
+    <!-- Element UI -->
     <script src="https://unpkg.com/element-ui/lib/index.js"></script>
+    <!-- 自定义脚本 -->
     <script src="js/main.js"></script>
 </body>
 </html>
+
+</```rewritten_file>

@@ -52,6 +52,12 @@ new Vue({
         }
     },
     methods: {
+        handleLogin() {
+            this.submitForm('loginForm');
+        },
+        handleRegister() {
+            window.location.href = 'register.html';
+        },
         submitForm(formName) {
             this.$refs[formName].validate((valid) => {
                 if (valid) {
@@ -100,9 +106,6 @@ new Vue({
                     }, 1000);
                 }
             });
-        },
-        goToRegister() {
-            window.location.href = 'register.html';
         },
         // 登录成功后的处理
         handleLoginSuccess(userData) {
