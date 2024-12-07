@@ -9,11 +9,14 @@
 .header {
     position: fixed;
     top: 0;
+    left: 0;
     right: 0;
     z-index: 1000;
     background: transparent;
     transition: all 0.3s ease;
-    width: auto;
+    width: 100%;
+    margin: 0;
+    padding: 0;
 }
 
 .header.scrolled {
@@ -28,12 +31,13 @@
 .nav {
     display: flex;
     align-items: center;
+    justify-content: flex-end;
     gap: 20px;
     padding: 0 20px;
     height: 60px;
     background: transparent;
     transition: all 0.3s ease;
-    border-radius: 0 0 0 8px;
+    margin: 0;
 }
 
 .nav .el-menu {
@@ -356,7 +360,7 @@
     padding: 40px 0;
 }
 
-/* 订单列表样式 */
+/* 订单���表样式 */
 .orders-header {
     display: flex;
     justify-content: space-between;
