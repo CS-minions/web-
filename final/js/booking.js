@@ -239,6 +239,14 @@ new Vue({
                 case 'hotel':
                     const roomPrice = this.priceDetails.hotel[this.bookingForm.roomType]?.price || 0;
                     const days = this.calculateDays(this.bookingForm.checkIn, this.bookingForm.checkOut);
+                    console.log('价格计算:', {
+                        roomType: this.bookingForm.roomType,
+                        roomPrice: roomPrice,
+                        checkIn: this.bookingForm.checkIn,
+                        checkOut: this.bookingForm.checkOut,
+                        days: days,
+                        totalAmount: roomPrice * days
+                    });
                     return roomPrice * days;
 
                 case 'transport':
@@ -255,8 +263,10 @@ new Vue({
 
         calculateDays(start, end) {
             if (!start || !end) return 1;
-            const startDate = new Date(start + 'T00:00:00Z');
-            const endDate = new Date(end + 'T00:00:00Z');
+            const startDate = new Date(start);
+            const endDate = new Date(end);
+            startDate.setHours(0, 0, 0, 0);
+            endDate.setHours(0, 0, 0, 0);
             return Math.max(1, Math.ceil((endDate - startDate) / (1000 * 60 * 60 * 24)));
         },
 
